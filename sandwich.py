@@ -127,4 +127,4 @@ if __name__ == "__main__":
         sand = get_import(url)
         driver.quit()
         i+=1
-        time.sleep(40)
+        time.sleep(60)
