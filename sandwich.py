@@ -114,9 +114,11 @@ def get_import(url):
 
 if __name__ == "__main__":
     url = 'https://sandwiched.me'
-    for i in range(0,50):
+    i=0
+    while True:
         print(f"--------------------Iterazione: {i+1}--------------------")
         driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         sand = get_import(url)
         driver.quit()
-        time.sleep(20)
+        i+=1
+        time.sleep(40)
