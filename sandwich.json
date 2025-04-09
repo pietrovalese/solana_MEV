@@ -6081,5 +6081,5090 @@
             "value_end": "3.284",
             "currency_end": "SOL"
         }
+    },
+    {
+        "hash": "6662ad3b6987140a9ae2928ea3df2d9ebdd8c4c3d5ac87409e90bf2bcd1fc508",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "1.928",
+            "currency_start": "SOL",
+            "value_end": "20,167,436.",
+            "currency_end": "Spotify"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 3w8N7ay9",
+                "value_start": "1.020",
+                "currency_start": "SOL",
+                "value_end": "10,122,483.",
+                "currency_end": "Spotify"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "20,167,436.",
+            "currency_start": "Spotify",
+            "value_end": "1.997",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "e5ecb39e65ede53901773a7a7719d98efcdafda4cfcaa08a045a0fc296720b63",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "1.834",
+            "currency_start": "SOL",
+            "value_end": "6,531,381.1",
+            "currency_end": "bluechip"
+        },
+        "victims": [
+            {
+                "victim": "Victim: DXgGRsu5",
+                "value_start": "3.444",
+                "currency_start": "SOL",
+                "value_end": "11,407,762.",
+                "currency_end": "bluechip"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "6,419,699.6",
+            "currency_start": "bluechip",
+            "value_end": "1.969",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "bd089f8d9601cc7761b14fbaddbb8f997c838b03c42f7ce4944b26065f45369e",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "15.339",
+            "currency_start": "SOL",
+            "value_end": "49,771,379.",
+            "currency_end": "bluechip"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 85wZdn3c",
+                "value_start": "0.324",
+                "currency_start": "SOL",
+                "value_end": "853,066.24",
+                "currency_end": "bluechip"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "49,741,038.",
+            "currency_start": "bluechip",
+            "value_end": "15.377",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "70df5b8f9a74c61e2c13b38445c2cbc367275e2abe9ef07550cb4d70f6be8a57",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "4.216",
+            "currency_start": "SOL",
+            "value_end": "9,618,871.8",
+            "currency_end": "HOPE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 51hxwyGQ",
+                "value_start": "0.82",
+                "currency_start": "SOL",
+                "value_end": "1,769,431.2",
+                "currency_end": "HOPE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "9,618,871.8",
+            "currency_start": "HOPE",
+            "value_end": "4.271",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "bdf553d7f03e3470a54bb89952d733cb418edb1323c2ef98da906e9c7c7a4861",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "3.460",
+            "currency_start": "SOL",
+            "value_end": "7,827,530.8",
+            "currency_end": "HOPE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: FULL4qqb",
+                "value_start": "0.847",
+                "currency_start": "SOL",
+                "value_end": "1,828,053.2",
+                "currency_end": "HOPE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "7,827,530.8",
+            "currency_start": "HOPE",
+            "value_end": "3.507",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "fd8d900963537ec2c182d653965de5c7b760dc24a2d54358bdc2edff81403d90",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "4.184",
+            "currency_start": "SOL",
+            "value_end": "9,699,403.5",
+            "currency_end": "HOPE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 9BVpGQby",
+                "value_start": "0.718",
+                "currency_start": "SOL",
+                "value_end": "1,577,061.0",
+                "currency_end": "HOPE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "9,699,403.5",
+            "currency_start": "HOPE",
+            "value_end": "4.229",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "f4d40efd6dd265a40f5aefa7f338795c81f7b91da6ee96340ead51c6d07b44e1",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "2.939",
+            "currency_start": "SOL",
+            "value_end": "62,289,894.",
+            "currency_end": "PWESIDENT"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 2usLaEhD",
+                "value_start": "1.000",
+                "currency_start": "SOL",
+                "value_end": "19,009,492.",
+                "currency_end": "PWESIDENT"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "62,289,894.",
+            "currency_start": "PWESIDENT",
+            "value_end": "3.078",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "42548c4877db4c6f756c81b980682a1361dee8a072848386154b4f0c536ca8df",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "4.224",
+            "currency_start": "SOL",
+            "value_end": "9,970,362.0",
+            "currency_end": "HOPE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 8H199yzP",
+                "value_start": "0.44",
+                "currency_start": "SOL",
+                "value_end": "984,855.14",
+                "currency_end": "HOPE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "9,961,055.1",
+            "currency_start": "HOPE",
+            "value_end": "4.241",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "6f8f11955ffc1646738ddd5f70bae3d44406238fe93f72217b8622d8e8eb8a1d",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "11.528",
+            "currency_start": "SOL",
+            "value_end": "31,431,125.",
+            "currency_end": "bluechip"
+        },
+        "victims": [
+            {
+                "victim": "Victim: ES3gQdM9",
+                "value_start": "0.998",
+                "currency_start": "SOL",
+                "value_end": "2,333,665.9",
+                "currency_end": "bluechip"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "31,312,625.",
+            "currency_start": "bluechip",
+            "value_end": "11.688",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "ffa2893f678cbd38b3bdaa055095498c1321b36f49641b73a83178c1f7c4711f",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "4.163",
+            "currency_start": "SOL",
+            "value_end": "10,086,418.",
+            "currency_end": "HOPE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 6FZHUXrs",
+                "value_start": "0.662",
+                "currency_start": "SOL",
+                "value_end": "1,517,493.0",
+                "currency_end": "HOPE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "10,066,735.",
+            "currency_start": "HOPE",
+            "value_end": "4.197",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "6e487c114407d6ab1e62bd34290e44c9f60ea36a0819600a5fbe8d4a54aef28d",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "3.544",
+            "currency_start": "SOL",
+            "value_end": "8,523,742.0",
+            "currency_end": "HOPE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 2jSVNCFG",
+                "value_start": "0.477",
+                "currency_start": "SOL",
+                "value_end": "1,096,143.0",
+                "currency_end": "HOPE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "8,514,170.4",
+            "currency_start": "HOPE",
+            "value_end": "3.561",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "364e8574aac2fdac82d3db4c2c7a433b4175e240f58961402c6efc3ca9ba893e",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "3.936",
+            "currency_start": "SOL",
+            "value_end": "9,659,438.0",
+            "currency_end": "HOPE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: E2bpMkqF",
+                "value_start": "0.661",
+                "currency_start": "SOL",
+                "value_end": "1,539,509.3",
+                "currency_end": "HOPE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "9,640,408.1",
+            "currency_start": "HOPE",
+            "value_end": "3.968",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "fe747196b68a914be8c3a9b1ca35a5d96d4e3f55bc3f3f233b252d11ea88c81f",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "11.233",
+            "currency_start": "SOL",
+            "value_end": "26,740,170.",
+            "currency_end": "AHF"
+        },
+        "victims": [
+            {
+                "victim": "Victim: J1VYutN3",
+                "value_start": "0.649",
+                "currency_start": "SOL",
+                "value_end": "1,346,820.5",
+                "currency_end": "AHF"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "26,689,083.",
+            "currency_start": "AHF",
+            "value_end": "11.315",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "e32175bca2ec5a7273ddbde3981c187c24d8f29f7acbc7b56673839635bec404",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "4.133",
+            "currency_start": "SOL",
+            "value_end": "10,163,087.",
+            "currency_end": "HOPE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: F77aV54i",
+                "value_start": "0.591",
+                "currency_start": "SOL",
+                "value_end": "1,376,636.7",
+                "currency_end": "HOPE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "10,146,251.",
+            "currency_start": "HOPE",
+            "value_end": "4.162",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "a5fc39f01b1150ddac1321e939dfd21327e9a9525f2138969b042d0afa0be3f9",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "3.011",
+            "currency_start": "SOL",
+            "value_end": "7,655,989.3",
+            "currency_end": "HOPE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: ADgMsKRY",
+                "value_start": "5.246",
+                "currency_start": "SOL",
+                "value_end": "12,150,731.",
+                "currency_end": "HOPE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "7,491,843.9",
+            "currency_start": "HOPE",
+            "value_end": "3.292",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "bba8e475697f6eb0679a99bbfe5f9b82c7992d9a656cc8cd057072cd534999d4",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "4.045",
+            "currency_start": "SOL",
+            "value_end": "10,328,403.",
+            "currency_end": "HOPE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 5vn3PiFv",
+                "value_start": "0.922",
+                "currency_start": "SOL",
+                "value_end": "2,221,175.9",
+                "currency_end": "HOPE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "10,295,174.",
+            "currency_start": "HOPE",
+            "value_end": "4.098",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "56465abdd128047ec6c9f096feb347d1991594021acdb0124a480fd05d65bbc2",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "1.315",
+            "currency_start": "SOL",
+            "value_end": "1,843,814.3",
+            "currency_end": "GEKKO"
+        },
+        "victims": [
+            {
+                "victim": "Victim: Do6TozRV",
+                "value_start": "3.058",
+                "currency_start": "SOL",
+                "value_end": "4,152,007.3",
+                "currency_end": "GEKKO"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "1,829,470.7",
+            "currency_start": "GEKKO",
+            "value_end": "1.358",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "945f2c555eb3793e4b6ec450abc6e77098bf3d2b99930d852ef2119568021ccf",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "3.061",
+            "currency_start": "SOL",
+            "value_end": "6,801,472.9",
+            "currency_end": "bluechip"
+        },
+        "victims": [
+            {
+                "victim": "Victim: FDrxH25g",
+                "value_start": "0.306",
+                "currency_start": "SOL",
+                "value_end": "654,510.90",
+                "currency_end": "bluechip"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "6,799,166.3",
+            "currency_start": "bluechip",
+            "value_end": "3.066",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "38e961ad0ec88de3afd69a2c74d2ac82250fa8c90865104f5d77402b01dbed26",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "4.192",
+            "currency_start": "SOL",
+            "value_end": "10,505,842.",
+            "currency_end": "HOPE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: AhtSsNr6",
+                "value_start": "0.853",
+                "currency_start": "SOL",
+                "value_end": "2,017,853.9",
+                "currency_end": "HOPE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "10,475,679.",
+            "currency_start": "HOPE",
+            "value_end": "4.240",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "9797d71f9230ec7d7163dae654cc6c7e84e6e1db2d112e1d1dc19000ada16b93",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "3.399",
+            "currency_start": "SOL",
+            "value_end": "8,438,838.3",
+            "currency_end": "HOPE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 7ybXo5Q4",
+                "value_start": "0.55",
+                "currency_start": "SOL",
+                "value_end": "1,305,248.8",
+                "currency_end": "HOPE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "8,426,248.4",
+            "currency_start": "HOPE",
+            "value_end": "3.420",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "f2133fc35dbe92a2653f0f300db60a39b538a804c2a689841035344a5d7b428b",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "3.339",
+            "currency_start": "SOL",
+            "value_end": "8,289,483.8",
+            "currency_end": "HOPE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: FEiJmiA3",
+                "value_start": "0.431",
+                "currency_start": "SOL",
+                "value_end": "1,023,508.5",
+                "currency_end": "HOPE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "8,281,606.8",
+            "currency_start": "HOPE",
+            "value_end": "3.353",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "579e200189fd01d6dca0c6b04a92b468c6ffac416a79b774ea762cc0fc04321d",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "4.085",
+            "currency_start": "SOL",
+            "value_end": "10,233,157.",
+            "currency_end": "HOPE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 7TcHfFtB",
+                "value_start": "0.803",
+                "currency_start": "SOL",
+                "value_end": "1,902,211.0",
+                "currency_end": "HOPE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "10,206,073.",
+            "currency_start": "HOPE",
+            "value_end": "4.129",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "81466f9b73200fd3f56d1198aba23109da966abf49c9798e945d8cc43b10526a",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "4.082",
+            "currency_start": "SOL",
+            "value_end": "10,238,701.",
+            "currency_end": "HOPE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: DtiNR3qb",
+                "value_start": "0.797",
+                "currency_start": "SOL",
+                "value_end": "1,890,600.5",
+                "currency_end": "HOPE"
+            },
+            {
+                "victim": "Victim: DQwCJEZ4",
+                "value_start": "0.688",
+                "currency_start": "SOL",
+                "value_end": "1,632,323.3",
+                "currency_end": "HOPE"
+            },
+            {
+                "victim": "Victim: 3d6TdN18",
+                "value_start": "3.335",
+                "currency_start": "SOL",
+                "value_end": "8,292,357.9",
+                "currency_end": "HOPE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "10,211,850.",
+            "currency_start": "HOPE",
+            "value_end": "4.125",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "ce5539527370b5bc34ff80eb60d23d3e7a39c3aa946f59bb452a3e4ae0ce12a7",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "3.479",
+            "currency_start": "SOL",
+            "value_end": "9,363,677.7",
+            "currency_end": "HOPE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: GTNX8mrd",
+                "value_start": "0.427",
+                "currency_start": "SOL",
+                "value_end": "1,096,761.3",
+                "currency_end": "HOPE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "9,363,677.7",
+            "currency_start": "HOPE",
+            "value_end": "3.498",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "0063ac3b4179077dc539f796cbf4883b5ba724478f2c877aae47f0377474bcb1",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "3.071",
+            "currency_start": "SOL",
+            "value_end": "8,225,455.4",
+            "currency_end": "HOPE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 3tApU4Sh",
+                "value_start": "0.805",
+                "currency_start": "SOL",
+                "value_end": "2,058,053.7",
+                "currency_end": "HOPE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "8,225,455.4",
+            "currency_start": "HOPE",
+            "value_end": "3.114",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "9dad4cbf000e3da52db966f81516c5b2a34cdf540d4df4e027b9735b26a82346",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "6.218",
+            "currency_start": "SOL",
+            "value_end": "17,558,173.",
+            "currency_end": "NFT"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 4p9rK23s",
+                "value_start": "0.48",
+                "currency_start": "SOL",
+                "value_end": "1,257,514.2",
+                "currency_end": "NFT"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "17,558,173.",
+            "currency_start": "NFT",
+            "value_end": "6.252",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "c931e3c6a06405e61f07c330a66046f3cccc50664d913bbb7397b936bf4208f0",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "3.380",
+            "currency_start": "SOL",
+            "value_end": "8,356,308.4",
+            "currency_end": "HOPE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 2aQFAnzb",
+                "value_start": "0.911",
+                "currency_start": "SOL",
+                "value_end": "2,145,367.6",
+                "currency_end": "HOPE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "8,330,257.5",
+            "currency_start": "HOPE",
+            "value_end": "3.423",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "18e799db9d8a289cb7bff350289fc499bdda512515b38aa01d3fc89a85000d99",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "2.579",
+            "currency_start": "SOL",
+            "value_end": "7,372,012.1",
+            "currency_end": "HOPE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: GzZfjcMJ",
+                "value_start": "5.246",
+                "currency_start": "SOL",
+                "value_end": "13,652,528.",
+                "currency_end": "HOPE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "7,204,428.1",
+            "currency_start": "HOPE",
+            "value_end": "2.837",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "2c906e437ae89222b702a99950c09df763a247e69947509fcb8c4020dc9221d8",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "4.284",
+            "currency_start": "SOL",
+            "value_end": "11,990,413.",
+            "currency_end": "HOPE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: GZSqgL96",
+                "value_start": "0.532",
+                "currency_start": "SOL",
+                "value_end": "1,402,602.9",
+                "currency_end": "HOPE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "11,971,771.",
+            "currency_start": "HOPE",
+            "value_end": "4.312",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "bab6878befb81645b655ff606cd248c3ebb66d0441be085188d7d096fac5d02c",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "11.768",
+            "currency_start": "SOL",
+            "value_end": "7,551,337.5",
+            "currency_end": "ASKORA"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 2J63Xsqj",
+                "value_start": "0.75",
+                "currency_start": "SOL",
+                "value_end": "447,168.26",
+                "currency_end": "ASKORA"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "7,551,337.5",
+            "currency_start": "ASKORA",
+            "value_end": "11.813",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "2b8989e855c857e8375a65a40352eeeb57dd66d5d5f3d36b770b5716b3c6477e",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "3.966",
+            "currency_start": "SOL",
+            "value_end": "10,031,533.",
+            "currency_end": "HOPE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: F35ojqxa",
+                "value_start": "0.583",
+                "currency_start": "SOL",
+                "value_end": "1,399,076.9",
+                "currency_end": "HOPE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "10,031,533.",
+            "currency_start": "HOPE",
+            "value_end": "4.000",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "cc5a9ba9c766bd8be45a26e41515160c49af56a4228059539c268f06e3f9b5bc",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "3.419",
+            "currency_start": "SOL",
+            "value_end": "8,593,458.4",
+            "currency_end": "HOPE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: GGZLhef2",
+                "value_start": "0.914",
+                "currency_start": "SOL",
+                "value_end": "2,183,616.8",
+                "currency_end": "HOPE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "8,593,458.4",
+            "currency_start": "HOPE",
+            "value_end": "3.474",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "6112970bd542dba3d9365196c0944f4b56bbd667c240db5c432f214b968510e1",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "9.054",
+            "currency_start": "SOL",
+            "value_end": "17,850,804.",
+            "currency_end": "bluechip"
+        },
+        "victims": [
+            {
+                "victim": "Victim: ECd2rk13",
+                "value_start": "0.99",
+                "currency_start": "SOL",
+                "value_end": "1,755,803.0",
+                "currency_end": "bluechip"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "17,850,804.",
+            "currency_start": "bluechip",
+            "value_end": "9.187",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "9ca4a549884732101fede6fabbe415a746e8088749a92b1b518310c98d0727f6",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "3.809",
+            "currency_start": "SOL",
+            "value_end": "10,526,197.",
+            "currency_end": "HOPE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 4vJfp62j",
+                "value_start": "2.981",
+                "currency_start": "SOL",
+                "value_end": "8,154,560.8",
+                "currency_end": "HOPE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "10,526,197.",
+            "currency_start": "HOPE",
+            "value_end": "3.872",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "da79d3aa1f47074e17aab38d81b3e3a065f50a3cb1fcf1096b468a0c59d025fa",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "2.226",
+            "currency_start": "SOL",
+            "value_end": "6,032,321.1",
+            "currency_end": "HOPE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: GgYejS2p",
+                "value_start": "0.677",
+                "currency_start": "SOL",
+                "value_end": "1,771,675.9",
+                "currency_end": "HOPE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "6,032,321.1",
+            "currency_start": "HOPE",
+            "value_end": "2.252",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "6dc63b0639ae96a84a2a3e5530d8ec00763d31cf7b0ec13f30ae58224865bc00",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "16.839",
+            "currency_start": "SOL",
+            "value_end": "36,813,326.",
+            "currency_end": "bluechip"
+        },
+        "victims": [
+            {
+                "victim": "Victim: H8yxJQ9P",
+                "value_start": "0.755",
+                "currency_start": "SOL",
+                "value_end": "1,358,546.3",
+                "currency_end": "bluechip"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "36,731,934.",
+            "currency_start": "bluechip",
+            "value_end": "16.973",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "6c0e4a665a3f88372844d52a645f2fe53efae82b7fdc121a1d5b20be889bb9fe",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "11.139",
+            "currency_start": "SOL",
+            "value_end": "40,054,245.",
+            "currency_end": "fed"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 56sngnyM",
+                "value_start": "0.5",
+                "currency_start": "SOL",
+                "value_end": "1,546,650.9",
+                "currency_end": "fed"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "39,995,035.",
+            "currency_start": "fed",
+            "value_end": "11.202",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "01374da444def7b0f8eceeab5ce7265ac18954dc45e95d599a9b874c6b865220",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "3.372",
+            "currency_start": "SOL",
+            "value_end": "19,588,165.",
+            "currency_end": "George"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 4isgV44x",
+                "value_start": "1.029",
+                "currency_start": "SOL",
+                "value_end": "5,637,407.0",
+                "currency_end": "George"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "19,588,165.",
+            "currency_start": "George",
+            "value_end": "3.462",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "a4b82f099c3de8b82b265593807128cdc4029fcf4806abd49007aaf382dfbb28",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "0.75",
+            "currency_start": "SOL",
+            "value_end": "24,457,743.",
+            "currency_end": "9oAH5M"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 4uLCSJWh",
+                "value_start": "0.84",
+                "currency_start": "SOL",
+                "value_end": "26,049,303.",
+                "currency_end": "9oAH5M"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "24,457,743.",
+            "currency_start": "9oAH5M",
+            "value_end": "0.79",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "f24410be3a3394259dd187b1f12881ad636d45c519a3177ffd8b4aa33c3670e0",
+        "bot1": {
+            "bot": "Bot: 2brXWR3R",
+            "value_start": "4.732",
+            "currency_start": "SOL",
+            "value_end": "806,414.35",
+            "currency_end": "Eduardo"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 3B8iQr4G",
+                "value_start": "10.195",
+                "currency_start": "SOL",
+                "value_end": "1,665,870.7",
+                "currency_end": "Eduardo"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2brXWR3R",
+            "value_start": "806,414.35",
+            "currency_start": "Eduardo",
+            "value_end": "4.985",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "1a6e241b3c1893d4b43253b682ffcd7f539eb74bb787e885c7671be5edaa74f6",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "9.555",
+            "currency_start": "SOL",
+            "value_end": "1,295,175.1",
+            "currency_end": "Eduardo"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 7WsgRZ9a",
+                "value_start": "0.198",
+                "currency_start": "SOL",
+                "value_end": "26,868.812",
+                "currency_end": "Eduardo"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "1,290,676.3",
+            "currency_start": "Eduardo",
+            "value_end": "9.692",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "54ea626b0894c3b794f631c011b7c35cad3b4de502900e58565276d0c3463058",
+        "bot1": {
+            "bot": "Bot: printUrD",
+            "value_start": "3.006",
+            "currency_start": "SOL",
+            "value_end": "431,727.91",
+            "currency_end": "Eduardo"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 9Rha4ffG",
+                "value_start": "3.006",
+                "currency_start": "SOL",
+                "value_end": "425,031.72",
+                "currency_end": "Eduardo"
+            },
+            {
+                "victim": "Victim: BNQUG2po",
+                "value_start": "3.276",
+                "currency_start": "SOL",
+                "value_end": "463,100.35",
+                "currency_end": "Eduardo"
+            },
+            {
+                "victim": "Victim: G8AJCLJG",
+                "value_start": "19.970",
+                "currency_start": "SOL",
+                "value_end": "2,661,955.9",
+                "currency_end": "Eduardo"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: printUrD",
+            "value_start": "431,727.91",
+            "currency_start": "Eduardo",
+            "value_end": "3.362",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "c36519586501d1be85e6689f3cd1a4604bf753f1dc0e3218c3b7d5e9a93b30ba",
+        "bot1": {
+            "bot": "Bot: 2nuVzXmA",
+            "value_start": "3.006",
+            "currency_start": "SOL",
+            "value_end": "443,589.79",
+            "currency_end": "Eduardo"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 7NMjTjrt",
+                "value_start": "3.006",
+                "currency_start": "SOL",
+                "value_end": "436,616.58",
+                "currency_end": "Eduardo"
+            },
+            {
+                "victim": "Victim: F8JtBPwp",
+                "value_start": "0.099",
+                "currency_start": "SOL",
+                "value_end": "14,255.654",
+                "currency_end": "Eduardo"
+            },
+            {
+                "victim": "Victim: Ex8PDSEX",
+                "value_start": "3.006",
+                "currency_start": "SOL",
+                "value_end": "436,531.63",
+                "currency_end": "Eduardo"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2nuVzXmA",
+            "value_start": "443,589.79",
+            "currency_start": "Eduardo",
+            "value_end": "3.041",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "9b9fa0a1ac96b2c184f5211d8019e84946fcc4c4c5071f7f4a50150d0ec3ffbe",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "0.56",
+            "currency_start": "SOL",
+            "value_end": "5,981,318.2",
+            "currency_end": "catholic"
+        },
+        "victims": [
+            {
+                "victim": "Victim: MbPbfaVS",
+                "value_start": "1.617",
+                "currency_start": "SOL",
+                "value_end": "16,618,664.",
+                "currency_end": "catholic"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "5,981,318.2",
+            "currency_start": "catholic",
+            "value_end": "0.593",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "7cd9d5b8125abd7a6ebeebeec2430c5d46f7b24367a8d37d5eecdfe4cc6a6f7a",
+        "bot1": {
+            "bot": "Bot: vvvdfN4j",
+            "value_start": "3.588",
+            "currency_start": "SOL",
+            "value_end": "578,988.22",
+            "currency_end": "Eduardo"
+        },
+        "victims": [
+            {
+                "victim": "Victim: BNQUG2po",
+                "value_start": "3.276",
+                "currency_start": "SOL",
+                "value_end": "518,713.52",
+                "currency_end": "Eduardo"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: vvvdfN4j",
+            "value_start": "578,334.55",
+            "currency_start": "Eduardo",
+            "value_end": "3.669",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "e80faf70133792bd6d53d37b992283565f804178866de7483b035ab4f2cb0ac3",
+        "bot1": {
+            "bot": "Bot: vvvjq5iM",
+            "value_start": "3.133",
+            "currency_start": "SOL",
+            "value_end": "503,994.54",
+            "currency_end": "Eduardo"
+        },
+        "victims": [
+            {
+                "victim": "Victim: B1mtaakB",
+                "value_start": "3.006",
+                "currency_start": "SOL",
+                "value_end": "475,446.16",
+                "currency_end": "Eduardo"
+            },
+            {
+                "victim": "Victim: 5yLYqXem",
+                "value_start": "0.0196",
+                "currency_start": "SOL",
+                "value_end": "3,077.706",
+                "currency_end": "Eduardo"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: vvvjq5iM",
+            "value_start": "503,708.27",
+            "currency_start": "Eduardo",
+            "value_end": "3.169",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "dfc02e60a116ef0e3183eda3d93cb3d2ed2d0548b2a7c2cb9aa9c71ab857dd04",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "0.621",
+            "currency_start": "SOL",
+            "value_end": "17,209,456.",
+            "currency_end": "Bullion"
+        },
+        "victims": [
+            {
+                "victim": "Victim: AzrqDiSv",
+                "value_start": "0.262",
+                "currency_start": "SOL",
+                "value_end": "7,022,206.5",
+                "currency_end": "Bullion"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "17,157,563.",
+            "currency_start": "Bullion",
+            "value_end": "0.629",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "9bb1cfe9db4dd4beb57e9b0a7d61440ccb40880d7affbf427cbc17dc136df753",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "1.732",
+            "currency_start": "SOL",
+            "value_end": "20,021,309.",
+            "currency_end": "George"
+        },
+        "victims": [
+            {
+                "victim": "Victim: EVnZLBgW",
+                "value_start": "1.586",
+                "currency_start": "SOL",
+                "value_end": "17,233,262.",
+                "currency_end": "George"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "20,021,309.",
+            "currency_start": "George",
+            "value_end": "1.834",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "8ac6fa8971da799bb4bc8fe91a1cbf20f53ca11c786d56a1786d669d0dec3eca",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "4.982",
+            "currency_start": "SOL",
+            "value_end": "13,042,905.",
+            "currency_end": "DNA"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 9rLoekP1",
+                "value_start": "1.999",
+                "currency_start": "SOL",
+                "value_end": "4,861,654.7",
+                "currency_end": "DNA"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "12,948,469.",
+            "currency_start": "DNA",
+            "value_end": "5.127",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "f196bedabf675e9f3896f64b91365f5513ba110e35489f8592e488867b238af3",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "22.413",
+            "currency_start": "SOL",
+            "value_end": "63,964,439.",
+            "currency_end": "pisscoin"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 2kYrzWhn",
+                "value_start": "1.148",
+                "currency_start": "SOL",
+                "value_end": "2,457,661.6",
+                "currency_end": "pisscoin"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "63,681,914.",
+            "currency_start": "pisscoin",
+            "value_end": "22.732",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "e6301fed8cd6de671527b838e4b80dcaeb9a936909743e577af9a9fa18886ab6",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "1.680",
+            "currency_start": "SOL",
+            "value_end": "2,594,666.9",
+            "currency_end": "GEKKO"
+        },
+        "victims": [
+            {
+                "victim": "Victim: CZqAkdZj",
+                "value_start": "0.626",
+                "currency_start": "SOL",
+                "value_end": "949,056.44",
+                "currency_end": "GEKKO"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "2,592,254.7",
+            "currency_start": "GEKKO",
+            "value_end": "1.687",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "ae0349bf445f0727d4dc567ae96ec75ecf8df804ebd9157ce1f0ee4be4f09c31",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "7.008",
+            "currency_start": "SOL",
+            "value_end": "70,372,254.",
+            "currency_end": "BitMouse"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 8h5b26mF",
+                "value_start": "2.548",
+                "currency_start": "SOL",
+                "value_end": "21,692,136.",
+                "currency_end": "BitMouse"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "70,372,254.",
+            "currency_start": "BitMouse",
+            "value_end": "7.577",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "3d72d68c6c49d535f221c1966c024e9817b974da65f93eb7ace8a6cf861b1be8",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "0.367",
+            "currency_start": "SOL",
+            "value_end": "8,300,509.4",
+            "currency_end": "Douse"
+        },
+        "victims": [
+            {
+                "victim": "Victim: GsQNas6a",
+                "value_start": "1",
+                "currency_start": "SOL",
+                "value_end": "21,831,031.",
+                "currency_end": "Douse"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "8,300,509.4",
+            "currency_start": "Douse",
+            "value_end": "0.386",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "eb26df2cf9df194f5d5e9dc6c11f428f12cf5bbced429a5fb5993c52aa46149c",
+        "bot1": {
+            "bot": "Bot: printUrD",
+            "value_start": "3.737",
+            "currency_start": "SOL",
+            "value_end": "630,040.93",
+            "currency_end": "Eduardo"
+        },
+        "victims": [
+            {
+                "victim": "Victim: Ex8PDSEX",
+                "value_start": "4.008",
+                "currency_start": "SOL",
+                "value_end": "661,299.99",
+                "currency_end": "Eduardo"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: printUrD",
+            "value_start": "630,040.93",
+            "currency_start": "Eduardo",
+            "value_end": "3.803",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "11722a6e9be0bcd6378f21f6f01edfed7eaabd008478bba9f0ad58e842a495dc",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "14.061",
+            "currency_start": "SOL",
+            "value_end": "30,221,382.",
+            "currency_end": "Pizznapple"
+        },
+        "victims": [
+            {
+                "victim": "Victim: AbSGRe8S",
+                "value_start": "0.649",
+                "currency_start": "SOL",
+                "value_end": "1,189,397.3",
+                "currency_end": "Pizznapple"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "30,221,382.",
+            "currency_start": "Pizznapple",
+            "value_end": "14.171",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "b6bb900314fa3e07ff5a55b1c04231a39203ed9ecb63964b15dd8d02015a3104",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "3.731",
+            "currency_start": "SOL",
+            "value_end": "63,093,944.",
+            "currency_end": "EGG"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 25i8XGmu",
+                "value_start": "1.959",
+                "currency_start": "SOL",
+                "value_end": "29,156,704.",
+                "currency_end": "EGG"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "63,093,944.",
+            "currency_start": "EGG",
+            "value_end": "4.044",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "dbe141b6532a6bae92ac88d69011b54834999588cce6ffc42e97c71b5860ccc9",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "9.507",
+            "currency_start": "SOL",
+            "value_end": "22,797,967.",
+            "currency_end": "Pizznapple"
+        },
+        "victims": [
+            {
+                "victim": "Victim: AKnXLKGf",
+                "value_start": "1.297",
+                "currency_start": "SOL",
+                "value_end": "2,750,902.1",
+                "currency_end": "Pizznapple"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "22,797,967.",
+            "currency_start": "Pizznapple",
+            "value_end": "9.720",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "2ffedf6a2ab1ada5f101125bd862d076880a52b380094004f77e5b182fd86545",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "14.566",
+            "currency_start": "SOL",
+            "value_end": "21,182,452.",
+            "currency_end": "Martijn"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 7q9K3Rfh",
+                "value_start": "0.39",
+                "currency_start": "SOL",
+                "value_end": "495,517.88",
+                "currency_end": "Martijn"
+            },
+            {
+                "victim": "Victim: 4fmSJgwu",
+                "value_start": "0.0223",
+                "currency_start": "SOL",
+                "value_end": "36,744.343",
+                "currency_end": "Martijn"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "21,175,871.",
+            "currency_start": "Martijn",
+            "value_end": "14.590",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "9b33e7f7086dfcd6a19dd5ce6d19792d14420bae79c6cde603badc1b161085bb",
+        "bot1": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "9.830",
+            "currency_start": "SOL",
+            "value_end": "35,599,612.",
+            "currency_end": "ILUV"
+        },
+        "victims": [
+            {
+                "victim": "Victim: GWMCWHo1",
+                "value_start": "0.946",
+                "currency_start": "SOL",
+                "value_end": "2,977,109.4",
+                "currency_end": "ILUV"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "35,599,612.",
+            "currency_start": "ILUV",
+            "value_end": "10.003",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "509fa2e63261db551cf803bfd0a3eda29f0fb5df7b974bc69023cc754cceb945",
+        "bot1": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "7.537",
+            "currency_start": "SOL",
+            "value_end": "12,104,175.",
+            "currency_end": "Martijn"
+        },
+        "victims": [
+            {
+                "victim": "Victim: ELagVa6m",
+                "value_start": "2.336",
+                "currency_start": "SOL",
+                "value_end": "3,421,815.4",
+                "currency_end": "Martijn"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "12,104,175.",
+            "currency_start": "Martijn",
+            "value_end": "7.815",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "fb8ac41cc2bbdf4243f58f8d4b7f94c6c68ee3f8c1834b65276423f870ada202",
+        "bot1": {
+            "bot": "Bot: 4rWSbsui",
+            "value_start": "0.0451",
+            "currency_start": "SOL",
+            "value_end": "319,223.27",
+            "currency_end": "COO"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 9kxKCyos",
+                "value_start": "0.731",
+                "currency_start": "SOL",
+                "value_end": "4,956,714.1",
+                "currency_end": "COO"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 4rWSbsui",
+            "value_start": "319,223.27",
+            "currency_start": "COO",
+            "value_end": "0.0486",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "8bdc3902b742fa26975ae527d5e2ab33995133018a1ff08fd11f92834ad9db6b",
+        "bot1": {
+            "bot": "Bot: 4rWSbsui",
+            "value_start": "3.870",
+            "currency_start": "SOL",
+            "value_end": "75,035,792.",
+            "currency_end": "EGG"
+        },
+        "victims": [
+            {
+                "victim": "Victim: G4euvUMe",
+                "value_start": "1.003",
+                "currency_start": "SOL",
+                "value_end": "17,283,101.",
+                "currency_end": "EGG"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 4rWSbsui",
+            "value_start": "75,035,792.",
+            "currency_start": "EGG",
+            "value_end": "4.045",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "28640501d6c169c7c3dc83d1370668e9c4c32ca9fbe0ad8333cdf987203f32bd",
+        "bot1": {
+            "bot": "Bot: vvvdfN4j",
+            "value_start": "3.801",
+            "currency_start": "SOL",
+            "value_end": "562,561.51",
+            "currency_end": "Eduardo"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 9c8UqD5P",
+                "value_start": "3.839",
+                "currency_start": "SOL",
+                "value_end": "557,006.07",
+                "currency_end": "Eduardo"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: vvvdfN4j",
+            "value_start": "562,561.51",
+            "currency_start": "Eduardo",
+            "value_end": "3.860",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "a44f6a610726adfadbd41ec9fbfdb0978765bac2aa29de1a132db31dfb2e166b",
+        "bot1": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "16.177",
+            "currency_start": "SOL",
+            "value_end": "20,842,709.",
+            "currency_end": "Martijn"
+        },
+        "victims": [
+            {
+                "victim": "Victim: Hu2EJQyp",
+                "value_start": "0.635",
+                "currency_start": "SOL",
+                "value_end": "710,288.54",
+                "currency_end": "Martijn"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "20,842,709.",
+            "currency_start": "Martijn",
+            "value_end": "16.260",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "f138bfeaa0d32c5b2b1741b7a07466206544e06783d5d8e7f501153bf89a4276",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "14.377",
+            "currency_start": "SOL",
+            "value_end": "18,684,641.",
+            "currency_end": "Martijn"
+        },
+        "victims": [
+            {
+                "victim": "Victim: AzYvGzi7",
+                "value_start": "0.649",
+                "currency_start": "SOL",
+                "value_end": "742,178.33",
+                "currency_end": "Martijn"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "18,684,641.",
+            "currency_start": "Martijn",
+            "value_end": "14.455",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "c2312bc0c2ecae7ce126847fba7dc22b17c795daf535c4fa5a23d47b9f297155",
+        "bot1": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "6.322",
+            "currency_start": "SOL",
+            "value_end": "8,856,176.9",
+            "currency_end": "Martijn"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 9bd9oexg",
+                "value_start": "1.198",
+                "currency_start": "SOL",
+                "value_end": "1,571,206.9",
+                "currency_end": "Martijn"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "8,856,176.9",
+            "currency_start": "Martijn",
+            "value_end": "6.421",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "31220f056ca62f6219879cb5539744629d976551e3a83a81abe35b29fb44ac58",
+        "bot1": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "0.94",
+            "currency_start": "SOL",
+            "value_end": "20,117,021.",
+            "currency_end": "FLASH"
+        },
+        "victims": [
+            {
+                "victim": "Victim: XgKc5pWz",
+                "value_start": "0.525",
+                "currency_start": "SOL",
+                "value_end": "10,823,529.",
+                "currency_end": "FLASH"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "20,117,021.",
+            "currency_start": "FLASH",
+            "value_end": "0.965",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "9e6939818d7d724f99209678e6cbb3c443679cb9481c14a33b7f1ad492682a81",
+        "bot1": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "15.862",
+            "currency_start": "SOL",
+            "value_end": "33,329,207.",
+            "currency_end": "Pizznapple"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 4WhFBsQY",
+                "value_start": "2.147",
+                "currency_start": "SOL",
+                "value_end": "3,727,852.6",
+                "currency_end": "Pizznapple"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "33,329,207.",
+            "currency_start": "Pizznapple",
+            "value_end": "16.417",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "ca330c446b3b0b09c2c21538e2fe5aa2902a2f4b8e364ee6ada0be543cf205e4",
+        "bot1": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "2.962",
+            "currency_start": "SOL",
+            "value_end": "4,458,544.8",
+            "currency_end": "Martijn"
+        },
+        "victims": [
+            {
+                "victim": "Victim: CA525bD5",
+                "value_start": "1.028",
+                "currency_start": "SOL",
+                "value_end": "1,491,862.5",
+                "currency_end": "Martijn"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "4,458,544.8",
+            "currency_start": "Martijn",
+            "value_end": "3.003",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "1b00e8890d773052c629fca4f937fd8d108729caa9e0bd26ae5f0b75791ba591",
+        "bot1": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "2.195",
+            "currency_start": "SOL",
+            "value_end": "39,424,189.",
+            "currency_end": "F48FYP"
+        },
+        "victims": [
+            {
+                "victim": "Victim: qtSTe6J1",
+                "value_start": "1.040",
+                "currency_start": "SOL",
+                "value_end": "17,311,889.",
+                "currency_end": "F48FYP"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "39,424,189.",
+            "currency_start": "F48FYP",
+            "value_end": "2.299",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "52564956a1d6d9a8bcee99d99bba9ddafa6d291755ccde4cf49d92766a3c3151",
+        "bot1": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "2.098",
+            "currency_start": "SOL",
+            "value_end": "758,096.50",
+            "currency_end": "GOLD"
+        },
+        "victims": [
+            {
+                "victim": "Victim: J6o7f47c",
+                "value_start": "2.181",
+                "currency_start": "SOL",
+                "value_end": "779,909.81",
+                "currency_end": "GOLD"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "758,096.50",
+            "currency_start": "GOLD",
+            "value_end": "2.109",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "247cb9a57bbca4ad4794e92af2eb2fa0aa2178bc2fc2ca0d0b859ed971e7897d",
+        "bot1": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "3.649",
+            "currency_start": "SOL",
+            "value_end": "85,998,327.",
+            "currency_end": "BitMouse"
+        },
+        "victims": [
+            {
+                "victim": "Victim: BdfV3aNk",
+                "value_start": "0.619",
+                "currency_start": "SOL",
+                "value_end": "13,007,375.",
+                "currency_end": "BitMouse"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "85,998,327.",
+            "currency_start": "BitMouse",
+            "value_end": "3.760",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "4b918765c2934f77dec3ea4e5a8312e69d3c97964d17d11c5af716c8bd2004ef",
+        "bot1": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "6.529",
+            "currency_start": "SOL",
+            "value_end": "1,915,236.5",
+            "currency_end": "BBBB"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 8znrX9gQ",
+                "value_start": "0.933",
+                "currency_start": "SOL",
+                "value_end": "265,716.03",
+                "currency_end": "BBBB"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "1,915,236.5",
+            "currency_start": "BBBB",
+            "value_end": "6.547",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "d2ea7acfe736838e612f4bebb932fbeca3d7d0f726d77b84a1fdb22c883a5402",
+        "bot1": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "0.296",
+            "currency_start": "SOL",
+            "value_end": "10,484,284.",
+            "currency_end": "GEORGE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: GkCGuUdU",
+                "value_start": "0.51",
+                "currency_start": "SOL",
+                "value_end": "17,590,163.",
+                "currency_end": "GEORGE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "10,484,284.",
+            "currency_start": "GEORGE",
+            "value_end": "0.306",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "b8b01920c14899248786d319738647c5cf34b30b3f294e9f1a04a386fdefc152",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "20.550",
+            "currency_start": "SOL",
+            "value_end": "2,864,413.5",
+            "currency_end": "Eduardo"
+        },
+        "victims": [
+            {
+                "victim": "Victim: BjecFsEA",
+                "value_start": "2.690",
+                "currency_start": "SOL",
+                "value_end": "353,517.90",
+                "currency_end": "Eduardo"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "2,864,413.5",
+            "currency_start": "Eduardo",
+            "value_end": "20.726",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "1d84ea66551399aec5cbd07b0533ea46a586cc8f83a11c0ebe4da6e780ac74f7",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "1.971",
+            "currency_start": "SOL",
+            "value_end": "5,021,179.5",
+            "currency_end": "Pizznapple"
+        },
+        "victims": [
+            {
+                "victim": "Victim: bLcJkjrq",
+                "value_start": "1.047",
+                "currency_start": "SOL",
+                "value_end": "2,575,481.5",
+                "currency_end": "Pizznapple"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "5,021,179.5",
+            "currency_start": "Pizznapple",
+            "value_end": "2.010",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "2dce4617e7645504347903c712ff1b065e87a8254dfab21c7776bdc179b28101",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "61.449",
+            "currency_start": "SOL",
+            "value_end": "7,897,926.7",
+            "currency_end": "Eduardo"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 9uCUdVYq",
+                "value_start": "1.297",
+                "currency_start": "SOL",
+                "value_end": "143,092.22",
+                "currency_end": "Eduardo"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "7,897,926.7",
+            "currency_start": "Eduardo",
+            "value_end": "61.525",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "0a8c9f5daeb34603e4609df2bcc1b42c55e31baa5923c6d3a521d9708908aa26",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "8.970",
+            "currency_start": "SOL",
+            "value_end": "20,096,885.",
+            "currency_end": "Pizznapple"
+        },
+        "victims": [
+            {
+                "victim": "Victim: AKnXLKGf",
+                "value_start": "0.649",
+                "currency_start": "SOL",
+                "value_end": "1,306,523.1",
+                "currency_end": "Pizznapple"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "20,096,885.",
+            "currency_start": "Pizznapple",
+            "value_end": "9.048",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "25eda8307b4e204ac77cadafcf5c44a6bd569575c6ebbf855bf213bd2e64f209",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "1.915",
+            "currency_start": "SOL",
+            "value_end": "41,626,940.",
+            "currency_end": "BitMouse"
+        },
+        "victims": [
+            {
+                "victim": "Victim: sFJsLPfP",
+                "value_start": "0.574",
+                "currency_start": "SOL",
+                "value_end": "11,435,297.",
+                "currency_end": "BitMouse"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "41,626,940.",
+            "currency_start": "BitMouse",
+            "value_end": "1.979",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "2055147ab08f32f51effcc6bca1d345b1e267650f12c3797369d8d927c4f4c64",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "7.826",
+            "currency_start": "SOL",
+            "value_end": "1,142,954.4",
+            "currency_end": "Eduardo"
+        },
+        "victims": [
+            {
+                "victim": "Victim: HSjd2EMr",
+                "value_start": "1.999",
+                "currency_start": "SOL",
+                "value_end": "284,680.30",
+                "currency_end": "Eduardo"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "1,142,954.4",
+            "currency_start": "Eduardo",
+            "value_end": "7.870",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "d9543371eb86a4cecad285ae0891734b515907f14245fa8db73655c1cb00da21",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "3.178",
+            "currency_start": "SOL",
+            "value_end": "15,584,243.",
+            "currency_end": "OG"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 4JUSH5eg",
+                "value_start": "1.799",
+                "currency_start": "SOL",
+                "value_end": "8,134,205.9",
+                "currency_end": "OG"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "15,584,243.",
+            "currency_start": "OG",
+            "value_end": "3.345",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "5394cd8830bb822cf63e54bbfd767515c48f2722bea0b93fb3d37296fe0d04d7",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "8.571",
+            "currency_start": "SOL",
+            "value_end": "1,172,430.2",
+            "currency_end": "Eduardo"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 3B8iQr4G",
+                "value_start": "5.097",
+                "currency_start": "SOL",
+                "value_end": "673,921.98",
+                "currency_end": "Eduardo"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "1,167,764.4",
+            "currency_start": "Eduardo",
+            "value_end": "8.713",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "154e49c4c2c186e024606d235406c56b98c517047fb22571864aa2fe58ef730a",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "21.116",
+            "currency_start": "SOL",
+            "value_end": "1,223,826.1",
+            "currency_end": "AGAWA"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 9jZKNFrQ",
+                "value_start": "13.641",
+                "currency_start": "SOL",
+                "value_end": "751,451.66",
+                "currency_end": "AGAWA"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "1,215,506.6",
+            "currency_start": "AGAWA",
+            "value_end": "21.706",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "441a0df21f9f4d502f2b83fb14a6dc3f793899b47b1adb8e1d613bd08a1df32b",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "3.379",
+            "currency_start": "SOL",
+            "value_end": "7,687,447.5",
+            "currency_end": "Martijn"
+        },
+        "victims": [
+            {
+                "victim": "Victim: ECoVS2Mg",
+                "value_start": "2.198",
+                "currency_start": "SOL",
+                "value_end": "4,705,353.6",
+                "currency_end": "Martijn"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "7,623,068.8",
+            "currency_start": "Martijn",
+            "value_end": "3.495",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "510d66d39e672f1d339185e4b5c5153ac6cff263419f568789f340d8fdd96751",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "10.771",
+            "currency_start": "SOL",
+            "value_end": "21,135,375.",
+            "currency_end": "Martijn"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 5iAJDEcy",
+                "value_start": "0.495",
+                "currency_start": "SOL",
+                "value_end": "864,904.72",
+                "currency_end": "Martijn"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "21,115,206.",
+            "currency_start": "Martijn",
+            "value_end": "10.814",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "2fa21833f9d450bc8a271d0608a9381b88f8b64408e7528a224838f7888ab4fd",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "4.621",
+            "currency_start": "SOL",
+            "value_end": "24,137,104.",
+            "currency_end": "SPERM"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 8CkiWvuU",
+                "value_start": "1.299",
+                "currency_start": "SOL",
+                "value_end": "6,138,978.7",
+                "currency_end": "SPERM"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "23,954,884.",
+            "currency_start": "SPERM",
+            "value_end": "4.758",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "c61797a581d65d0d354c0f7e490f3f57bf23b74220dec3eef71090d4218a5368",
+        "bot1": {
+            "bot": "Bot: HhxkWPd9",
+            "value_start": "2.499",
+            "currency_start": "SOL",
+            "value_end": "335,820.52",
+            "currency_end": "Eduardo"
+        },
+        "victims": [
+            {
+                "victim": "Victim: Fsa5uw2K",
+                "value_start": "0.000005",
+                "currency_start": "SOL",
+                "value_end": "0.64",
+                "currency_end": "Eduardo"
+            },
+            {
+                "victim": "Victim: 8i1Ggosj",
+                "value_start": "2.499",
+                "currency_start": "SOL",
+                "value_end": "331,707.73",
+                "currency_end": "Eduardo"
+            },
+            {
+                "victim": "Victim: HVUYiXvt",
+                "value_start": "4.074",
+                "currency_start": "SOL",
+                "value_end": "532,197.68",
+                "currency_end": "Eduardo"
+            },
+            {
+                "victim": "Victim: 9eKkytmy",
+                "value_start": "4.141",
+                "currency_start": "SOL",
+                "value_end": "530,322.73",
+                "currency_end": "Eduardo"
+            },
+            {
+                "victim": "Victim: DKSymDwJ",
+                "value_start": "4.204",
+                "currency_start": "SOL",
+                "value_end": "527,688.47",
+                "currency_end": "Eduardo"
+            },
+            {
+                "victim": "Victim: EXJnKejw",
+                "value_start": "4.462",
+                "currency_start": "SOL",
+                "value_end": "548,619.81",
+                "currency_end": "Eduardo"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: HhxkWPd9",
+            "value_start": "335,820.52",
+            "currency_start": "Eduardo",
+            "value_end": "2.730",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "e5b3b277c1ed66b41e0e666120ae310b08090e17ac43629bc53a9df4904a3dc2",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "4.059",
+            "currency_start": "SOL",
+            "value_end": "232,040.48",
+            "currency_end": "Pumpswap"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 255iNKM9",
+                "value_start": "5.847",
+                "currency_start": "SOL",
+                "value_end": "330,243.20",
+                "currency_end": "Pumpswap"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "231,620.31",
+            "currency_start": "Pumpswap",
+            "value_end": "4.091",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "167bc93c0ae949aa3e4280bfcd4a12fad40f1bf687b3ce35f80cacd50e33528f",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "1.221",
+            "currency_start": "SOL",
+            "value_end": "2,108,930.4",
+            "currency_end": "Y/N"
+        },
+        "victims": [
+            {
+                "victim": "Victim: B1aXcXf2",
+                "value_start": "9.175",
+                "currency_start": "SOL",
+                "value_end": "14,647,679.",
+                "currency_end": "Y/N"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "2,056,498.7",
+            "currency_start": "Y/N",
+            "value_end": "1.360",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "6f6a028ba6e91344fc6e07f3274cd0481628c2c2c80fc4aede810aafef2f5cee",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "3.477",
+            "currency_start": "SOL",
+            "value_end": "13,949,303.",
+            "currency_end": "SPERM"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 3FTXytG2",
+                "value_start": "0.626",
+                "currency_start": "SOL",
+                "value_end": "2,362,031.9",
+                "currency_end": "SPERM"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "13,949,303.",
+            "currency_start": "SPERM",
+            "value_end": "3.524",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "324feeb916ce93f56735789f0ee1e2f04a3e4251762f6c2622b11ed0c0f4a3ca",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "12.239",
+            "currency_start": "SOL",
+            "value_end": "26,673,503.",
+            "currency_end": "MrJon"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 6TXA3dMQ",
+                "value_start": "0.82",
+                "currency_start": "SOL",
+                "value_end": "1,638,719.7",
+                "currency_end": "MrJon"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "26,673,503.",
+            "currency_start": "MrJon",
+            "value_end": "12.305",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "f6e5df640d8d63929821d17efab6cfa40dea23fe23fd492e4848cbe80f369fe3",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "6.308",
+            "currency_start": "SOL",
+            "value_end": "16,345,340.",
+            "currency_end": "Martijn"
+        },
+        "victims": [
+            {
+                "victim": "Victim: CxiriW9E",
+                "value_start": "0.517",
+                "currency_start": "SOL",
+                "value_end": "1,236,354.7",
+                "currency_end": "Martijn"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "16,345,340.",
+            "currency_start": "Martijn",
+            "value_end": "6.352",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "6364d8eb4decb3c1552eab4f93d7624bdb33e9f10a64c56bda0b8adc37d43ca5",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "14.236",
+            "currency_start": "SOL",
+            "value_end": "21,870,239.",
+            "currency_end": "Pizznapple"
+        },
+        "victims": [
+            {
+                "victim": "Victim: F7tAkVck",
+                "value_start": "1.167",
+                "currency_start": "SOL",
+                "value_end": "1,559,487.8",
+                "currency_end": "Pizznapple"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "21,870,239.",
+            "currency_start": "Pizznapple",
+            "value_end": "14.442",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "04d84620343ddf3ecd8255f0e7416b70a027f683c48db2ee6b5db4f65f55523f",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "4.841",
+            "currency_start": "SOL",
+            "value_end": "8,243,029.1",
+            "currency_end": "Pizznapple"
+        },
+        "victims": [
+            {
+                "victim": "Victim: EKE9WjhD",
+                "value_start": "1.097",
+                "currency_start": "SOL",
+                "value_end": "1,765,425.4",
+                "currency_end": "Pizznapple"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "8,243,029.1",
+            "currency_start": "Pizznapple",
+            "value_end": "4.917",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "c6218579a129ac0f6a4c978ea29c0259fe3506f9d29a6784a4f2d9b60c022a79",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "3.810",
+            "currency_start": "SOL",
+            "value_end": "3,537,660.2",
+            "currency_end": "XIJINGPOOH"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 2J63Xsqj",
+                "value_start": "0.75",
+                "currency_start": "SOL",
+                "value_end": "676,320.92",
+                "currency_end": "XIJINGPOOH"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "3,537,660.2",
+            "currency_start": "XIJINGPOOH",
+            "value_end": "3.828",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "c276b16acd82570d98a2b518e3d1a83610746f83a995e17979504e61f6f534d3",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "2.502",
+            "currency_start": "SOL",
+            "value_end": "11,596,793.",
+            "currency_end": "Elonstein"
+        },
+        "victims": [
+            {
+                "victim": "Victim: BoCeNS4r",
+                "value_start": "1.078",
+                "currency_start": "SOL",
+                "value_end": "4,789,022.5",
+                "currency_end": "Elonstein"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "11,596,793.",
+            "currency_start": "Elonstein",
+            "value_end": "2.565",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "cf439e6b7030b60f91365c7267b45b7445c6e2f14a42da9ef775e82099ddb7a2",
+        "bot1": {
+            "bot": "Bot: 2brXWR3R",
+            "value_start": "0.0221",
+            "currency_start": "SOL",
+            "value_end": "230,410.31",
+            "currency_end": "Koala"
+        },
+        "victims": [
+            {
+                "victim": "Victim: AjmaH3sX",
+                "value_start": "0.295",
+                "currency_start": "SOL",
+                "value_end": "3,048,170.3",
+                "currency_end": "Koala"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2brXWR3R",
+            "value_start": "230,410.31",
+            "currency_start": "Koala",
+            "value_end": "0.0223",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "0b3b847863ffa98cffb26c890130e57137c901161ce7bdb393c9fc8690c39372",
+        "bot1": {
+            "bot": "Bot: 2brXWR3R",
+            "value_start": "8.716",
+            "currency_start": "SOL",
+            "value_end": "14,308,228.",
+            "currency_end": "Pizznapple"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 9mUwYYMe",
+                "value_start": "0.65",
+                "currency_start": "SOL",
+                "value_end": "976,614.67",
+                "currency_end": "Pizznapple"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2brXWR3R",
+            "value_start": "14,308,228.",
+            "currency_start": "Pizznapple",
+            "value_end": "8.776",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "00437e7d815aba0079db363ae5071a6e04526006e02e7cea5e3eee7cb1bfe52c",
+        "bot1": {
+            "bot": "Bot: 2brXWR3R",
+            "value_start": "11.141",
+            "currency_start": "SOL",
+            "value_end": "22,874,019.",
+            "currency_end": "SFS"
+        },
+        "victims": [
+            {
+                "victim": "Victim: GcyDQTqZ",
+                "value_start": "0.26",
+                "currency_start": "SOL",
+                "value_end": "471,754.13",
+                "currency_end": "SFS"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2brXWR3R",
+            "value_start": "22,874,019.",
+            "currency_start": "SFS",
+            "value_end": "11.149",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "ad39f131788e429f18baef959350c599eb9e12f792b282bc4b2327038611e845",
+        "bot1": {
+            "bot": "Bot: 2brXWR3R",
+            "value_start": "11.716",
+            "currency_start": "SOL",
+            "value_end": "23,798,230.",
+            "currency_end": "SFS"
+        },
+        "victims": [
+            {
+                "victim": "Victim: HXyxauHQ",
+                "value_start": "0.26",
+                "currency_start": "SOL",
+                "value_end": "464,208.19",
+                "currency_end": "SFS"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2brXWR3R",
+            "value_start": "23,798,230.",
+            "currency_start": "SFS",
+            "value_end": "11.723",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "1c0ed787219642083c494133ac8081eb99ea39e601d74ccba50d07f7574880ca",
+        "bot1": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "0.162",
+            "currency_start": "SOL",
+            "value_end": "4,702,976.8",
+            "currency_end": "CowJockey"
+        },
+        "victims": [
+            {
+                "victim": "Victim: BaGbpg9w",
+                "value_start": "0.808",
+                "currency_start": "SOL",
+                "value_end": "22,770,391.",
+                "currency_end": "CowJockey"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "4,702,976.8",
+            "currency_start": "CowJockey",
+            "value_end": "0.17",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "af664e2f718d296a1c5a1903102751d257f71d64a84846b4399ffca8b26ba74b",
+        "bot1": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "5.038",
+            "currency_start": "SOL",
+            "value_end": "21,688,778.",
+            "currency_end": "mullet"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 2kYrzWhn",
+                "value_start": "1.139",
+                "currency_start": "SOL",
+                "value_end": "4,565,997.6",
+                "currency_end": "mullet"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "21,688,778.",
+            "currency_start": "mullet",
+            "value_end": "5.164",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "33763ea479a6c3fa6e80e7b2a4a55eef9c502cd5db8f17a942435f0bd247bdb7",
+        "bot1": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "4.474",
+            "currency_start": "SOL",
+            "value_end": "25,191,100.",
+            "currency_end": "FLASH"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 2kYrzWhn",
+                "value_start": "1.139",
+                "currency_start": "SOL",
+                "value_end": "5,955,836.0",
+                "currency_end": "FLASH"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "25,191,100.",
+            "currency_start": "FLASH",
+            "value_end": "4.602",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "60951817046c3a8731594d37aa8c8103ea29192d4fed5a732dd1091d40867b01",
+        "bot1": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "9.070",
+            "currency_start": "SOL",
+            "value_end": "17,926,261.",
+            "currency_end": "Pizznapple"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 7ynbqTLi",
+                "value_start": "2.378",
+                "currency_start": "SOL",
+                "value_end": "4,181,388.8",
+                "currency_end": "Pizznapple"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "17,926,261.",
+            "currency_start": "Pizznapple",
+            "value_end": "9.440",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "344ebd6ea357acd2114dc5a1c42dd51c0c51984c9511afbc6a24bccc52b00879",
+        "bot1": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "1.814",
+            "currency_start": "SOL",
+            "value_end": "35,951,183.",
+            "currency_end": "SHELL"
+        },
+        "victims": [
+            {
+                "victim": "Victim: DevnifCV",
+                "value_start": "0.51",
+                "currency_start": "SOL",
+                "value_end": "9,546,348.0",
+                "currency_end": "SHELL"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "35,951,183.",
+            "currency_start": "SHELL",
+            "value_end": "1.858",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "bac6a9ddc6ffe033dc7660b4ba951d3ffe9f44c5054c765db277eb500b1a303d",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "5.146",
+            "currency_start": "SOL",
+            "value_end": "98,343,858.",
+            "currency_end": "BOWIE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: CGyLZfdc",
+                "value_start": "0.637",
+                "currency_start": "SOL",
+                "value_end": "10,587,407.",
+                "currency_end": "BOWIE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "98,343,858.",
+            "currency_start": "BOWIE",
+            "value_end": "5.288",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "878986a47d8e300e28560b5650a8c70b42c43d04303207f188c6b66e4e33ab02",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "7.099",
+            "currency_start": "SOL",
+            "value_end": "15,552,373.",
+            "currency_end": "Pizznapple"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 6bjDmUD1",
+                "value_start": "0.584",
+                "currency_start": "SOL",
+                "value_end": "1,176,206.3",
+                "currency_end": "Pizznapple"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "15,552,373.",
+            "currency_start": "Pizznapple",
+            "value_end": "7.151",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "74416eb3dcdb195383f55794117e38d835180faf92132e78a6fade5e74a346fd",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "55.969",
+            "currency_start": "SOL",
+            "value_end": "15,067,448.",
+            "currency_end": "EGGFLATION"
+        },
+        "victims": [
+            {
+                "victim": "Victim: GfPL5i4k",
+                "value_start": "1.000",
+                "currency_start": "SOL",
+                "value_end": "224,519.62",
+                "currency_end": "EGGFLATION"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "15,067,448.",
+            "currency_start": "EGGFLATION",
+            "value_end": "56.034",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "3e24545362ca07e44e512e2baff1911ec453cac78b7f2c37d4f336a6d0d8ec50",
+        "bot1": {
+            "bot": "Bot: 2brXWR3R",
+            "value_start": "6.433",
+            "currency_start": "SOL",
+            "value_end": "1,216,408.7",
+            "currency_end": "FRIES"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 6duiChQ8",
+                "value_start": "1.000",
+                "currency_start": "SOL",
+                "value_end": "184,985.15",
+                "currency_end": "FRIES"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2brXWR3R",
+            "value_start": "1,216,408.7",
+            "currency_start": "FRIES",
+            "value_end": "6.438",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "04dde4f045e706ab8176cf6429f1ab23b1a7cc3a07610c7fe535cd19fc8936e8",
+        "bot1": {
+            "bot": "Bot: B8pefhNV",
+            "value_start": "0.199",
+            "currency_start": "SOL",
+            "value_end": "3,507,303.8",
+            "currency_end": "MouseCoin"
+        },
+        "victims": [
+            {
+                "victim": "Victim: EsTehnHV",
+                "value_start": "2.119",
+                "currency_start": "SOL",
+                "value_end": "35,453,914.",
+                "currency_end": "MouseCoin"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B8pefhNV",
+            "value_start": "3,507,303.8",
+            "currency_start": "MouseCoin",
+            "value_end": "0.219",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "2d4721f215c8c39ca7758c0105835033033e5152acb4976f9c46b35dc743843e",
+        "bot1": {
+            "bot": "Bot: 2brXWR3R",
+            "value_start": "0.036",
+            "currency_start": "SOL",
+            "value_end": "152,483.79",
+            "currency_end": "USATA"
+        },
+        "victims": [
+            {
+                "victim": "Victim: DzrZ1oEA",
+                "value_start": "0.222",
+                "currency_start": "SOL",
+                "value_end": "933,712.03",
+                "currency_end": "USATA"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2brXWR3R",
+            "value_start": "152,483.79",
+            "currency_start": "USATA",
+            "value_end": "0.0361",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "24196d603358c7ba06be5d64846cb77d6af5a3b6a3b52202d002c2d4628cd5ea",
+        "bot1": {
+            "bot": "Bot: 2brXWR3R",
+            "value_start": "47.817",
+            "currency_start": "SOL",
+            "value_end": "49,502,095.",
+            "currency_end": "Martijn"
+        },
+        "victims": [
+            {
+                "victim": "Victim: E7rBv7rC",
+                "value_start": "0.49",
+                "currency_start": "SOL",
+                "value_end": "353,861.81",
+                "currency_end": "Martijn"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2brXWR3R",
+            "value_start": "49,502,095.",
+            "currency_start": "Martijn",
+            "value_end": "47.880",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "a177c530c7377e5108b46ecec7c35bfe056320916dccc0d871fba33f6bfd8fb8",
+        "bot1": {
+            "bot": "Bot: B8pefhNV",
+            "value_start": "0.292",
+            "currency_start": "SOL",
+            "value_end": "6,034,778.2",
+            "currency_end": "MouseCoin"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 9AD49mGw",
+                "value_start": "2.119",
+                "currency_start": "SOL",
+                "value_end": "41,227,644.",
+                "currency_end": "MouseCoin"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B8pefhNV",
+            "value_start": "6,034,778.2",
+            "currency_start": "MouseCoin",
+            "value_end": "0.324",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "61c2936804c6bed82722e4b3fbde49f38743ff81bde5782777fe2d37a8c6397a",
+        "bot1": {
+            "bot": "Bot: HhxkWPd9",
+            "value_start": "2.499",
+            "currency_start": "SOL",
+            "value_end": "298,045.28",
+            "currency_end": "Eduardo"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 57qBMFh7",
+                "value_start": "1.999",
+                "currency_start": "SOL",
+                "value_end": "235,949.97",
+                "currency_end": "Eduardo"
+            },
+            {
+                "victim": "Victim: EXJnKejw",
+                "value_start": "4.661",
+                "currency_start": "SOL",
+                "value_end": "541,756.39",
+                "currency_end": "Eduardo"
+            },
+            {
+                "victim": "Victim: DKSymDwJ",
+                "value_start": "4.537",
+                "currency_start": "SOL",
+                "value_end": "516,344.85",
+                "currency_end": "Eduardo"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: HhxkWPd9",
+            "value_start": "298,045.28",
+            "currency_start": "Eduardo",
+            "value_end": "2.619",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "2fd992c6be2e5b45012713d3362c5cab1ffa72aa3bde81abb053b1fef1518684",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "2.354",
+            "currency_start": "SOL",
+            "value_end": "11,244,294.",
+            "currency_end": "SPERM"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 2MiWHyXN",
+                "value_start": "0.609",
+                "currency_start": "SOL",
+                "value_end": "2,770,175.3",
+                "currency_end": "SPERM"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "11,211,870.",
+            "currency_start": "SPERM",
+            "value_end": "2.382",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "1b3d0d9f98b5fe9efcd43dc6194900965eaf327875d3fa34ee0cdb5e2778c055",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "8.811",
+            "currency_start": "SOL",
+            "value_end": "3,039,667.2",
+            "currency_end": "Monkeys"
+        },
+        "victims": [
+            {
+                "victim": "Victim: F7sKP5or",
+                "value_start": "1.439",
+                "currency_start": "SOL",
+                "value_end": "481,774.31",
+                "currency_end": "Monkeys"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "3,037,689.6",
+            "currency_start": "Monkeys",
+            "value_end": "8.838",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "e323d51484b84bef3960de00c7d7ce601e4709789b8f2db3189ed8b92c52ee3d",
+        "bot1": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "0.0227",
+            "currency_start": "SOL",
+            "value_end": "227,083.49",
+            "currency_end": "Koala"
+        },
+        "victims": [
+            {
+                "victim": "Victim: AjmaH3sX",
+                "value_start": "0.72",
+                "currency_start": "SOL",
+                "value_end": "7,087,046.2",
+                "currency_end": "Koala"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "227,083.49",
+            "currency_start": "Koala",
+            "value_end": "0.0233",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "c08825e24c492032034891cf1c0b158dca41ff9ed90fc1ebac856c31fc049408",
+        "bot1": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "4.415",
+            "currency_start": "SOL",
+            "value_end": "31,032,689.",
+            "currency_end": "NETHER"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 8hrgtohf",
+                "value_start": "1.000",
+                "currency_start": "SOL",
+                "value_end": "6,361,076.8",
+                "currency_end": "NETHER"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "31,032,689.",
+            "currency_start": "NETHER",
+            "value_end": "4.547",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "c3580ed692b8ff5588c49818c94695e4229a65100c5b54f383b368471e08f2b9",
+        "bot1": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "3.452",
+            "currency_start": "SOL",
+            "value_end": "9,504,569.8",
+            "currency_end": "Martijn"
+        },
+        "victims": [
+            {
+                "victim": "Victim: AtvJbtsi",
+                "value_start": "0.613",
+                "currency_start": "SOL",
+                "value_end": "1,606,633.4",
+                "currency_end": "Martijn"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "9,504,569.8",
+            "currency_start": "Martijn",
+            "value_end": "3.486",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "43ef27fa944ddd1eb24de8c9c5ca26cc812fba732427c9687c2d3b94b1769e9e",
+        "bot1": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "2.480",
+            "currency_start": "SOL",
+            "value_end": "19,363,793.",
+            "currency_end": "NETHER"
+        },
+        "victims": [
+            {
+                "victim": "Victim: DRkuKKhK",
+                "value_start": "2.000",
+                "currency_start": "SOL",
+                "value_end": "14,325,752.",
+                "currency_end": "NETHER"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "19,363,793.",
+            "currency_start": "NETHER",
+            "value_end": "2.656",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "8b45d039486d5c493c6a5f5c645477fdd1a9f14bd9537090f2ff379b0d78131e",
+        "bot1": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "0.564",
+            "currency_start": "SOL",
+            "value_end": "622,556.30",
+            "currency_end": "yee"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 7znbvsSx",
+                "value_start": "0.432",
+                "currency_start": "SOL",
+                "value_end": "473,860.32",
+                "currency_end": "yee"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "622,556.30",
+            "currency_start": "yee",
+            "value_end": "0.564",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "13f67e5027904389023a81e3d670b3c1afcc24d3eaa2cc4bb154b02894c910dd",
+        "bot1": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "3.885",
+            "currency_start": "SOL",
+            "value_end": "32,771,880.",
+            "currency_end": "TYCOON"
+        },
+        "victims": [
+            {
+                "victim": "Victim: AFLtejSW",
+                "value_start": "3.567",
+                "currency_start": "SOL",
+                "value_end": "25,820,808.",
+                "currency_end": "TYCOON"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "32,771,880.",
+            "currency_start": "TYCOON",
+            "value_end": "4.426",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "fd5a04aa52d97a118cfcc233a02ffb741c471d0cff10630cdf527374cfbd8e9e",
+        "bot1": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "5.292",
+            "currency_start": "SOL",
+            "value_end": "14,891,014.",
+            "currency_end": "Martijn"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 4xXy116b",
+                "value_start": "2.280",
+                "currency_start": "SOL",
+                "value_end": "5,852,565.3",
+                "currency_end": "Martijn"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "14,891,014.",
+            "currency_start": "Martijn",
+            "value_end": "5.549",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "b502be1c761a21700988eefa07b2dab05cee273f82ae43729dbda12a8b08d749",
+        "bot1": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "3.414",
+            "currency_start": "SOL",
+            "value_end": "65,870,429.",
+            "currency_end": "Buñuelo"
+        },
+        "victims": [
+            {
+                "victim": "Victim: CHTVWDFZ",
+                "value_start": "1.188",
+                "currency_start": "SOL",
+                "value_end": "20,513,127.",
+                "currency_end": "Buñuelo"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "65,870,429.",
+            "currency_start": "Buñuelo",
+            "value_end": "3.599",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "7f0998e82ec94852ba862dee0b8c5e32465464e8ca855e2a0edb6a528ca96534",
+        "bot1": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "5.300",
+            "currency_start": "SOL",
+            "value_end": "26,240,100.",
+            "currency_end": "BECKY"
+        },
+        "victims": [
+            {
+                "victim": "Victim: HdDURpnt",
+                "value_start": "0.5",
+                "currency_start": "SOL",
+                "value_end": "2,385,024.1",
+                "currency_end": "BECKY"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "26,240,100.",
+            "currency_start": "BECKY",
+            "value_end": "5.307",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "ab2b0e0a111a8b8034927cf5fdd10c31feea427af3b65d780265d4de5f5b70b2",
+        "bot1": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "5.164",
+            "currency_start": "SOL",
+            "value_end": "24,137,404.",
+            "currency_end": "BECKY"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 9AdDi7fN",
+                "value_start": "0.5",
+                "currency_start": "SOL",
+                "value_end": "2,255,856.3",
+                "currency_end": "BECKY"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "24,137,404.",
+            "currency_start": "BECKY",
+            "value_end": "5.171",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "b876fe102db490c0f0105bad20fd3e08ae4a155d08d19b1ec121827ebc41e592",
+        "bot1": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "1.536",
+            "currency_start": "SOL",
+            "value_end": "9,361,963.8",
+            "currency_end": "GEM"
+        },
+        "victims": [
+            {
+                "victim": "Victim: FJZjFpoQ",
+                "value_start": "0.9",
+                "currency_start": "SOL",
+                "value_end": "5,372,339.6",
+                "currency_end": "GEM"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "9,361,963.8",
+            "currency_start": "GEM",
+            "value_end": "1.552",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "6f4aefe4966964c93c5a3eb80fcf947f9720835e5ad89ff25949355040d0658e",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "69.723",
+            "currency_start": "SOL",
+            "value_end": "3,441,354.5",
+            "currency_end": "AGAWA"
+        },
+        "victims": [
+            {
+                "victim": "Victim: ADkuMzte",
+                "value_start": "4.835",
+                "currency_start": "SOL",
+                "value_end": "215,695.57",
+                "currency_end": "AGAWA"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "3,436,016.5",
+            "currency_start": "AGAWA",
+            "value_end": "70.156",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "e913dc975043021f0d79910051e74aeea0faad7c4e9f9cf39c56ec5fe3943ef3",
+        "bot1": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "0.782",
+            "currency_start": "SOL",
+            "value_end": "13,816,828.",
+            "currency_end": "BeksMJ"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 9rZMccNJ",
+                "value_start": "5.198",
+                "currency_start": "SOL",
+                "value_end": "80,422,920.",
+                "currency_end": "BeksMJ"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "13,816,828.",
+            "currency_start": "BeksMJ",
+            "value_end": "0.98",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "de6d469a8306a60cbc75d50a1c8f92e4dd0db10abb980cfe4c17ec1933981c75",
+        "bot1": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "4.026",
+            "currency_start": "SOL",
+            "value_end": "24,061,973.",
+            "currency_end": "GEM"
+        },
+        "victims": [
+            {
+                "victim": "Victim: GwAT9L86",
+                "value_start": "0.8",
+                "currency_start": "SOL",
+                "value_end": "4,587,136.4",
+                "currency_end": "GEM"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "24,061,973.",
+            "currency_start": "GEM",
+            "value_end": "4.060",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "69486cc6134e8f7e7d1a5d007f8e26e949182f650cd352b1d568b98af7e4416b",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "4.370",
+            "currency_start": "SOL",
+            "value_end": "2,484,320.0",
+            "currency_end": "Xeno"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 2J63Xsqj",
+                "value_start": "0.75",
+                "currency_start": "SOL",
+                "value_end": "415,689.31",
+                "currency_end": "Xeno"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "2,483,216.5",
+            "currency_start": "Xeno",
+            "value_end": "4.380",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "9637a0ad0872f33075ef01cae79fe3c725578064d984e964ce6b0f2ec491b527",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "2.758",
+            "currency_start": "SOL",
+            "value_end": "14,761,148.",
+            "currency_end": "SPERM"
+        },
+        "victims": [
+            {
+                "victim": "Victim: G8FLWojY",
+                "value_start": "0.216",
+                "currency_start": "SOL",
+                "value_end": "1,096,446.8",
+                "currency_end": "SPERM"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "14,754,520.",
+            "currency_start": "SPERM",
+            "value_end": "2.764",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "31b5f22317400f3cddd71fed39b6b424c5c7f0fcde0d329f55c548741f5c2044",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "12.525",
+            "currency_start": "SOL",
+            "value_end": "35,678,497.",
+            "currency_end": "fed"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 56sngnyM",
+                "value_start": "0.5",
+                "currency_start": "SOL",
+                "value_end": "1,226,147.4",
+                "currency_end": "fed"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "35,635,844.",
+            "currency_start": "fed",
+            "value_end": "12.583",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "fed99a42591b6776453c137913bdb4bb0f429310d514fd766d292e8284aecc73",
+        "bot1": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "5.615",
+            "currency_start": "SOL",
+            "value_end": "26,318,848.",
+            "currency_end": "BECKY"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 6LFTkiyr",
+                "value_start": "0.7",
+                "currency_start": "SOL",
+                "value_end": "3,154,203.3",
+                "currency_end": "BECKY"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "26,318,848.",
+            "currency_start": "BECKY",
+            "value_end": "5.636",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "220b50c1ee640a7d68bbc4af16bd57d15f85a526187bc714095e254194e951e5",
+        "bot1": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "1.665",
+            "currency_start": "SOL",
+            "value_end": "10,163,023.",
+            "currency_end": "GEM"
+        },
+        "victims": [
+            {
+                "victim": "Victim: FET1WQXP",
+                "value_start": "0.4",
+                "currency_start": "SOL",
+                "value_end": "2,398,529.9",
+                "currency_end": "GEM"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "10,163,023.",
+            "currency_start": "GEM",
+            "value_end": "1.668",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "5c5a6577269dd8adb88c4b7e8be44bb650888ffc8d535dd17ec87b074f7a7014",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "4.344",
+            "currency_start": "SOL",
+            "value_end": "10,017,243.",
+            "currency_end": "MouseCoin"
+        },
+        "victims": [
+            {
+                "victim": "Victim: BkqukCdy",
+                "value_start": "0.941",
+                "currency_start": "SOL",
+                "value_end": "2,043,447.9",
+                "currency_end": "MouseCoin"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "9,985,186.9",
+            "currency_start": "MouseCoin",
+            "value_end": "4.400",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "da2254187cc0eb6bf904d44d80df7b5608a1249619d0337c44e28437a37395ea",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "3.991",
+            "currency_start": "SOL",
+            "value_end": "9,959,004.7",
+            "currency_end": "MouseCoin"
+        },
+        "victims": [
+            {
+                "victim": "Victim: DvpNndkz",
+                "value_start": "0.576",
+                "currency_start": "SOL",
+                "value_end": "1,360,960.0",
+                "currency_end": "MouseCoin"
+            },
+            {
+                "victim": "Victim: F1EegY5n",
+                "value_start": "3.449",
+                "currency_start": "SOL",
+                "value_end": "8,550,652.4",
+                "currency_end": "MouseCoin"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "9,942,271.9",
+            "currency_start": "MouseCoin",
+            "value_end": "4.019",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "858f4ba2be3abc9b2e00837b784f1772d527b169aa17baa0f281e9ca1022a13e",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "17.908",
+            "currency_start": "SOL",
+            "value_end": "40,485,161.",
+            "currency_end": "MouseCoin"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 2kYrzWhn",
+                "value_start": "1.398",
+                "currency_start": "SOL",
+                "value_end": "2,544,983.5",
+                "currency_end": "MouseCoin"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "40,278,922.",
+            "currency_start": "MouseCoin",
+            "value_end": "18.223",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "26ea7cdd1a80fb4fe3575519943276dd6981dff027ca169f413b73d58bbbf2d5",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "6.045",
+            "currency_start": "SOL",
+            "value_end": "39,436,051.",
+            "currency_end": "SCHRITTLER"
+        },
+        "victims": [
+            {
+                "victim": "Victim: Fmz96aFc",
+                "value_start": "0.437",
+                "currency_start": "SOL",
+                "value_end": "2,532,262.8",
+                "currency_end": "SCHRITTLER"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "39,352,886.",
+            "currency_start": "SCHRITTLER",
+            "value_end": "6.094",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "d3f1f70d39847e0548b8f26410e9db6ea419a3c4083de77af0f90279b710cd88",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "24.298",
+            "currency_start": "SOL",
+            "value_end": "240,176,133.",
+            "currency_end": "TKM"
+        },
+        "victims": [
+            {
+                "victim": "Victim: CK2fX5hp",
+                "value_start": "0.247",
+                "currency_start": "SOL",
+                "value_end": "1,534,791.0",
+                "currency_end": "TKM"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "240,176,133.",
+            "currency_start": "TKM",
+            "value_end": "24.366",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "fb08c85651c70a10f9e1710098510e49124c6b6a932eb633c75f8d7c3834aeed",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "0.696",
+            "currency_start": "SOL",
+            "value_end": "2,141,126.4",
+            "currency_end": "PC"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 32JUKPpX",
+                "value_start": "11.214",
+                "currency_start": "SOL",
+                "value_end": "29,792,039.",
+                "currency_end": "PC"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "2,039,656.6",
+            "currency_start": "PC",
+            "value_end": "0.868",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "78f50a88e1f1992bc662d6d66b3bb2dd0166f9e6c0fa5ee8a6674ba0905df6e5",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "4.093",
+            "currency_start": "SOL",
+            "value_end": "21,184,270.",
+            "currency_end": "SPERM"
+        },
+        "victims": [
+            {
+                "victim": "Victim: HFCUyS7i",
+                "value_start": "0.574",
+                "currency_start": "SOL",
+                "value_end": "2,749,687.0",
+                "currency_end": "SPERM"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "21,125,378.",
+            "currency_start": "SPERM",
+            "value_end": "4.138",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "7253cd8745b1b2b880f72586498f05cf48c2cbfa5f7223aaeeb82bc96ca9cdd5",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "12.950",
+            "currency_start": "SOL",
+            "value_end": "1,848,193.9",
+            "currency_end": "Loopy"
+        },
+        "victims": [
+            {
+                "victim": "Victim: Zh1owq3U",
+                "value_start": "3.990",
+                "currency_start": "SOL",
+                "value_end": "546,431.15",
+                "currency_end": "Loopy"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "1,842,937.4",
+            "currency_start": "Loopy",
+            "value_end": "13.102",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "79937e435ae20d3e315a76dc1e8c555eac72e1f8bd03ce9bd52e76e06446d00d",
+        "bot1": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "1.822",
+            "currency_start": "SOL",
+            "value_end": "37617.770B",
+            "currency_end": "REMUS"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 8akTXTc5",
+                "value_start": "0.39",
+                "currency_start": "SOL",
+                "value_end": "7884.754B",
+                "currency_end": "REMUS"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "37617.770B",
+            "currency_start": "REMUS",
+            "value_end": "1.826",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "248d1c3f1b0545d451692638f04f213335a7314c7f7db4a9fb032055ee1dafe5",
+        "bot1": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "19.672",
+            "currency_start": "SOL",
+            "value_end": "23,894,349.",
+            "currency_end": "Martijn"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 4ZS7RR2v",
+                "value_start": "1.213",
+                "currency_start": "SOL",
+                "value_end": "1,247,685.8",
+                "currency_end": "Martijn"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "23,894,349.",
+            "currency_start": "Martijn",
+            "value_end": "19.917",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "c1e00055082760f5e0f7250af5d43080bef6b4046bacead4c0a06104c3a51dd8",
+        "bot1": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "5.195",
+            "currency_start": "SOL",
+            "value_end": "22,028,277.",
+            "currency_end": "BECKY"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 4kbRTwQr",
+                "value_start": "1.000",
+                "currency_start": "SOL",
+                "value_end": "4,088,183.7",
+                "currency_end": "BECKY"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "22,028,277.",
+            "currency_start": "BECKY",
+            "value_end": "5.229",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "0b30f6a118ee0cdb25baeaee6ace288cc0287050788a245c0ce6779313600a99",
+        "bot1": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "3.913",
+            "currency_start": "SOL",
+            "value_end": "5,180,066.8",
+            "currency_end": "Pizznapple"
+        },
+        "victims": [
+            {
+                "victim": "Victim: HvBn3CfJ",
+                "value_start": "5.415",
+                "currency_start": "SOL",
+                "value_end": "6,637,007.7",
+                "currency_end": "Pizznapple"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "5,180,066.8",
+            "currency_start": "Pizznapple",
+            "value_end": "4.247",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "8f385ef866542eff8e5c6a116b50c165eed550280c2ef7b33ac338cf9f55280b",
+        "bot1": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "9.597",
+            "currency_start": "SOL",
+            "value_end": "12,964,803.",
+            "currency_end": "Martijn"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 679Nbr6s",
+                "value_start": "1.997",
+                "currency_start": "SOL",
+                "value_end": "2,447,669.0",
+                "currency_end": "Martijn"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "12,964,803.",
+            "currency_start": "Martijn",
+            "value_end": "9.856",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "6e8ceac1956ef86b2749fe9ba990232c53dab694eb290291ed4e7975e030ae66",
+        "bot1": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "2.072",
+            "currency_start": "SOL",
+            "value_end": "26,090,819.",
+            "currency_end": "Paulownia"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 8JajoqHz",
+                "value_start": "1.150",
+                "currency_start": "SOL",
+                "value_end": "13,596,091.",
+                "currency_end": "Paulownia"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "26,090,819.",
+            "currency_start": "Paulownia",
+            "value_end": "2.164",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "7bce6b9988ed16d6f9899024e6d5b72cdc41c68aa10049cd7abfc7e7880d8cf6",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "10.212",
+            "currency_start": "SOL",
+            "value_end": "1,544,385.9",
+            "currency_end": "Loopy"
+        },
+        "victims": [
+            {
+                "victim": "Victim: DDxp3wmU",
+                "value_start": "7.294",
+                "currency_start": "SOL",
+                "value_end": "1,055,815.6",
+                "currency_end": "Loopy"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "1,534,869.1",
+            "currency_start": "Loopy",
+            "value_end": "10.471",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "91bf33c6e8f9c4ff7e446e05fb8b940855890b98c801a8f4acdacbc9753a478d",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "4.408",
+            "currency_start": "SOL",
+            "value_end": "197,335.53",
+            "currency_end": "AISLOP"
+        },
+        "victims": [
+            {
+                "victim": "Victim: JD25qVdt",
+                "value_start": "3.790",
+                "currency_start": "SOL",
+                "value_end": "168,053.82",
+                "currency_end": "AISLOP"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "197,187.44",
+            "currency_start": "AISLOP",
+            "value_end": "4.423",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "3034f2e73b54f86aa39e64ac429f8d959c9655213b8df546b30796837e7a7457",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "2.034",
+            "currency_start": "SOL",
+            "value_end": "9,037,048.4",
+            "currency_end": "MouseCoin"
+        },
+        "victims": [
+            {
+                "victim": "Victim: ERjvbVse",
+                "value_start": "1.558",
+                "currency_start": "SOL",
+                "value_end": "6,640,083.7",
+                "currency_end": "MouseCoin"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "9,037,048.4",
+            "currency_start": "MouseCoin",
+            "value_end": "2.107",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "5abe2f065ab886363ecb05a1ecb428b841dc22e4c09ea50bc9ac34658806d810",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "1.536",
+            "currency_start": "SOL",
+            "value_end": "65,391,655.",
+            "currency_end": "BitMouse"
+        },
+        "victims": [
+            {
+                "victim": "Victim: HyPXic4C",
+                "value_start": "0.65",
+                "currency_start": "SOL",
+                "value_end": "24,863,740.",
+                "currency_end": "BitMouse"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "65,391,655.",
+            "currency_start": "BitMouse",
+            "value_end": "1.622",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "6f6cb3f835bc227c17a62e199a334bcb64413d5b1d91cec4eace7f183c3067e6",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "0.688",
+            "currency_start": "SOL",
+            "value_end": "609,908.97",
+            "currency_end": "yee"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 6hJV8XLN",
+                "value_start": "2.050",
+                "currency_start": "SOL",
+                "value_end": "1,786,343.0",
+                "currency_end": "yee"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "609,908.97",
+            "currency_start": "yee",
+            "value_end": "0.702",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "1dc2f7307bbbb209b56ec503be8f6b77b9cc79982fedd5cb377feb06365ca44d",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "2.841",
+            "currency_start": "SOL",
+            "value_end": "71,472,382.",
+            "currency_end": "55%"
+        },
+        "victims": [
+            {
+                "victim": "Victim: nagv31xv",
+                "value_start": "0.619",
+                "currency_start": "SOL",
+                "value_end": "14,142,503.",
+                "currency_end": "55%"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "71,472,382.",
+            "currency_start": "55%",
+            "value_end": "2.933",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "19f568f42985278220f88e8b5538c1441a8aea0c94c7c47b030c2a1c43eecfcb",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "4.969",
+            "currency_start": "SOL",
+            "value_end": "17,368,245.",
+            "currency_end": "pisscoin"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 6JcYYXrf",
+                "value_start": "0.574",
+                "currency_start": "SOL",
+                "value_end": "1,860,053.4",
+                "currency_end": "pisscoin"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "17,368,245.",
+            "currency_start": "pisscoin",
+            "value_end": "5.020",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "12e6bcf4ec769f3fa30ae6ca45a7eb582032d2f3352f06f060941c0ed9980422",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "10.021",
+            "currency_start": "SOL",
+            "value_end": "19,493,582.",
+            "currency_end": "Martijn"
+        },
+        "victims": [
+            {
+                "victim": "Victim: H8yxJQ9P",
+                "value_start": "0.745",
+                "currency_start": "SOL",
+                "value_end": "1,299,507.9",
+                "currency_end": "Martijn"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "19,493,582.",
+            "currency_start": "Martijn",
+            "value_end": "10.115",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "a2041780f334d6e8134e01cc7d4c93fe50c6ade65d3c57313901a6f50bb3f281",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "6.522",
+            "currency_start": "SOL",
+            "value_end": "102,396,060.",
+            "currency_end": "DavidBowie"
+        },
+        "victims": [
+            {
+                "victim": "Victim: HBr9apMN",
+                "value_start": "2.000",
+                "currency_start": "SOL",
+                "value_end": "24,870,342.",
+                "currency_end": "DavidBowie"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "102,396,060.",
+            "currency_start": "DavidBowie",
+            "value_end": "7.117",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "b35d54efba94d71ad0fe75f423a471de5af939ee24fa0660f5a0a56ab3371bb0",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "6.151",
+            "currency_start": "SOL",
+            "value_end": "49,863,034.",
+            "currency_end": "SPERM"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 8ZLyTs5j",
+                "value_start": "0.259",
+                "currency_start": "SOL",
+                "value_end": "1,836,810.7",
+                "currency_end": "SPERM"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "49,863,034.",
+            "currency_start": "SPERM",
+            "value_end": "6.185",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "89af10f3d78d833bee2f6a532c641c7f387e4172abf8b6a26d0fea9c6d0973ab",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "3.089",
+            "currency_start": "SOL",
+            "value_end": "53,720,955.",
+            "currency_end": "DavidBowie"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 8kBPCeQx",
+                "value_start": "0.198",
+                "currency_start": "SOL",
+                "value_end": "3,124,693.6",
+                "currency_end": "DavidBowie"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "53,720,955.",
+            "currency_start": "DavidBowie",
+            "value_end": "3.108",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "beb6fe99ebf84c7bbac859ea439d5b90b058fda692f4289e682180bb8ac3fd1e",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "2.155",
+            "currency_start": "SOL",
+            "value_end": "9,147,626.4",
+            "currency_end": "FLOPPA"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 2nf1uPcT",
+                "value_start": "0.49",
+                "currency_start": "SOL",
+                "value_end": "2,016,273.0",
+                "currency_end": "FLOPPA"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "9,147,626.4",
+            "currency_start": "FLOPPA",
+            "value_end": "2.169",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "462c26867e94d87139826cf3ad07f93b8e9aa6019a92ccfa89669dbc229bc41b",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "45.568",
+            "currency_start": "SOL",
+            "value_end": "2,884,624.0",
+            "currency_end": "AGAWA"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 5GHubTMv",
+                "value_start": "1.893",
+                "currency_start": "SOL",
+                "value_end": "111,454.29",
+                "currency_end": "AGAWA"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "2,884,624.0",
+            "currency_start": "AGAWA",
+            "value_end": "45.614",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "d5220a0d6196aed4664eb2c65624343c2a43991c6af6e85c16325f8e6fb36eca",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "3.518",
+            "currency_start": "SOL",
+            "value_end": "15,535,424.",
+            "currency_end": "KEKIUS"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 7DuqJZAg",
+                "value_start": "1.078",
+                "currency_start": "SOL",
+                "value_end": "4,513,207.4",
+                "currency_end": "KEKIUS"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "15,535,424.",
+            "currency_start": "KEKIUS",
+            "value_end": "3.604",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "ad7d4a47460f18cf62ce6c53c46c217fc4f3d875f7aebba28ed2ca9aece6ca2f",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "0.595",
+            "currency_start": "SOL",
+            "value_end": "1,342,372.2",
+            "currency_end": "2-bit MD5"
+        },
+        "victims": [
+            {
+                "victim": "Victim: GYfiSaPB",
+                "value_start": "1.476",
+                "currency_start": "SOL",
+                "value_end": "3,256,350.2",
+                "currency_end": "2-bit MD5"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "1,342,372.2",
+            "currency_start": "2-bit MD5",
+            "value_end": "0.612",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "3d46db31bfe7f65dbe4d7cdd6aa136db3ddbc74331d952957d74453363bafe46",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "2.085",
+            "currency_start": "SOL",
+            "value_end": "8,163,380.1",
+            "currency_end": "HITLER ALT"
+        },
+        "victims": [
+            {
+                "victim": "Victim: HpvosqRt",
+                "value_start": "1.995",
+                "currency_start": "SOL",
+                "value_end": "7,471,563.6",
+                "currency_end": "HITLER ALT"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "8,163,380.1",
+            "currency_start": "HITLER ALT",
+            "value_end": "2.175",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "a2d84ee207f7c25d2422df81954c1a0575a3bde8c8a09aa141d6a6b27239d057",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "7.154",
+            "currency_start": "SOL",
+            "value_end": "4,209,880.6",
+            "currency_end": "GFC"
+        },
+        "victims": [
+            {
+                "victim": "Victim: ATouWyU5",
+                "value_start": "3.098",
+                "currency_start": "SOL",
+                "value_end": "1,732,165.4",
+                "currency_end": "GFC"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "4,188,621.4",
+            "currency_start": "GFC",
+            "value_end": "7.302",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "6aa8b9f38df18b988be4c06bf91995180f1789dc62f9141e35674e736915f25f",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "0.391",
+            "currency_start": "SOL",
+            "value_end": "18,150,737.",
+            "currency_end": "Trump BTC"
+        },
+        "victims": [
+            {
+                "victim": "Victim: EbMzCtvc",
+                "value_start": "1.009",
+                "currency_start": "SOL",
+                "value_end": "46,014,495.",
+                "currency_end": "Trump BTC"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "18,078,292.",
+            "currency_start": "Trump BTC",
+            "value_end": "0.398",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "2cd6af770c151f71cb482c41ba3bf7f9cab59ba21516c9926db099a6cb493f01",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "0.685",
+            "currency_start": "SOL",
+            "value_end": "1,053,218.0",
+            "currency_end": "SPERM"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 2M8qGRN3",
+                "value_start": "0.774",
+                "currency_start": "SOL",
+                "value_end": "1,174,588.2",
+                "currency_end": "SPERM"
+            },
+            {
+                "victim": "Victim: 4gqJC7PW",
+                "value_start": "0.664",
+                "currency_start": "SOL",
+                "value_end": "1,007,122.9",
+                "currency_end": "SPERM"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "1,051,332.3",
+            "currency_start": "SPERM",
+            "value_end": "0.69",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "541602ee49ba1ef7424881d8d22df7345be04277b62c494c0f61e5fd67225cb6",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "27.924",
+            "currency_start": "SOL",
+            "value_end": "6,770,327.4",
+            "currency_end": "Eduardo"
+        },
+        "victims": [
+            {
+                "victim": "Victim: DmG3cMQs",
+                "value_start": "4.997",
+                "currency_start": "SOL",
+                "value_end": "1,094,728.4",
+                "currency_end": "Eduardo"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "6,736,274.7",
+            "currency_start": "Eduardo",
+            "value_end": "28.468",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "4b56c4e32eaafd88761f8f0622f04eab967c0c4bb9365ab9e65beedafbc06880",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "0.966",
+            "currency_start": "SOL",
+            "value_end": "1,839,814.2",
+            "currency_end": "SPERM"
+        },
+        "victims": [
+            {
+                "victim": "Victim: G5FAH8gN",
+                "value_start": "0.809",
+                "currency_start": "SOL",
+                "value_end": "1,513,679.6",
+                "currency_end": "SPERM"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "1,835,695.0",
+            "currency_start": "SPERM",
+            "value_end": "0.975",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "167dec2ead5f8bffdbb2ed9830ad3c0f4b4f175183883cb60af25823d46c9e6e",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "12.557",
+            "currency_start": "SOL",
+            "value_end": "26,014,839.",
+            "currency_end": "2-bit MD5"
+        },
+        "victims": [
+            {
+                "victim": "Victim: HzuZDaPe",
+                "value_start": "1.298",
+                "currency_start": "SOL",
+                "value_end": "2,317,645.8",
+                "currency_end": "2-bit MD5"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "25,899,275.",
+            "currency_start": "2-bit MD5",
+            "value_end": "12.764",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "9b4dfbf3c2073bbf2efd2a5da704a01eecda8feaaf404bac90cec7dfa4d0fe36",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "1.548",
+            "currency_start": "SOL",
+            "value_end": "72,509.242",
+            "currency_end": "FILTER"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 7zBrZnKU",
+                "value_start": "0.425",
+                "currency_start": "SOL",
+                "value_end": "19,568.119",
+                "currency_end": "FILTER"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "72,480.345",
+            "currency_start": "FILTER",
+            "value_end": "1.551",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "6541f0811be400f685f2d7d3ddb5a8c7ffd00bfeb2de5ab0506954d98ff607e3",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "12.413",
+            "currency_start": "SOL",
+            "value_end": "546,636.02",
+            "currency_end": "FILTER"
+        },
+        "victims": [
+            {
+                "victim": "Victim: HC8dnGdE",
+                "value_start": "0.428",
+                "currency_start": "SOL",
+                "value_end": "17,019.402",
+                "currency_end": "FILTER"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "546,437.71",
+            "currency_start": "FILTER",
+            "value_end": "12.429",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "44f430028069cc325b0eed2910c05d7ad1f91a4fbb636c6bbbda06dd04eac26b",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "2.667",
+            "currency_start": "SOL",
+            "value_end": "126,090.13",
+            "currency_end": "FILTER"
+        },
+        "victims": [
+            {
+                "victim": "Victim: DM383VLW",
+                "value_start": "0.425",
+                "currency_start": "SOL",
+                "value_end": "19,567.356",
+                "currency_end": "FILTER"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "126,039.14",
+            "currency_start": "FILTER",
+            "value_end": "2.672",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "daa682d71d10968c740413009a6dca9077d12decbbe724c791c407602a19ec58",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "2.929",
+            "currency_start": "SOL",
+            "value_end": "13,549,873.",
+            "currency_end": "Martijn"
+        },
+        "victims": [
+            {
+                "victim": "Victim: W7LcfTVL",
+                "value_start": "1.199",
+                "currency_start": "SOL",
+                "value_end": "5,210,000.4",
+                "currency_end": "Martijn"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "13,466,210.",
+            "currency_start": "Martijn",
+            "value_end": "3.002",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "31ce5b0623b3415ac95163e65515a6976b9498a9a693534820b73971b694b6ac",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "22.711",
+            "currency_start": "SOL",
+            "value_end": "5,408,179.2",
+            "currency_end": "Eduardo"
+        },
+        "victims": [
+            {
+                "victim": "Victim: DmG3cMQs",
+                "value_start": "9.995",
+                "currency_start": "SOL",
+                "value_end": "2,155,164.2",
+                "currency_end": "Eduardo"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "5,349,950.5",
+            "currency_start": "Eduardo",
+            "value_end": "23.689",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "64799919bb543bf71ce69f1732c9972fa3093868a2182dee32eaf22bed9d1abb",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "9.543",
+            "currency_start": "SOL",
+            "value_end": "5,520,909.7",
+            "currency_end": "GFC"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 39jTFUqz",
+                "value_start": "1.099",
+                "currency_start": "SOL",
+                "value_end": "603,200.74",
+                "currency_end": "GFC"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "5,514,614.1",
+            "currency_start": "GFC",
+            "value_end": "9.590",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "6db2a6e455babe40d6e98321094c23b7f6f9bfc03e080206855e58d5cd63e59a",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "19.644",
+            "currency_start": "SOL",
+            "value_end": "17,477,038.",
+            "currency_end": "MooMoo"
+        },
+        "victims": [
+            {
+                "victim": "Victim: HUwHdcmw",
+                "value_start": "0.624",
+                "currency_start": "SOL",
+                "value_end": "495,958.62",
+                "currency_end": "MooMoo"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "17,471,356.",
+            "currency_start": "MooMoo",
+            "value_end": "19.677",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "2640573d80d9ea742a69315d4cd631a0f283a915e6d9c22545e7680632a7d9e5",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "7.403",
+            "currency_start": "SOL",
+            "value_end": "47,328,017.",
+            "currency_end": "AHF"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 6iYox73k",
+                "value_start": "0.182",
+                "currency_start": "SOL",
+                "value_end": "1,008,351.6",
+                "currency_end": "AHF"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "47,314,598.",
+            "currency_start": "AHF",
+            "value_end": "7.414",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "2281869dfb0d263246f1f813d09a12dfced5fbe767a0ec9ae516acd5b7123268",
+        "bot1": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "0.974",
+            "currency_start": "SOL",
+            "value_end": "41,382,425.",
+            "currency_end": "LLM"
+        },
+        "victims": [
+            {
+                "victim": "Victim: CmPMni1C",
+                "value_start": "0.33",
+                "currency_start": "SOL",
+                "value_end": "13,163,673.",
+                "currency_end": "LLM"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: E6YoRP3a",
+            "value_start": "41,166,408.",
+            "currency_start": "LLM",
+            "value_end": "0.994",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "70cf86a379e520f287e726a1abdc8943d230dc51baa5724356a3fe21826e8f17",
+        "bot1": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "0.522",
+            "currency_start": "SOL",
+            "value_end": "872,924.95",
+            "currency_end": "RNL"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 9BNkxZ1T",
+                "value_start": "0.481",
+                "currency_start": "SOL",
+                "value_end": "795,369.63",
+                "currency_end": "RNL"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "872,924.95",
+            "currency_start": "RNL",
+            "value_end": "0.525",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "6bf02b5b620f009029024f8c716ef697a1804c690da5ba6de4161ab2d3660cdc",
+        "bot1": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "3.849",
+            "currency_start": "SOL",
+            "value_end": "18,070,896.",
+            "currency_end": "Letter"
+        },
+        "victims": [
+            {
+                "victim": "Victim: J8QPDJSj",
+                "value_start": "4.400",
+                "currency_start": "SOL",
+                "value_end": "18,748,195.",
+                "currency_end": "Letter"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 2W7uKYtu",
+            "value_start": "18,070,896.",
+            "currency_start": "Letter",
+            "value_end": "4.249",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "a2fa8350f5eb0a257cdcf73a26de6a546684052e50601f4aa19aa66e6d580913",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "7.842",
+            "currency_start": "SOL",
+            "value_end": "539,910.62",
+            "currency_end": "AGAWA"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 5GLw7sEG",
+                "value_start": "3.082",
+                "currency_start": "SOL",
+                "value_end": "208,550.12",
+                "currency_end": "AGAWA"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "539,910.62",
+            "currency_start": "AGAWA",
+            "value_end": "7.883",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "c2e8be7e49c492d8d20bdff058bcda1c3a67e7debaee5d0a569de38ceb004b30",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "4.980",
+            "currency_start": "SOL",
+            "value_end": "60,955,991.",
+            "currency_end": "EC002"
+        },
+        "victims": [
+            {
+                "victim": "Victim: CSvMjMBE",
+                "value_start": "1.080",
+                "currency_start": "SOL",
+                "value_end": "11,759,820.",
+                "currency_end": "EC002"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "60,955,991.",
+            "currency_start": "EC002",
+            "value_end": "5.172",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "55c25f61ca73f537d760dc3c7b49ce5fc4d09e623a98e880ec934797ed09fa98",
+        "bot1": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "6.044",
+            "currency_start": "SOL",
+            "value_end": "57,061,048.",
+            "currency_end": "CopyCat"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 6rNmfSWn",
+                "value_start": "2.211",
+                "currency_start": "SOL",
+                "value_end": "18,165,997.",
+                "currency_end": "CopyCat"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: B91piBSf",
+            "value_start": "57,061,048.",
+            "currency_start": "CopyCat",
+            "value_end": "6.464",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "05f61344e9b84a8534e70842ae5252295ecf13620542d908705c07149ef6ad90",
+        "bot1": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "5.410",
+            "currency_start": "SOL",
+            "value_end": "55,257,330.",
+            "currency_end": "Peacocking"
+        },
+        "victims": [
+            {
+                "victim": "Victim: CE6WbvHV",
+                "value_start": "0.625",
+                "currency_start": "SOL",
+                "value_end": "5,737,023.1",
+                "currency_end": "Peacocking"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "55,257,330.",
+            "currency_start": "Peacocking",
+            "value_end": "5.520",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "09ee60871d8e65797420c47ac80ce7c541e566be8224f6237ac8d08fad3cf98c",
+        "bot1": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "4.963",
+            "currency_start": "SOL",
+            "value_end": "31,215,976.",
+            "currency_end": "CopyCat"
+        },
+        "victims": [
+            {
+                "victim": "Victim: BvqbUBLv",
+                "value_start": "1.150",
+                "currency_start": "SOL",
+                "value_end": "6,645,253.5",
+                "currency_end": "CopyCat"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "31,215,976.",
+            "currency_start": "CopyCat",
+            "value_end": "5.113",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "e20435d2576991e8ab5692f958f94565b24cd67cfd122c1600e7a6010d2d0959",
+        "bot1": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "1.403",
+            "currency_start": "SOL",
+            "value_end": "15,807,115.",
+            "currency_end": "Peacocking"
+        },
+        "victims": [
+            {
+                "victim": "Victim: D3suz7ud",
+                "value_start": "0.792",
+                "currency_start": "SOL",
+                "value_end": "8,569,052.5",
+                "currency_end": "Peacocking"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "15,807,115.",
+            "currency_start": "Peacocking",
+            "value_end": "1.444",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "c3a4e47faa74c2d3c832b0797eeab7f0789d05d7d656afc1fdce94ab8a9f12ad",
+        "bot1": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "2.363",
+            "currency_start": "SOL",
+            "value_end": "55,785,143.",
+            "currency_end": "POT"
+        },
+        "victims": [
+            {
+                "victim": "Victim: 7cB6qf7T",
+                "value_start": "0.45",
+                "currency_start": "SOL",
+                "value_end": "9,859,693.8",
+                "currency_end": "POT"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "55,785,143.",
+            "currency_start": "POT",
+            "value_end": "2.417",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "42af5a5bc8aa5fd317bf0777aadefdeaa3ae72acab12b7907b9181b73392c215",
+        "bot1": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "5.729",
+            "currency_start": "SOL",
+            "value_end": "98,691,572.",
+            "currency_end": "MARIE"
+        },
+        "victims": [
+            {
+                "victim": "Victim: HUtPHnS3",
+                "value_start": "0.88",
+                "currency_start": "SOL",
+                "value_end": "13,031,678.",
+                "currency_end": "MARIE"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "98,691,572.",
+            "currency_start": "MARIE",
+            "value_end": "5.936",
+            "currency_end": "SOL"
+        }
+    },
+    {
+        "hash": "c436e6525f8de12e810d0dc5f4815c9cb92b1c8fe3d2122f1d9ab698693b8f3c",
+        "bot1": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "15.324",
+            "currency_start": "SOL",
+            "value_end": "46,373,854.",
+            "currency_end": "WienerAI"
+        },
+        "victims": [
+            {
+                "victim": "Victim: HySPNW4h",
+                "value_start": "0.9",
+                "currency_start": "SOL",
+                "value_end": "2,512,015.7",
+                "currency_end": "WienerAI"
+            }
+        ],
+        "bot2": {
+            "bot": "Bot: 6kkoqcKf",
+            "value_start": "46,373,854.",
+            "currency_start": "WienerAI",
+            "value_end": "15.380",
+            "currency_end": "SOL"
+        }
     }
 ]

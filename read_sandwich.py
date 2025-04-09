@@ -9,9 +9,10 @@ def plot_data():
     fig, axes = plt.subplots(2, 2, figsize=(18, 16))  # Griglia 2x2
     ax1, ax2, ax3, ax4 = axes.flatten()
 
-    # --- Primo grafico: Conteggio sandwich per bot ---
-    bot_names = list(active_bots.keys())
-    sandwich_counts = list(active_bots.values())
+    sorted_bots = sorted(active_bots.items(), key=lambda x: x[1], reverse=True)[:8]
+    bot_names = [bot[0] for bot in sorted_bots]
+    sandwich_counts = [bot[1] for bot in sorted_bots]
+    
     bars1 = ax1.bar(bot_names, sandwich_counts, color='skyblue')
 
     for bar in bars1:
@@ -21,8 +22,9 @@ def plot_data():
 
     ax1.set_xlabel('Bot')
     ax1.set_ylabel('Numero di sandwich')
-    ax1.set_title('Conteggio sandwich per bot')
-    ax1.set_xticklabels(bot_names, rotation=45, ha='right')
+    ax1.set_title('Conteggio sandwich per Top 8 bot')
+    ax1.set_xticks(range(len(bot_names)))  # Imposta le posizioni degli "ticks"
+    ax1.set_xticklabels(bot_names, rotation=45, ha='right')  # Imposta le etichette
     ax1.grid(axis='y', linestyle='--', alpha=0.7)
 
     # --- Secondo grafico: Top 10 Trade ---
@@ -38,7 +40,8 @@ def plot_data():
     ax2.set_xlabel('Trade')
     ax2.set_ylabel('Occorrenze')
     ax2.set_title('Top 8 trade più frequenti')
-    ax2.set_xticklabels(trade_labels, rotation=45, ha='right')
+    ax2.set_xticks(range(len(trade_labels)))  # Imposta le posizioni degli "ticks"
+    ax2.set_xticklabels(trade_labels, rotation=45, ha='right')  # Imposta le etichette
     ax2.grid(axis='y', linestyle='--', alpha=0.7)
 
     # --- Terzo grafico: Heatmap dei trade più frequenti ---
@@ -82,52 +85,7 @@ def plot_data():
     plt.tight_layout()
     plt.show()
 
-    # --- PLOTTAGGIO: Griglia 1x2 (uno accanto all'altro) ---
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(18, 9))  # Creiamo una griglia 1x2 di subgrafici
-
-    # --- Primo grafico: Conteggio sandwich per bot ---
-    bot_names = list(active_bots.keys())
-    sandwich_counts = list(active_bots.values())
-    bars1 = ax1.bar(bot_names, sandwich_counts, color='skyblue')
-
-    # Etichette sopra le barre
-    for bar in bars1:
-        yval = bar.get_height()
-        ax1.text(bar.get_x() + bar.get_width() / 2, yval + 0.1, str(yval),
-                 ha='center', va='bottom', fontsize=10, fontweight='bold')
-
-    ax1.set_xlabel('Bot')
-    ax1.set_ylabel('Numero di sandwich')
-    ax1.set_title('Conteggio sandwich per bot')
-    ax1.set_xticklabels(bot_names, rotation=45, ha='right')
-    ax1.grid(axis='y', linestyle='--', alpha=0.7)
-
-    # --- Secondo grafico: Top 10 Trade ---
-    top_trades = trade_counter.most_common(10)
-    trade_labels = [f"{a} <-> {b}" for (a, b), _ in top_trades]
-    trade_counts = [count for _, count in top_trades]
-
-    bars2 = ax2.bar(trade_labels, trade_counts, color='salmon')
-
-    # Etichette sopra le barre
-    for bar, count in zip(bars2, trade_counts):
-        ax2.text(bar.get_x() + bar.get_width() / 2, count + 0.1, str(count),
-                 ha='center', va='bottom', fontsize=10, fontweight='bold')
-
-    ax2.set_xlabel('Trade')
-    ax2.set_ylabel('Occorrenze')
-    ax2.set_title('Top 10 trade più frequenti')
-    ax2.set_xticklabels(trade_labels, rotation=45, ha='right')
-    ax2.grid(axis='y', linestyle='--', alpha=0.7)
-
-    # Ottimizza layout per evitare sovrapposizioni
-    plt.tight_layout()
-    plt.show()
-
-
-
-
-if __name__=="__main__":
+def update_data():
     # Carica il file JSON
     with open('sandwich.json', 'r') as f:
         data = json.load(f)
@@ -167,13 +125,19 @@ if __name__=="__main__":
     # Conta le occorrenze
     trade_counter = Counter(normalized_trades)
 
-    # Stampa ordinata per numero di trade
-    print("Trade più frequenti:")
-    for trade, count in trade_counter.most_common():
-        print(f"{trade}: {count}")
-
     # Converte i valori dei bot in interi
     for bot in active_bots:
         active_bots[bot] = int(active_bots[bot])
 
-    plot_data()
+    return active_bots, trade_counter
+
+if __name__=="__main__":
+    while True:
+        # Aggiorna i dati
+        active_bots, trade_counter = update_data()
+
+        # Mostra i grafici
+        plot_data()
+
+        # Aspetta che l'utente premi invio per aggiornare i grafici
+        input("Premi Invio per aggiornare i grafici...")

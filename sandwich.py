@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 import json
 from webdriver_manager.chrome import ChromeDriverManager
@@ -117,7 +118,12 @@ if __name__ == "__main__":
     i=0
     while True:
         print(f"--------------------Iterazione: {i+1}--------------------")
-        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        
+        options = Options()
+        #options.add_argument("--headless")  # Aggiungi l'opzione headless
+        #options.add_argument("--no-sandbox")  # Rende possibile l'esecuzione in ambienti restrittivi
+        
+        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
         sand = get_import(url)
         driver.quit()
         i+=1
