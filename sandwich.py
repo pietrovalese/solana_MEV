@@ -38,7 +38,7 @@ def get_transaction_solanaFM(tx_block, driver_solanaFM):
         WebDriverWait(driver_solanaFM, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.w-full'))
         )
-        time.sleep(15)
+        time.sleep(10)
 
         details_block = driver_solanaFM.find_elements(By.CSS_SELECTOR, '.text-sm')
 
@@ -57,6 +57,7 @@ def get_transaction_solanaFM(tx_block, driver_solanaFM):
     except Exception as e:
         print(f"Errore durante l'estrazione (get_transactions_solanaFM)")
 
+    print(f"Epoch trovata: {res}")
     return res
 
 def get_transaction_info(tx_hash, driver_solscan):
