@@ -39,11 +39,13 @@ python3 read_sandwich.py
 
 ## 📁 Project Structure
 
+```
 solana_sandwich/
 ├── sandwich.py          # Web scraper for sandwiched.me, solscan.io, and solanaFM.com
 ├── read_sandwich.py     # Script for web-based visualization of sandwich attack data
 ├── assets/                # Folder containing the css file to configure the web dashboard
 |── README.md            # Project documentation
 └── sandwich.json            # Json dataset
+```
 
 ---
