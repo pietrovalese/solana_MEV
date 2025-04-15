@@ -1,0 +1,99 @@
+/* assets/styles.css */
+
+
+/* CSS per la dashboard */
+body {
+    background-color: #222;  /* Sfondo scuro per tutta la pagina */
+    color: white;  /* Colore del testo chiaro */
+    font-family: 'Arial', sans-serif;  /* Font generico */
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    color: white;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+/* Specifico per i grafici */
+#bot-chart, #trade-chart, #heatmap-chart {
+    margin: 20px auto;  /* Aggiunge margini per separare i grafici */
+    border-radius: 10px;  /* Arrotonda gli angoli */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);  /* Ombra per il grafico */
+    background-color: #333;  /* Sfondo del contenitore del grafico */
+    padding: 10px;
+}
+
+.graph-title {
+    color: white;
+    font-size: 18px;
+    text-align: center;
+}
+
+/* Stili per il menu a tendina */
+.dash-dropdown {
+    background-color: #444;  /* Sfondo del menu a tendina */
+    color: white;  /* Colore del testo */
+    border: 1px solid #555;  /* Bordo del menu */
+    padding: 10px;
+    border-radius: 5px;  /* Angoli arrotondati */
+    font-size: 14px;
+}
+
+.dash-dropdown select {
+    background-color: #444;  /* Sfondo per le opzioni */
+    color: white;  /* Colore delle opzioni */
+    border: 1px solid #555;  /* Bordo delle opzioni */
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Personalizzazione della barra dei colori della heatmap */
+.plotly-colorbar {
+    background-color: #333;
+    border-radius: 5px;
+    border: 1px solid #555;
+}
+
+.plotly-colorbar .tick {
+    color: white;  /* Colore delle etichette della barra dei colori */
+}
+
+/* Hover effects */
+.dash-dropdown:hover {
+    background-color: #555;  /* Cambia colore al passaggio del mouse */
+    cursor: pointer;
+}
+
+/* Miglioramenti ai bordi della heatmap */
+.plotly-graph-div {
+    border: 2px solid #555;  /* Bordo esterno del grafico */
+    border-radius: 10px;
+}
+
+/* Cambia il colore di sfondo e del testo del controllo del dropdown */
+.Select-control {
+    background-color: #333 !important; /* Sfondo scuro */
+    color: white !important;            /* Testo chiaro */
+}
+
+/* Cambia il colore del testo dell'elemento selezionato */
+.Select-value-label {
+    color: #ffcc00 !important;         /* Colore giallo per il testo */
+}
+
+/* Cambia il colore di sfondo e del testo delle opzioni nel menù */
+.VirtualizedSelectOption {
+    background-color: #444 !important; /* Sfondo scuro */
+    color: white !important;            /* Testo chiaro */
+}
+
+/* Cambia il colore di sfondo e del testo dell'opzione selezionata nel menù */
+.VirtualizedSelectFocusedOption {
+    background-color: #555 !important; /* Sfondo intermedio */
+    color: white !important;            /* Testo chiaro */
+}

@@ -1,143 +1,201 @@
 import json
-import matplotlib.pyplot as plt
-from collections import Counter
-import seaborn as sns
-import numpy as np
+import pandas as pd
+from dash import Dash, dcc, html
+from dash.dependencies import Output, Input
+import plotly.express as px
+import plotly.graph_objects as go
+import os
 
-def plot_data():
-    # --- PLOTTAGGIO: Griglia 2x2 ---
-    fig, axes = plt.subplots(2, 2, figsize=(18, 16))  # Griglia 2x2
-    ax1, ax2, ax3, ax4 = axes.flatten()
+# --- Funzioni di utilità ---
 
-    sorted_bots = sorted(active_bots.items(), key=lambda x: x[1], reverse=True)[:8]
-    bot_names = [bot[0] for bot in sorted_bots]
-    sandwich_counts = [bot[1] for bot in sorted_bots]
-    
-    bars1 = ax1.bar(bot_names, sandwich_counts, color='skyblue')
+def clean_token(token):
+    return token.replace("bot: ", "").replace("victim: ", "").strip()
 
-    for bar in bars1:
-        yval = bar.get_height()
-        ax1.text(bar.get_x() + bar.get_width() / 2, yval + 0.1, str(yval),
-                 ha='center', va='bottom', fontsize=10, fontweight='bold')
+def normalize_pair(t1, t2):
+    return tuple(sorted([t1, t2]))
 
-    ax1.set_xlabel('Bot')
-    ax1.set_ylabel('Numero di sandwich')
-    ax1.set_title('Conteggio sandwich per Top 8 bot')
-    ax1.set_xticks(range(len(bot_names)))  # Imposta le posizioni degli "ticks"
-    ax1.set_xticklabels(bot_names, rotation=45, ha='right')  # Imposta le etichette
-    ax1.grid(axis='y', linestyle='--', alpha=0.7)
+# --- Preparazione Heatmap ---
 
-    # --- Secondo grafico: Top 10 Trade ---
-    top_trades = trade_counter.most_common(8)
-    trade_labels = [f"{a} <-> {b}" for (a, b), _ in top_trades]
-    trade_counts = [count for _, count in top_trades]
+# --- Preparazione Heatmap ---
 
-    bars2 = ax2.bar(trade_labels, trade_counts, color='salmon')
-    for bar, count in zip(bars2, trade_counts):
-        ax2.text(bar.get_x() + bar.get_width() / 2, count + 0.1, str(count),
-                 ha='center', va='bottom', fontsize=10, fontweight='bold')
+def prepare_heatmap_data(data, top_n_tokens=10, epoch=None):
+    trade_count = {}
+    token_freq = {}
 
-    ax2.set_xlabel('Trade')
-    ax2.set_ylabel('Occorrenze')
-    ax2.set_title('Top 8 trade più frequenti')
-    ax2.set_xticks(range(len(trade_labels)))  # Imposta le posizioni degli "ticks"
-    ax2.set_xticklabels(trade_labels, rotation=45, ha='right')  # Imposta le etichette
-    ax2.grid(axis='y', linestyle='--', alpha=0.7)
+    for entry in data:
+        # Rimuovi il filtro sull'epoca se epoch è una stringa vuota
+        epoch_values = entry.get("bot1", {}).get("Details", {}).get("Epoch", [])
+        if epoch is None or epoch == "" or (epoch_values and (epoch == epoch_values[0] or epoch_values[0] == "")):  # Ignora epoca se vuoto
+            for side in ["bot1", "bot2"]:
+                bot = entry.get(side, {})
+                t1 = clean_token(bot.get("token_start", ""))
+                t2 = clean_token(bot.get("token_end", ""))
+                if t1 and t2:
+                    pair = normalize_pair(t1, t2)
+                    trade_count[pair] = trade_count.get(pair, 0) + 1
+                    token_freq[t1] = token_freq.get(t1, 0) + 1
+                    token_freq[t2] = token_freq.get(t2, 0) + 1
 
-    # --- Terzo grafico: Heatmap dei trade più frequenti ---
-    top_n = 8
-    top_pairs = [pair for pair, _ in trade_counter.most_common(top_n)]
-    currencies_top = sorted(set([cur for pair in top_pairs for cur in pair]))
+            for victim in entry.get("victims", []):
+                t1 = clean_token(victim.get("token_start", ""))
+                t2 = clean_token(victim.get("token_end", ""))
+                if t1 and t2:
+                    pair = normalize_pair(t1, t2)
+                    trade_count[pair] = trade_count.get(pair, 0) + 1
+                    token_freq[t1] = token_freq.get(t1, 0) + 1
+                    token_freq[t2] = token_freq.get(t2, 0) + 1
 
-    heat_data = np.zeros((len(currencies_top), len(currencies_top)))
+    # Seleziona i token più frequenti
+    top_tokens = set([token for token, _ in sorted(token_freq.items(), key=lambda x: x[1], reverse=True)[:top_n_tokens]])
 
-    for i, cur1 in enumerate(currencies_top):
-        for j, cur2 in enumerate(currencies_top):
-            pair = tuple(sorted((cur1, cur2)))
-            heat_data[i, j] = trade_counter.get(pair, 0)
+    # Filtra solo le coppie tra i top token
+    filtered_trade_count = {pair: count for pair, count in trade_count.items()
+                            if pair[0] in top_tokens and pair[1] in top_tokens}
 
-    sns.heatmap(
-        heat_data,
-        xticklabels=currencies_top,
-        yticklabels=currencies_top,
-        cmap='Reds',
-        annot=True,
-        fmt=".0f",
-        ax=ax3
+    tokens = sorted(top_tokens)
+    matrix = pd.DataFrame(0, index=tokens, columns=tokens)
+
+    for (t1, t2), count in filtered_trade_count.items():
+        matrix.at[t1, t2] = count
+        matrix.at[t2, t1] = count
+
+    return matrix
+
+
+
+def create_heatmap(matrix):
+    fig = go.Figure(data=go.Heatmap(
+        z=matrix.values,
+        x=matrix.columns,
+        y=matrix.index,
+        colorscale='Blues',
+        hoverongaps=False
+    ))
+
+    fig.update_layout(
+        title='Heatmap delle coppie di token più scambiate (Top Token)',
+        xaxis_nticks=36,
+        plot_bgcolor="#222",
+        paper_bgcolor="#222",
+        font_color="white",
+        height=700
     )
-    ax3.set_title('Heatmap dei Top 8 trade più frequenti')
-    ax3.set_xlabel('Valuta')
-    ax3.set_ylabel('Valuta')
-    box3 = ax3.get_position()
-    ax3.set_position([box3.x0, box3.y0-0.05, box3.width, box3.height])
-    
-    # --- Quarto grafico: Grafico a torta dei trade più effettuati ---
-    top_labels = [f"{a} <-> {b}" for (a, b), _ in top_trades]
-    top_counts = [count for _, count in top_trades]
-    ax4.pie(top_counts, labels=top_labels, autopct='%1.1f%%', startangle=140, colors=plt.cm.Paired.colors)
-    ax4.set_title("Distribuzione dei Top 8 Trade")
 
-    # 🔽 Sposta il grafico a torta leggermente più in basso
-    box4 = ax4.get_position()
-    ax4.set_position([box4.x0, box4.y0 + 0.1, box4.width, box4.height])
+    return fig
 
-    # Ottimizza layout
-    plt.tight_layout()
-    plt.show()
+# --- Top bot/trade ---
 
-def update_data():
-    # Carica il file JSON
-    with open('sandwich.json', 'r') as f:
-        data = json.load(f)
-
-    # Raccogli i nomi dei bot e conteggi
-    bot_fields = []
-    active_bots = {}
+def top_bot(data, n, epoch=None):
+    bot_name_dict = {}
 
     for entry in data:
-        for key, value in entry.items():
-            if isinstance(value, dict) and "bot" in value:
-                bot_name = value["bot"]
-                bot_fields.append(bot_name)
-                if bot_name in active_bots:
-                    active_bots[bot_name] += 0.5
-                else:
-                    active_bots[bot_name] = 0.5
+        # Rimuovi il filtro sull'epoca se epoch è una stringa vuota
+        epoch_values = entry.get("bot1", {}).get("Details", {}).get("Epoch", [])
+        if epoch is None or epoch == "" or (epoch_values and (epoch == epoch_values[0] or epoch_values[0] == "")):  # Ignora epoca se vuoto
+            raw_bot_name = entry.get("bot1", {}).get("bot", "")
+            bot_name = clean_token(raw_bot_name)
+            if bot_name:
+                bot_name_dict[bot_name] = bot_name_dict.get(bot_name, 0) + 1
 
-    # Conteggio coppie valute
-    tuple_currency = []
+    sorted_bots = sorted(bot_name_dict.items(), key=lambda x: x[1], reverse=True)
+    return sorted_bots[:n]
+
+def top_trades(data, n, epoch=None):
+    trade_count = {}
+
     for entry in data:
-        for key, value in entry.items():
-            if isinstance(value, dict) and "currency_start" in value and "currency_end" in value:
-                currency_start = value["currency_start"]
-                currency_end = value["currency_end"]
-                currency = [currency_start + " -> " + currency_end, currency_end + " -> " + currency_start]
-                tuple_currency.append(currency)
+        # Rimuovi il filtro sull'epoca se epoch è una stringa vuota
+        epoch_values = entry.get("bot1", {}).get("Details", {}).get("Epoch", [])
+        if epoch is None or epoch == "" or (epoch_values and (epoch == epoch_values[0] or epoch_values[0] == "")):  # Ignora epoca se vuoto
+            for side in ["bot1", "bot2"]:
+                bot = entry.get(side, {})
+                t1 = clean_token(bot.get("token_start", ""))
+                t2 = clean_token(bot.get("token_end", ""))
+                if t1 and t2:
+                    pair = f"{min(t1, t2)} <-> {max(t1, t2)}"
+                    trade_count[pair] = trade_count.get(pair, 0) + 1
 
-    # Conta le coppie indipendentemente dall'ordine
-    normalized_trades = []
-    for pair in tuple_currency:
-        for trade in pair:
-            src, dst = trade.split(' -> ')
-            normalized = tuple(sorted([src, dst]))
-            normalized_trades.append(normalized)
+            for victim in entry.get("victims", []):
+                t1 = clean_token(victim.get("token_start", ""))
+                t2 = clean_token(victim.get("token_end", ""))
+                if t1 and t2:
+                    pair = f"{min(t1, t2)} <-> {max(t1, t2)}"
+                    trade_count[pair] = trade_count.get(pair, 0) + 1
 
-    # Conta le occorrenze
-    trade_counter = Counter(normalized_trades)
+    sorted_trades = sorted(trade_count.items(), key=lambda x: x[1], reverse=True)
+    return sorted_trades[:n]
 
-    # Converte i valori dei bot in interi
-    for bot in active_bots:
-        active_bots[bot] = int(active_bots[bot])
+# --- Caricamento dati ---
 
-    return active_bots, trade_counter
+def load_data():
+    if not os.path.exists("sandwich.jsonl"):
+        return []
+    with open("sandwich.jsonl", "r", encoding="utf-8") as f:
+        return [json.loads(line) for line in f]
 
-if __name__=="__main__":
-    while True:
-        # Aggiorna i dati
-        active_bots, trade_counter = update_data()
+# --- Generazione grafici ---
 
-        # Mostra i grafici
-        plot_data()
+def generate_figures(data, epoch):
+    top_bots = top_bot(data, 8, epoch)
+    top_trades_list = top_trades(data, 8, epoch)
 
-        # Aspetta che l'utente premi invio per aggiornare i grafici
-        input("Premi Invio per aggiornare i grafici...")
+    df_bots = pd.DataFrame(top_bots, columns=["Bot", "Frequenza"])
+    df_trades = pd.DataFrame(top_trades_list, columns=["Trade", "Frequenza"])
+
+    fig_bots = px.bar(df_bots, x="Bot", y="Frequenza", title="Top 8 Bot per Frequenza", color="Bot")
+    fig_bots.update_layout(plot_bgcolor="#222", paper_bgcolor="#222", font_color="white")
+
+    fig_trades = px.bar(df_trades, x="Trade", y="Frequenza", title="Top 8 Trade Pairs", color="Trade")
+    fig_trades.update_layout(plot_bgcolor="#222", paper_bgcolor="#222", font_color="white", xaxis_tickangle=45)
+
+    return fig_bots, fig_trades
+
+# --- Dash app ---
+
+app = Dash(__name__)
+app.title = "Sandwich Attack Dashboard"
+
+app.layout = html.Div(style={"backgroundColor": "#222", "color": "white", "padding": "20px"}, children=[
+    html.H1("Sandwich Attack Dashboard", style={"textAlign": "center"}),
+    html.Div([
+        dcc.Dropdown(
+            id="epoch-dropdown",
+            options=[
+                {"label": "All", "value": ""},  # Modifica per usare una stringa vuota
+                {"label": "Epoca 770", "value": "770"},
+                {"label": "Epoca 771", "value": "771"},
+                {"label": "Epoca 772", "value": "772"},
+                # Aggiungi altre epoche se necessario
+            ],
+            value="",  # Imposta su una stringa vuota per selezionare "Allepoch" di default
+            style={"backgroundColor": "#444", "color": "white", "border": "1px solid #555", "borderRadius": "5px"}
+        ),
+        dcc.Graph(id="bot-chart"),
+        dcc.Graph(id="trade-chart"),
+        dcc.Graph(id="heatmap-chart"),
+    ]),
+    dcc.Interval(id="interval-component", interval=120*1000, n_intervals=0),
+    html.Div("Dati aggiornati ogni 120 secondi", style={"textAlign": "center", "marginTop": "10px", "fontSize": "14px"})
+])
+
+# --- Callback aggiornamento grafici ---
+
+@app.callback(
+    [Output("bot-chart", "figure"),
+     Output("trade-chart", "figure"),
+     Output("heatmap-chart", "figure")],
+    [Input("epoch-dropdown", "value"),
+     Input("interval-component", "n_intervals")]
+)
+def update_graphs(epoch, n):
+    data = load_data()
+    fig_bots, fig_trades = generate_figures(data, epoch)
+    # Genera anche la heatmap, applicando il filtro dell'epoca
+    matrix = prepare_heatmap_data(data, epoch=epoch)
+    fig_heatmap = create_heatmap(matrix)
+    return fig_bots, fig_trades, fig_heatmap
+
+# --- Avvio ---
+
+if __name__ == '__main__':
+    app.run(debug=True)
