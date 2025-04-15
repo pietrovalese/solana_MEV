@@ -2,7 +2,7 @@ import json
 
 def is_valid_float(value):
     try:
-        float(str(value).replace(',', ''))  # supporta valori come '1,234.56'
+        float(str(value).replace(',', ''))  
         return True
     except (ValueError, TypeError):
         return False
@@ -72,3 +72,4 @@ if __name__ == "__main__":
 
     print(f"Numero di righe da controllare: {len(lines)}\nRighe da controllare: {lines}")
     print(f"Valid sandwich: {len(data_flat)-len(lines)}")
+    print(f"Percentuale di sandwich da eliminare: {round((len(lines)/len(data_flat))*100,2)}%")

@@ -10,6 +10,64 @@ import json
 import time
 import hashlib
 
+def is_valid_float(value):
+    try:
+        float(str(value).replace(',', ''))  
+        return True
+    except (ValueError, TypeError):
+        return False
+
+
+def sandwich_integrity_check(sandwich):
+    def check_value_path(path):
+        try:
+            val = path
+            return is_valid_float(val)
+        except (KeyError, TypeError, IndexError):
+            return False
+
+    # -------- VALUE START --------
+    if not check_value_path(sandwich["bot1"]["value_start"]):
+        return False
+    if not check_value_path(sandwich["bot2"]["value_start"]):
+        return False
+    for victim in sandwich.get("victims", []):
+        if not check_value_path(victim["value_start"]):
+            return False
+
+    # -------- VALUE END --------
+    if not check_value_path(sandwich["bot1"]["value_end"]):
+        return False
+    if not check_value_path(sandwich["bot2"]["value_end"]):
+        return False
+    for victim in sandwich.get("victims", []):
+        if not check_value_path(victim["value_end"]):
+            return False
+
+    # -------- BLOCK --------
+    for bot in ["bot1", "bot2"]:
+        block = sandwich[bot]["Details"].get("Block")
+        if block is None or not is_valid_float(block):
+            return False
+    for victim in sandwich.get("victims", []):
+        block = victim["Details"].get("Block")
+        if block is None or not is_valid_float(block):
+            return False
+
+    # -------- EPOCH --------
+    for bot in ["bot1", "bot2"]:
+        epoch = sandwich[bot]["Details"].get("Epoch")
+        if epoch and len(epoch) > 0:
+            if not is_valid_float(epoch[0]):
+                return False
+    for victim in sandwich.get("victims", []):
+        epoch = victim["Details"].get("Epoch")
+        if epoch and len(epoch) > 0:
+            if not is_valid_float(epoch[0]):
+                return False
+
+    return True
+
 
 def calculate_id(bot1,victims,bot2):
     
@@ -219,9 +277,11 @@ def get_import(driver):
                         "victims": victims,
                         "bot2": bot2
                     }
-                    sandwich_array.append(sandwich)
-                    json_write(sandwich_array)
-                    sandwich_array.remove(sandwich)
+                    if sandwich_integrity_check(sandwich):
+                        print("\n-------------------------------------------------------\nValid sandwich\n-------------------------------------------------------\n")
+                        sandwich_array.append(sandwich)
+                        json_write(sandwich_array)
+                        sandwich_array.remove(sandwich)
                     victims = []
                     bot_counter = 0
 
