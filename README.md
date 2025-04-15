@@ -17,30 +17,13 @@ It performs **web scraping** from multiple sources — including [sandwiched.me]
 
 ---
 
-## 🚀 How to Use
-
-### 1. Run the Scraper
-
-To collect sandwich attack data and export it as JSON:
-
-```bash
-python3 sandwich.py
-```
-
-### 2. Run the data visualizer 
-
-To visualize through a web dashboard the data in the json file:
-
-```bash
-python3 read_sandwich.py
-```
-
 ---
 
 ## 📁 Project Structure
 
 ```
 solana_sandwich/
+├── requirements.txt     # Dependencies
 ├── sandwich.py          # Web scraper for sandwiched.me, solscan.io, and solanaFM.com
 ├── read_sandwich.py     # Script for web-based visualization of sandwich attack data
 ├── assets/                # Folder containing the css file to configure the web dashboard
@@ -49,3 +32,27 @@ solana_sandwich/
 ```
 
 ---
+
+## 🚀 How to Use
+
+### 1. Install the requirements
+
+```bash
+pip install -r requirements.txt
+```
+
+### 2. Run the Scraper
+
+To collect sandwich attack data and export it as JSON:
+
+```bash
+python3 sandwich.py
+```
+
+### 3. Run the data visualizer 
+
+To visualize through a web dashboard the data in the json file:
+
+```bash
+python3 read_sandwich.py
+```
