@@ -9,6 +9,7 @@ import time
 import json
 import time
 import hashlib
+import re
 
 def is_valid_float(value):
     try:
@@ -16,6 +17,14 @@ def is_valid_float(value):
         return True
     except (ValueError, TypeError):
         return False
+    
+def clean_fee(fee_str):
+    """Estrae il primo numero decimale valido da una stringa, oppure 0.0 se non trovato."""
+    if not fee_str:
+        return 0.0
+    matches = re.findall(r"\d*\.?\d+", fee_str)
+    return float(matches[0]) if matches else 0.0
+
 
 
 def sandwich_integrity_check(sandwich):
@@ -64,6 +73,18 @@ def sandwich_integrity_check(sandwich):
         epoch = victim["Details"].get("Epoch")
         if epoch and len(epoch) > 0:
             if not is_valid_float(epoch[0]):
+                return False
+            
+    # -------- FEE --------
+    for bot in ["bot1", "bot2"]:
+        fee = sandwich[bot]["Details"].get("Fee")
+        if fee and len(fee) > 0:
+            if not is_valid_float(clean_fee(fee)) or "sponsored:   solaxy: the first-ever solana layer 2 presale, solaxy, explodes, raising over $26m! buy $solx!" in fee:
+                return False
+    for victim in sandwich.get("victims", []):
+        fee = victim["Details"].get("Fee")
+        if fee and len(fee) > 0:
+            if not is_valid_float(clean_fee(fee)) or "sponsored:   solaxy: the first-ever solana layer 2 presale, solaxy, explodes, raising over $26m! buy $solx!" in fee:
                 return False
 
     return True

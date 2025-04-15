@@ -17,8 +17,6 @@ It performs **web scraping** from multiple sources — including [sandwiched.me]
 
 ---
 
----
-
 ## 📁 Project Structure
 
 ```
