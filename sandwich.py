@@ -76,15 +76,18 @@ def sandwich_integrity_check(sandwich):
                 return False
             
     # -------- FEE --------
+    
+    error_string="sponsored:   solaxy: the first-ever solana layer 2 presale, solaxy, explodes, raising over $26m! buy $solx!"
+    
     for bot in ["bot1", "bot2"]:
         fee = sandwich[bot]["Details"].get("Fee")
         if fee and len(fee) > 0:
-            if not is_valid_float(clean_fee(fee)) or "sponsored:   solaxy: the first-ever solana layer 2 presale, solaxy, explodes, raising over $26m! buy $solx!" in fee:
+            if not is_valid_float(clean_fee(fee)) or error_string in fee:
                 return False
     for victim in sandwich.get("victims", []):
         fee = victim["Details"].get("Fee")
         if fee and len(fee) > 0:
-            if not is_valid_float(clean_fee(fee)) or "sponsored:   solaxy: the first-ever solana layer 2 presale, solaxy, explodes, raising over $26m! buy $solx!" in fee:
+            if not is_valid_float(clean_fee(fee)) or error_string in fee:
                 return False
 
     return True
