@@ -1,3 +1,8 @@
+import logging
+import json
+import time
+import hashlib
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
@@ -5,11 +10,18 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
-import time
-import json
-import time
-import hashlib
 import re
+
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+
+def init_driver():
+    options = Options()
+    return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 def is_valid_float(value):
     try:
@@ -93,134 +105,61 @@ def sandwich_integrity_check(sandwich):
     return True
 
 
-def calculate_id(bot1,victims,bot2):
-    
-    id=""
-    victims_string=""
-    bot1_string=bot1["hash"]
-    bot2_string=bot2["hash"]
-    
-    for victim in victims:
-        victim_string=victim["hash"]
-        victims_string+=victim_string
-          
-    id=bot1_string+bot2_string+victims_string
-    hash_object = hashlib.sha256(id.encode('utf-8'))
-    hashed = hash_object.hexdigest()
-    return hashed
+def calculate_id(bot1, victims, bot2):
+    id_str = bot1["hash"] + bot2["hash"] + ''.join(v["hash"] for v in victims)
+    return hashlib.sha256(id_str.encode('utf-8')).hexdigest()
 
-def get_transaction_solanaFM(tx_block, driver_solanaFM):
-    url_solanaFM = f"https://solana.fm/block/{tx_block}?cluster=mainnet-alpha"
-    driver_solanaFM.get(url_solanaFM)
-    
-    print(f"Richiesta a {url_solanaFM}")
-    res=""
-
+def get_transaction_solanaFM(tx_block):
+    driver = init_driver()
+    url = f"https://solana.fm/block/{tx_block}?cluster=mainnet-alpha"
+    driver.get(url)
+    logging.info(f"Accessing: {url}")
     try:
-        WebDriverWait(driver_solanaFM, 20).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, '.w-full'))
-        )
-        time.sleep(10)
-
-        details_block = driver_solanaFM.find_elements(By.CSS_SELECTOR, '.text-sm')
-
-        refined_list_block = []
-        for el in details_block:
-            text = el.text.strip().lower()
-            if text:
-                refined_list_block.append(text)
-            else:
-                link = el.get_attribute("href")
-                refined_list_block.append(link)
-
-        refined_list_block = [x for x in refined_list_block if x and isinstance(x, str) and x.isdigit()]
-        res = refined_list_block[0] if len(refined_list_block) >= 1 else "",
-
+        WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.w-full')))
+        time.sleep(15)
+        elements = driver.find_elements(By.CSS_SELECTOR, '.text-sm')
+        values = [el.text.strip().lower() or el.get_attribute("href") for el in elements]
+        numeric_values = [x for x in values if x and x.isdigit()]
+        return numeric_values[0] if numeric_values else ""
     except Exception as e:
-        print(f"Errore durante l'estrazione (get_transactions_solanaFM)")
+        logging.error("Error fetching data from SolanaFM", exc_info=e)
+        return ""
+    finally:
+        driver.quit()
 
-    print(f"Epoch trovata: {res}")
-    return res
-
-def get_transaction_info(tx_hash, driver_solscan):
-    url_solscan = f"https://solscan.io/tx/{tx_hash}"
-    driver_solscan.get(url_solscan)
-    
-    print(f"Richiesta a {url_solscan}")
-    
-    info = {}
-
+def get_transaction_info(tx_hash):
+    driver = init_driver()
+    url = f"https://solscan.io/tx/{tx_hash}"
+    driver.get(url)
+    logging.info(f"Accessing: {url}")
     try:
-        # Attendere che la pagina si carichi e che l'elemento venga trovato
-        WebDriverWait(driver_solscan, 20).until(
-            EC.presence_of_element_located((By.CLASS_NAME, 'textLink'))
-        )
+        WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CLASS_NAME, 'textLink')))
         time.sleep(5)
+        block_elements = driver.find_elements(By.CSS_SELECTOR, 'a.textLink')
+        timestamp_elements = driver.find_elements(By.CSS_SELECTOR, '.text-neutral5')
+        fee_elements = driver.find_elements(By.CSS_SELECTOR, '.text-neutral7')
+        result_elements = driver.find_elements(By.CSS_SELECTOR, '.flex-wrap')
 
-        # Prendere gli elementi con il selettore CSS che identificano i dettagli della transazione
-        details_block = driver_solscan.find_elements(By.CSS_SELECTOR, 'a.textLink') 
-        details_timestamp = driver_solscan.find_elements(By.CSS_SELECTOR, '.text-neutral5')
-        details_fee = driver_solscan.find_elements(By.CSS_SELECTOR, '.text-neutral7')  
-        details_result = driver_solscan.find_elements(By.CSS_SELECTOR, '.flex-wrap')  #
+        block = [el.text.strip().lower() or el.get_attribute("href") for el in block_elements]
+        timestamps = [el.text.strip().lower() for el in timestamp_elements if el.text.strip()]
+        fees = [el.text.strip().lower() for el in fee_elements if "sol" in el.text.lower() and "$" in el.text]
+        results = [el.text.strip().lower() for el in result_elements if el.text.strip()]
 
-        # Elenco delle informazioni estratte (da adattare ai dati effettivi)
-        refined_list_block = []
-        for el in details_block:
-            text = el.text.strip().lower()
-            if text:
-                refined_list_block.append(text)
-            else:
-                link = el.get_attribute("href")
-                refined_list_block.append(link)
-        
-        refined_list_ts = []
-        for el in details_timestamp:
-            text = el.text.strip().lower()
-            if text:
-                refined_list_ts.append(text)
-            else:
-                link = el.get_attribute("href")
-                refined_list_ts.append(link)
-            
-        refined_list_fee = []
-        for el in details_fee:
-            text = el.text.strip().lower()
-            if text:
-                refined_list_fee.append(text)
-            else:
-                link = el.get_attribute("href")
-                refined_list_fee.append(link)
-        refined_list_fee = [x for x in refined_list_fee if x != None]
-        refined_list_fee = [x for x in refined_list_fee if "sol" in x.lower() and "$" in x]
-        
-        refined_list_result = []
-        index=-1
-        for el in details_result:
-            text = el.text.strip().lower()
-            if text:
-                refined_list_result.append(text)
-            else:
-                link = el.get_attribute("href")
-                refined_list_result.append(link)
-        refined_list_result = [x for x in refined_list_result if x != None]
-        for i in range(0, len(refined_list_result)):
-            if refined_list_result[i] == "result":
-                index=i
-        result = refined_list_result[index+1].replace("\n", " --> ")
-        
-        # Estrazione dei dettagli: assicurati di selezionare gli indici corretti
-         
-        info = {"Block": refined_list_block[1] if len(refined_list_block) > 1 else "" , 
-                "Timestamp": refined_list_ts[0] if len(refined_list_ts) > 1 else "", 
-                "Fee": refined_list_fee[0], "Priority Fee": refined_list_fee[1] if len(refined_list_fee) > 1 else "", 
-                "Result": result if index!=-1 else "",
-                "Epoch": get_transaction_solanaFM(refined_list_block[1], driver_solanaFM)
-                }
+        result_text = next((results[i+1].replace("\n", " --> ") for i in range(len(results)) if results[i] == "result"), "")
 
+        return {
+            "Block": block[1] if len(block) > 1 else "",
+            "Timestamp": timestamps[0] if timestamps else "",
+            "Fee": fees[0] if fees else "",
+            "Priority Fee": fees[1] if len(fees) > 1 else "",
+            "Result": result_text,
+            "Epoch": get_transaction_solanaFM(block[1]) if len(block) > 1 else ""
+        }
     except Exception as e:
-        print(f"Errore durante l'estrazione (get_transaction_info)")
-
-    return info
+        logging.error("Error extracting Solscan info", exc_info=e)
+        return {}
+    finally:
+        driver.quit()
 
 def extract_tx_id(url):
     """Rimuove la parte del link per ottenere solo l'ID della transazione."""
@@ -229,17 +168,26 @@ def extract_tx_id(url):
 
 
 def create_bot_info(refined_list, i):
-    """Funzione per creare un dizionario bot."""
-    bot = {
+    return {
         "bot": refined_list[i],
         "value_start": refined_list[i + 1] if i + 1 < len(refined_list) else "",
         "token_start": refined_list[i + 2] if i + 2 < len(refined_list) else "",
         "value_end": refined_list[i + 3] if i + 3 < len(refined_list) else "",
         "token_end": refined_list[i + 4] if i + 4 < len(refined_list) else "",
         "hash": extract_tx_id(refined_list[i + 5] if i + 5 < len(refined_list) else ""),
-        "Details": get_transaction_info(extract_tx_id(refined_list[i + 5] if i + 5 < len(refined_list) else ""), driver_solscan)
+        "Details": get_transaction_info(extract_tx_id(refined_list[i + 5] if i + 5 < len(refined_list) else ""))
     }
-    return bot
+
+def create_victim_info(refined_list, i):
+    return {
+        "victim": refined_list[i],
+        "value_start": refined_list[i + 1] if i + 1 < len(refined_list) else "",
+        "token_start": refined_list[i + 2] if i + 2 < len(refined_list) else "",
+        "value_end": refined_list[i + 3] if i + 3 < len(refined_list) else "",
+        "token_end": refined_list[i + 4] if i + 4 < len(refined_list) else "",
+        "hash": extract_tx_id(refined_list[i + 5] if i + 5 < len(refined_list) else ""),
+        "Details": get_transaction_info(extract_tx_id(refined_list[i + 5] if i + 5 < len(refined_list) else ""))
+    }
 
 def json_write(sandwich_array):
     
@@ -268,72 +216,61 @@ def json_write(sandwich_array):
     
 
 def get_import(driver):
-    
-    victims = []
-    sandwich_array = []
-    bot_counter = 0
-    
     try:
-        WebDriverWait(driver, 20).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, '.css-vooagt'))
-        )
+        WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.css-vooagt')))
         time.sleep(1.5)
 
-        # Prende tutti gli elementi desiderati
-        combined_elements = driver.find_elements(By.CSS_SELECTOR, ".css-c8crdy, .css-j4hctk, .css-1d4aeae, .css-1dtafdp, .css-14fj6r6")
-        refined_list = []
-        
-        for i, el in enumerate(combined_elements):
-            text = el.text.strip().lower()
-            if text == "":
-                link = el.get_attribute("href")
-                refined_list.append(link)
+        elements = driver.find_elements(By.CSS_SELECTOR, ".css-c8crdy, .css-j4hctk, .css-1d4aeae, .css-1dtafdp, .css-14fj6r6")
+        refined_list = [el.text.strip().lower() or el.get_attribute("href") for el in elements]
+
+        i = 0
+        while i < len(refined_list):
+            if "bot" in refined_list[i]:
+                i_bot1 = i
+                logging.info(f"Trovato bot1 a index {i_bot1}")
+                i += 6  # salta i 6 campi del bot
+
+                # Inizio raccolta victims
+                victim_indices = []
+                while i < len(refined_list) and "victim" in refined_list[i]:
+                    victim_indices.append(i)
+                    i += 6  # ogni victim occupa 6 slot
+
+                # Ora cerchiamo bot2
+                if i < len(refined_list) and "bot" in refined_list[i]:
+                    i_bot2 = i
+                    logging.info(f"Trovato bot2 a index {i_bot2}")
+                    i += 6  # salta bot2
+
+                    with ThreadPoolExecutor(max_workers=3) as executor:
+                        future_bot1 = executor.submit(create_bot_info, refined_list, i_bot1)
+                        future_bot2 = executor.submit(create_bot_info, refined_list, i_bot2)
+                        future_victims = executor.submit(
+                            lambda: [create_victim_info(refined_list, vi) for vi in victim_indices]
+                        )
+
+                        bot1 = future_bot1.result()
+                        bot2 = future_bot2.result()
+                        victims = future_victims.result()
+
+                        sandwich = {
+                            "Id": calculate_id(bot1, victims, bot2),
+                            "bot1": bot1,
+                            "victims": victims,
+                            "bot2": bot2
+                        }
+
+                        if sandwich_integrity_check(sandwich):
+                            json_write([sandwich])
+                        logging.info("✅ Sandwich creato e scritto nel JSON.")
+
+                else:
+                    logging.warning("Bot2 non trovato dopo victims.")
             else:
-                refined_list.append(text)
-            
-        for i in range(0,len(refined_list)): 
-            text = refined_list[i]   
-            if "bot" in text:
-                if bot_counter == 2:
-                    sandwich = {
-                        "Id": calculate_id(bot1,victims,bot2),
-                        "bot1": bot1,
-                        "victims": victims,
-                        "bot2": bot2
-                    }
-                    if sandwich_integrity_check(sandwich):
-                        print("\n-------------------------------------------------------\nValid sandwich\n-------------------------------------------------------\n")
-                        sandwich_array.append(sandwich)
-                        json_write(sandwich_array)
-                        sandwich_array.remove(sandwich)
-                    victims = []
-                    bot_counter = 0
-
-                if bot_counter == 0:
-                    print(f"Making bot1 nr. {i}")
-                    bot1 = create_bot_info(refined_list, i)
-                elif bot_counter == 1:
-                    print(f"Making bot2 nr. {i}")
-                    bot2 = create_bot_info(refined_list, i)
-                
-                bot_counter += 1
-
-            elif "victim" in text:
-                print(f"making victim nr. {i}")
-                victim = {
-                    "victim": refined_list[i],
-                    "value_start": refined_list[i + 1] if i + 1 < len(refined_list) else "",
-                    "token_start": refined_list[i + 2] if i + 2 < len(refined_list) else "",
-                    "value_end": refined_list[i + 3] if i + 3 < len(refined_list) else "",
-                    "token_end": refined_list[i + 4] if i + 4 < len(refined_list) else "",
-                    "hash": extract_tx_id(refined_list[i + 5] if i + 5 < len(refined_list) else ""),
-                    "Details": get_transaction_info(extract_tx_id(refined_list[i + 5] if i + 5 < len(refined_list) else ""), driver_solscan)
-                }
-                victims.append(victim)
-        
+                i += 1  # Avanza se non è un bot (skippa elementi inutili)
 
     except Exception as e:
-        print(f"Errore durante l'estrazione (get_import): {e}")
+        logging.error("Errore durante get_import", exc_info=e)
 
 
 if __name__ == "__main__":
@@ -341,19 +278,16 @@ if __name__ == "__main__":
     while True:
         start = time.perf_counter()
 
-        url_sandwich = 'https://sandwiched.me'
-        driver_sandwich = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-        driver_solscan = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-        driver_solanaFM = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        url = 'https://sandwiched.me'
+        driver = init_driver()
+        driver.get(url)
 
-        driver_sandwich.get(url_sandwich)
-        get_import(driver_sandwich)
+        get_import(driver)
+
+        driver.quit()
 
         end = time.perf_counter()
-        print(f"Tempo di esecuzione: {end - start:.4f} secondi")
+        logging.info(f"Execution time: {end - start:.2f} seconds")
 
-        time.sleep(5)
-        driver_sandwich.quit()
-        driver_solscan.quit()
-        driver_solanaFM.quit()
-        time.sleep(5)
+        time.sleep(10)
+
