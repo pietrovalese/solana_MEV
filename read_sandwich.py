@@ -91,15 +91,15 @@ def create_heatmap(matrix):
         paper_bgcolor="#222",
         font_color="white",
         height=700,
-        margin=dict(l=80, r=40, t=80, b=50),  # Aumentato il margine sinistro
+        margin=dict(l=80, r=40, t=80, b=50),  
         xaxis=dict(
             tickangle=45,
             tickfont=dict(size=12),
         ),
         yaxis=dict(
             tickfont=dict(size=12),
-            ticks="outside",         # Etichette fuori dall'asse
-            ticklen=10,              # Lunghezza dei tick
+            ticks="outside",         
+            ticklen=10,              
         )
     )
 
@@ -339,4 +339,4 @@ def update_graphs(epoch, n):
 # --- Avvio ---
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=8050, debug=True)
