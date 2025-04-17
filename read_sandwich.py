@@ -260,6 +260,8 @@ app.layout = html.Div(style={"backgroundColor": "#222", "color": "white", "paddi
             {"label": "Epoca 770", "value": "770"},
             {"label": "Epoca 771", "value": "771"},
             {"label": "Epoca 772", "value": "772"},
+            {"label": "Epoca 773", "value": "773"},
+            {"label": "Epoca 774", "value": "774"},
         ],
         value="",
         style={"backgroundColor": "#444", "color": "white", "border": "1px solid #555", "borderRadius": "5px"}

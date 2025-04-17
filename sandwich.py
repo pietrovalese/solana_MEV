@@ -120,7 +120,7 @@ def get_transaction_solanaFM(tx_block):
         elements = driver.find_elements(By.CSS_SELECTOR, '.text-sm')
         values = [el.text.strip().lower() or el.get_attribute("href") for el in elements]
         numeric_values = [x for x in values if x and x.isdigit()]
-        return numeric_values[0] if numeric_values else ""
+        return [numeric_values[0]] if numeric_values else ""
     except Exception as e:
         logging.error("Error fetching data from SolanaFM", exc_info=e)
         return ""

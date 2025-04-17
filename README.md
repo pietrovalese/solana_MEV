@@ -1,7 +1,7 @@
 # 🥪 solana sandwich
 
 **solana_sandwich** is a tool for monitoring and analyzing **sandwich attacks** on the **Solana** blockchain.  
-It performs **web scraping** from multiple sources — including [sandwiched.me](https://sandwiched.me), [solscan.io](https://solscan.io), and [solanaFM.com](https://solanafm.com) — and saves all detected sandwich attack data in **JSON** format for further analysis and visualization.
+It performs **web scraping** with multiple thread and from multiple sources — including [sandwiched.me](https://sandwiched.me), [solscan.io](https://solscan.io), and [solanaFM.com](https://solanafm.com) — and saves all detected sandwich attack data in **JSON** format for further analysis and visualization.
 
 ---
 
