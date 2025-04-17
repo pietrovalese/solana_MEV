@@ -109,15 +109,15 @@ def calculate_id(bot1, victims, bot2):
     id_str = bot1["hash"] + bot2["hash"] + ''.join(v["hash"] for v in victims)
     return hashlib.sha256(id_str.encode('utf-8')).hexdigest()
 
-def get_transaction_solanaFM(tx_block):
+def get_transaction_epoch(tx_block):
     driver = init_driver()
-    url = f"https://solana.fm/block/{tx_block}?cluster=mainnet-alpha"
+    url = f"https://solscan.io/block/{tx_block}"
     driver.get(url)
     logging.info(f"Accessing: {url}")
     try:
         WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.w-full')))
-        time.sleep(15)
-        elements = driver.find_elements(By.CSS_SELECTOR, '.text-sm')
+        time.sleep(5)
+        elements = driver.find_elements(By.CSS_SELECTOR, '.textLink')
         values = [el.text.strip().lower() or el.get_attribute("href") for el in elements]
         numeric_values = [x for x in values if x and x.isdigit()]
         return [numeric_values[0]] if numeric_values else ""
@@ -153,7 +153,7 @@ def get_transaction_info(tx_hash):
             "Fee": fees[0] if fees else "",
             "Priority Fee": fees[1] if len(fees) > 1 else "",
             "Result": result_text,
-            "Epoch": get_transaction_solanaFM(block[1]) if len(block) > 1 else ""
+            "Epoch": get_transaction_epoch(block[1]) if len(block) > 1 else ""
         }
     except Exception as e:
         logging.error("Error extracting Solscan info", exc_info=e)
