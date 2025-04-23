@@ -1,7 +1,7 @@
 # 🥪 solana sandwich
 
 **solana_sandwich** is a tool for monitoring and analyzing **sandwich attacks** on the **Solana** blockchain.  
-It performs **web scraping** with multiple thread and from multiple sources — including [sandwiched.me](https://sandwiched.me), [solscan.io](https://solscan.io), and [solanaFM.com](https://solanafm.com) — and saves all detected sandwich attack data in **JSON** format for further analysis and visualization.
+It performs **web scraping** with multiple thread and from multiple sources — including [sandwiched.me](https://sandwiched.me) and [solscan.io](https://solscan.io) — and saves all detected sandwich attack data in **JSON** format for further analysis and visualization.
 
 ---
 
@@ -10,7 +10,6 @@ It performs **web scraping** with multiple thread and from multiple sources — 
 - Automated scraping of sandwich attack data from:
   - [sandwiched.me](https://sandwiched.me)
   - [solscan.io](https://solscan.io)
-  - [solana.fm](https://solana.fm)
 - Structured export of data in `.json` format
 - Tools for analyzing and identifying attack patterns
 - Easy-to-use script for visualizing the extracted data
@@ -23,7 +22,7 @@ It performs **web scraping** with multiple thread and from multiple sources — 
 solana_sandwich/
 ├── requirements.txt     # Dependencies
 ├── sandwich.py          # Web scraper for sandwiched.me, solscan.io, and solanaFM.com
-├── read_sandwich.py     # Script for web-based visualization of sandwich attack data
+├── sandwich_dashboard.py     # Script for web-based visualization of sandwich attack data
 ├── assets/                # Folder containing the css file to configure the web dashboard
 |── README.md            # Project documentation
 └── sandwich.json            # Json dataset
@@ -52,5 +51,5 @@ python3 sandwich.py
 To visualize through a web dashboard the data in the json file:
 
 ```bash
-python3 read_sandwich.py
+python3 sandwich_dashboard.py
 ```
