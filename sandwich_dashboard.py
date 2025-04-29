@@ -8,6 +8,7 @@ import os
 import re
 import requests
 from datetime import datetime
+import time
 
 # --- Funzioni di utilità ---
 
@@ -28,6 +29,51 @@ def parse_number(value):
 def normalize_pair(t1, t2):
     return tuple(sorted([t1, t2]))
 
+def get_last_sandwich_attacks(data, n=5):
+    return data[-n:]
+
+def create_report(entry):
+    print(f"Generando report per l'attacco con ID: {entry.get('bot1', {}).get('hash', 'Unknown')}")
+    return f"Report generato per l'attacco con ID: {entry.get('bot1', {}).get('hash', 'Unknown')}"
+
+
+# --- Create Report ---
+
+#def create_report(entry):
+#    
+#    API_KEY = "580a5ab9-5bea-4077-a736-57e497b9f573"
+#    
+#    signatures = []
+#    
+#    signatures.append(entry.get("bot1", {}).get("hash", ""))
+#    signatures.append(entry.get("bot2", {}).get("hash", ""))
+#    
+#    for victim in entry.get("victims", []):
+#        hash_val = victim.get("hash", "")
+#        if hash_val:  
+#            signatures.append(hash_val)
+#    signatures = list(filter(None, set(signatures)))
+#    
+#    for signature in signatures:
+#        url = f"https://api.solanabeach.io/v1/transaction/{signature}"
+#        headers = {
+#            "accept": "application/json",
+#            "Authorization": f"Bearer {API_KEY}"
+#        }
+#
+#        response = requests.get(url, headers=headers)
+#
+#        if response.ok:
+#            tx_details = response.json()
+#            flat_line = json.dumps(tx_details, separators=(',', ':'), ensure_ascii=False).replace("\n", "")
+#            with open("report/sandwich_details.jsonl", 'w', encoding='utf-8') as out:
+#                out.write(flat_line + '\n')
+#        else:
+#            print(f"Errore: {response.status_code} - {response.text}")
+#
+#    time.sleep(2.5)
+#    return
+#
 # --- Preparazione Heatmap ---
 
 def prepare_heatmap_data(data, top_n_tokens=8, epoch=None):
@@ -184,6 +230,42 @@ def generate_figures(data, epoch):
 
     return fig_bots, fig_trades
 
+
+def display_sandwich_attacks(epoch, callback_context):
+    data = load_data()
+    last_attacks = get_last_sandwich_attacks(data)
+
+    attacks = []
+    for i, entry in enumerate(last_attacks):
+        # Estrazione dei dati per ogni attacco
+        bot1 = entry.get("bot1", {}).get("bot", "Unknown Bot")
+        bot2 = entry.get("bot2", {}).get("bot", "Unknown Bot")
+        token_start = entry.get("bot1", {}).get("token_start", "Unknown Token")
+        token_end = entry.get("bot1", {}).get("token_end", "Unknown Token")
+        attack_id = entry.get("bot1", {}).get("hash", "Unknown ID")
+
+        # Creazione del layout per ogni attacco
+        attacks.append(
+            html.Div(
+                children=[
+                    html.Div(f"Attacco {i + 1}: {bot1} <-> {bot2}", style={"fontWeight": "bold", "fontSize": "18px"}),
+                    html.Div(f"Token Start: {token_start}, Token End: {token_end}", style={"fontSize": "16px"}),
+                    html.Button(
+                        "Visualizza Report",
+                        id=f"generate-report-{attack_id}",
+                        n_clicks=0,
+                        style={"backgroundColor": "#444", "color": "white", "borderRadius": "5px", "marginTop": "10px"}
+                    ),
+                    # Il div che conterrà il report sarà inizialmente vuoto
+                    html.Div(id=f"report-{attack_id}", style={"marginTop": "10px"})
+                ],
+                style={"border": "1px solid #444", "margin": "10px", "padding": "10px", "cursor": "pointer"}
+            )
+        )
+
+    return attacks
+
+
 # --- Dash App ---
 
 app = Dash(__name__)
@@ -213,6 +295,7 @@ app.layout = html.Div(style={"backgroundColor": "#222", "color": "white", "paddi
         ], style={"flex": "1"})
     ]),
 
+    html.Div(id="sandwich-attack-list", style={"marginTop": "20px"}),  # Qui verranno mostrati gli attacchi
     dcc.Graph(id="bot-chart"),
     dcc.Graph(id="trade-chart"),
     dcc.Graph(id="heatmap-chart"),
@@ -226,39 +309,71 @@ app.layout = html.Div(style={"backgroundColor": "#222", "color": "white", "paddi
     [Output("bot-chart", "figure"),
      Output("trade-chart", "figure"),
      Output("heatmap-chart", "figure"),
-     Output("stats-values", "children")],
+     Output("stats-values", "children"),
+     Output("sandwich-attack-list", "children")],
     [Input("epoch-dropdown", "value"),
      Input("interval-component", "n_intervals")]
 )
-def update_graphs(epoch, n):
+def update_dashboard(epoch, callback_context):
     data = load_data()
+    last_attacks = get_last_sandwich_attacks(data)
+
+    # Generazione dei grafici
     fig_bots, fig_trades = generate_figures(data, epoch)
     matrix = prepare_heatmap_data(data, epoch=epoch)
     fig_heatmap = create_heatmap(matrix)
 
+    # Calcolo delle statistiche
     min_fee, min_priority_fee, avg_fee, avg_priority_fee, max_fee, max_priority_fee = avg_fee_and_priority_fee(data, epoch)
     min_profit, avg_profit, max_profit = avg_net_profit(data, epoch)
 
+    # Statistiche da visualizzare
     stats = html.Div([
-    html.Div([
-        html.Div([make_stat_block("Min Fee", min_fee),
-                  make_stat_block("Average Fee", avg_fee),
-                  make_stat_block("Max Fee", max_fee)],
-                 style={"display": "flex", "justifyContent": "center", "marginTop": "50px"}),
+        html.Div([
+            html.Div([make_stat_block("Min Fee", min_fee),
+                      make_stat_block("Average Fee", avg_fee),
+                      make_stat_block("Max Fee", max_fee)],
+                     style={"display": "flex", "justifyContent": "center", "marginTop": "50px"}),
 
-        html.Div([make_stat_block("Min Priority Fee", min_priority_fee),
-                  make_stat_block("Average Priority Fee", avg_priority_fee),
-                  make_stat_block("Max Priority Fee", max_priority_fee)],
-                 style={"display": "flex", "justifyContent": "center", "marginTop": "100px"}),
+            html.Div([make_stat_block("Min Priority Fee", min_priority_fee),
+                      make_stat_block("Average Priority Fee", avg_priority_fee),
+                      make_stat_block("Max Priority Fee", max_priority_fee)],
+                     style={"display": "flex", "justifyContent": "center", "marginTop": "100px"}),
 
-        html.Div([make_stat_block("Min Net Profit", min_profit),
-                  make_stat_block("Average Net Profit", avg_profit),
-                  make_stat_block("Max Net Profit", max_profit)],
-                 style={"display": "flex", "justifyContent": "center", "marginTop": "100px"})
-    ], style={"textAlign": "center", "marginTop": "20px"})
-])
+            html.Div([make_stat_block("Min Net Profit", min_profit),
+                      make_stat_block("Average Net Profit", avg_profit),
+                      make_stat_block("Max Net Profit", max_profit)],
+                     style={"display": "flex", "justifyContent": "center", "marginTop": "100px"})
+        ], style={"textAlign": "center", "marginTop": "20px"})
+    ])
 
-    return fig_bots, fig_trades, fig_heatmap, stats
+    # Visualizzazione degli attacchi
+    attacks = []
+    for i, entry in enumerate(last_attacks):
+        bot1 = entry.get("bot1", {}).get("bot", "Unknown Bot")
+        bot2 = entry.get("bot2", {}).get("bot", "Unknown Bot")
+        token_start = entry.get("bot1", {}).get("token_start", "Unknown Token")
+        token_end = entry.get("bot1", {}).get("token_end", "Unknown Token")
+        attack_id = entry.get("bot1", {}).get("hash", "Unknown ID")
+
+        attacks.append(
+            html.Div(
+                children=[
+                    html.Div(f"Attacco {i + 1}: {bot1} <-> {bot2}", style={"fontWeight": "bold", "fontSize": "18px"}),
+                    html.Div(f"Token Start: {token_start}, Token End: {token_end}", style={"fontSize": "16px"}),
+                    html.Button(
+                        "Visualizza Report",
+                        id=f"generate-report-{attack_id}",
+                        n_clicks=0,
+                        style={"backgroundColor": "#444", "color": "white", "borderRadius": "5px", "marginTop": "10px"}
+                    ),
+                ],
+                style={"border": "1px solid #444", "margin": "10px", "padding": "10px", "cursor": "pointer"}
+            )
+        )
+
+    return fig_bots, fig_trades, fig_heatmap, stats, attacks
+
 
 @app.callback(
     Output("sol-price-chart", "figure"),
