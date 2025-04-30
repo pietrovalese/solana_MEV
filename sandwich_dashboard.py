@@ -9,6 +9,7 @@ import re
 import requests
 from datetime import datetime
 import time
+from dotenv import load_dotenv
 
 # --- Funzioni di utilità ---
 
@@ -233,7 +234,8 @@ def generate_report(n_clicks):
     triggered_id = ctx.triggered_id
     attack_id = triggered_id["index"]
 
-    API_KEY = "580a5ab9-5bea-4077-a736-57e497b9f573"
+    load_dotenv()
+    API_KEY = os.getenv("API_KEY")
     
     data = load_data()
     sandwiches = get_last_sandwich_attacks(data, n=5)
