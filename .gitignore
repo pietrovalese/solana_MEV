@@ -1,1 +1,7 @@
+# Ignora file di dati
 sandwich.jsonl
+
+# Ignora le cache di Python
+__pycache__/
+*.py[cod]
+*.pyo
