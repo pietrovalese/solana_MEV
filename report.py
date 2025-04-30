@@ -83,7 +83,7 @@ def save_report(text: str, output_path: str):
         f.write(text)
 
 def create_report_sandwich(input_file):  
-    output_file = "report/transaction_report.txt"
+    output_file = "transaction_report.txt"
     try:
         tx_data = load_transaction(input_file)
         total_transactions = len(tx_data)  # Conta il numero totale di transazioni

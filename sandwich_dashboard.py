@@ -263,7 +263,7 @@ def generate_report(n_clicks):
         if response.ok:
             tx_details = response.json()
             flat_line = json.dumps(tx_details, separators=(',', ':'), ensure_ascii=False).replace("\n", "")
-            with open("report/sandwich_details.jsonl", 'a', encoding='utf-8') as out:
+            with open("sandwich_details.jsonl", 'a', encoding='utf-8') as out:
                 out.write(flat_line + '\n')
         else:
             print(f"Errore: {response.status_code} - {response.text}")
@@ -271,7 +271,7 @@ def generate_report(n_clicks):
     
     
     from report import create_report_sandwich
-    final_report = create_report_sandwich("report/sandwich_details.jsonl")
+    final_report = create_report_sandwich("sandwich_details.jsonl")
     
     return html.Div([
         html.H4("📄 Report Finale"),
