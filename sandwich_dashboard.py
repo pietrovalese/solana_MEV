@@ -1,6 +1,6 @@
 import json
 import pandas as pd
-from dash import Dash, dcc, html
+from dash import Dash, dcc, html, callback, Output, Input, MATCH, callback_context, ctx
 from dash.dependencies import Output, Input
 import plotly.express as px
 import plotly.graph_objects as go
@@ -31,108 +31,6 @@ def normalize_pair(t1, t2):
 
 def get_last_sandwich_attacks(data, n=5):
     return data[-n:]
-
-def create_report(entry):
-    print(f"Generando report per l'attacco con ID: {entry.get('bot1', {}).get('hash', 'Unknown')}")
-    return f"Report generato per l'attacco con ID: {entry.get('bot1', {}).get('hash', 'Unknown')}"
-
-
-# --- Create Report ---
-
-#def create_report(entry):
-#    
-#    API_KEY = "580a5ab9-5bea-4077-a736-57e497b9f573"
-#    
-#    signatures = []
-#    
-#    signatures.append(entry.get("bot1", {}).get("hash", ""))
-#    signatures.append(entry.get("bot2", {}).get("hash", ""))
-#    
-#    for victim in entry.get("victims", []):
-#        hash_val = victim.get("hash", "")
-#        if hash_val:  
-#            signatures.append(hash_val)
-#    signatures = list(filter(None, set(signatures)))
-#    
-#    for signature in signatures:
-#        url = f"https://api.solanabeach.io/v1/transaction/{signature}"
-#        headers = {
-#            "accept": "application/json",
-#            "Authorization": f"Bearer {API_KEY}"
-#        }
-#
-#        response = requests.get(url, headers=headers)
-#
-#        if response.ok:
-#            tx_details = response.json()
-#            flat_line = json.dumps(tx_details, separators=(',', ':'), ensure_ascii=False).replace("\n", "")
-#            with open("report/sandwich_details.jsonl", 'w', encoding='utf-8') as out:
-#                out.write(flat_line + '\n')
-#        else:
-#            print(f"Errore: {response.status_code} - {response.text}")
-#
-#    time.sleep(2.5)
-#    return
-#
-# --- Preparazione Heatmap ---
-
-def prepare_heatmap_data(data, top_n_tokens=8, epoch=None):
-    trade_count = {}
-    token_freq = {}
-
-    for entry in data:
-        epoch_values = entry.get("bot1", {}).get("Details", {}).get("Epoch", [])
-        if epoch is None or epoch == "" or (epoch_values and (epoch == epoch_values[0] or epoch_values[0] == "")):
-            for side in ["bot1", "bot2"]:
-                bot = entry.get(side, {})
-                t1 = clean_token(bot.get("token_start", ""))
-                t2 = clean_token(bot.get("token_end", ""))
-                if t1 and t2:
-                    pair = normalize_pair(t1, t2)
-                    trade_count[pair] = trade_count.get(pair, 0) + 1
-                    token_freq[t1] = token_freq.get(t1, 0) + 1
-                    token_freq[t2] = token_freq.get(t2, 0) + 1
-
-            for victim in entry.get("victims", []):
-                t1 = clean_token(victim.get("token_start", ""))
-                t2 = clean_token(victim.get("token_end", ""))
-                if t1 and t2:
-                    pair = normalize_pair(t1, t2)
-                    trade_count[pair] = trade_count.get(pair, 0) + 1
-                    token_freq[t1] = token_freq.get(t1, 0) + 1
-                    token_freq[t2] = token_freq.get(t2, 0) + 1
-
-    top_tokens = set([token for token, _ in sorted(token_freq.items(), key=lambda x: x[1], reverse=True)[:top_n_tokens]])
-    filtered_trade_count = {pair: count for pair, count in trade_count.items() if pair[0] in top_tokens and pair[1] in top_tokens}
-    tokens = sorted(top_tokens)
-    matrix = pd.DataFrame(0, index=tokens, columns=tokens)
-
-    for (t1, t2), count in filtered_trade_count.items():
-        matrix.at[t1, t2] = count
-        matrix.at[t2, t1] = count
-
-    return matrix
-
-def create_heatmap(matrix):
-    fig = go.Figure(data=go.Heatmap(
-        z=matrix.values,
-        x=matrix.columns,
-        y=matrix.index,
-        colorscale='Reds',
-        hoverongaps=False,
-        zmin=0,
-    ))
-    fig.update_layout(
-        title='Heatmap delle coppie di token più scambiate (Top Token)',
-        plot_bgcolor="#222",
-        paper_bgcolor="#222",
-        font_color="white",
-        height=700,
-        margin=dict(l=80, r=40, t=80, b=50),  
-        xaxis=dict(tickangle=45, tickfont=dict(size=12)),
-        yaxis=dict(tickfont=dict(size=12), ticks="outside", ticklen=10)
-    )
-    return fig
 
 # --- Analisi statistiche ---
 
@@ -236,32 +134,51 @@ def display_sandwich_attacks(epoch, callback_context):
     last_attacks = get_last_sandwich_attacks(data)
 
     attacks = []
+
     for i, entry in enumerate(last_attacks):
-        # Estrazione dei dati per ogni attacco
         bot1 = entry.get("bot1", {}).get("bot", "Unknown Bot")
         bot2 = entry.get("bot2", {}).get("bot", "Unknown Bot")
         token_start = entry.get("bot1", {}).get("token_start", "Unknown Token")
         token_end = entry.get("bot1", {}).get("token_end", "Unknown Token")
+        bot1_value_start = entry.get("bot1", {}).get("value_start")
+        bot1_value_end = entry.get("bot1", {}).get("value_end")
+        bot2_value_start = entry.get("bot2", {}).get("value_start")
+        bot2_value_end = entry.get("bot2", {}).get("value_end")
         attack_id = entry.get("bot1", {}).get("hash", "Unknown ID")
 
-        # Creazione del layout per ogni attacco
-        attacks.append(
-            html.Div(
-                children=[
-                    html.Div(f"Attacco {i + 1}: {bot1} <-> {bot2}", style={"fontWeight": "bold", "fontSize": "18px"}),
-                    html.Div(f"Token Start: {token_start}, Token End: {token_end}", style={"fontSize": "16px"}),
-                    html.Button(
-                        "Visualizza Report",
-                        id=f"generate-report-{attack_id}",
-                        n_clicks=0,
-                        style={"backgroundColor": "#444", "color": "white", "borderRadius": "5px", "marginTop": "10px"}
-                    ),
-                    # Il div che conterrà il report sarà inizialmente vuoto
-                    html.Div(id=f"report-{attack_id}", style={"marginTop": "10px"})
-                ],
-                style={"border": "1px solid #444", "margin": "10px", "padding": "10px", "cursor": "pointer"}
-            )
+        victims_divs = []
+        for victim in entry.get("victims", []):
+            victim_name = victim.get("victim", "Unknown Victim")
+            v_token_start = victim.get("token_start", "Unknown Token")
+            v_value_start = victim.get("value_start", "Unknown Value")
+            v_token_end = victim.get("token_end", "Unknown Token")
+            v_value_end = victim.get("value_end", "Unknown Value")
+
+            victims_divs.extend([
+                html.Div(f"Victim: {victim_name}", style={"fontWeight": "bold", "fontSize": "18px"}),
+                html.Div(f"Token Start: {v_token_start} Value: {v_value_start} <-> Token End: {v_token_end} Value: {v_value_end}", style={"fontSize": "16px"}),
+            ])
+
+        attack_div = html.Div(
+            children=[
+                html.Div(f"Bot: {bot1}", style={"fontWeight": "bold", "fontSize": "18px"}),
+                html.Div(f"Token Start: {token_start} Value: {bot1_value_start} <-> Token End: {token_end} Value: {bot1_value_end}", style={"fontSize": "16px"}),
+                *victims_divs,
+                html.Div(f"Bot: {bot2}", style={"fontWeight": "bold", "fontSize": "18px"}),
+                html.Div(f"Token Start: {token_end} Value: {bot2_value_start} <-> Token End: {token_start} Value: {bot2_value_end}", style={"fontSize": "16px"}),
+                html.Button(
+                    "Visualizza Report",
+                    id={"type": "generate-report-btn", "index": attack_id},
+                    n_clicks=0,
+                    style={"backgroundColor": "#444", "color": "white", "borderRadius": "5px", "marginTop": "10px"}
+                ),
+                html.Div(id={"type": "report-div", "index": attack_id}, style={"marginTop": "10px"})
+            ],
+            style={"border": "1px solid #444", "margin": "10px", "padding": "10px", "cursor": "pointer"}
         )
+
+        attacks.append(attack_div)
+
 
     return attacks
 
@@ -298,30 +215,91 @@ app.layout = html.Div(style={"backgroundColor": "#222", "color": "white", "paddi
     html.Div(id="sandwich-attack-list", style={"marginTop": "20px"}),  # Qui verranno mostrati gli attacchi
     dcc.Graph(id="bot-chart"),
     dcc.Graph(id="trade-chart"),
-    dcc.Graph(id="heatmap-chart"),
+    #dcc.Graph(id="heatmap-chart"),
 
     dcc.Interval(id="interval-component", interval=120*1000, n_intervals=0),
     dcc.Interval(id="price-interval", interval=30*1000, n_intervals=0),
     html.Div("Dati aggiornati ogni 120 secondi", style={"textAlign": "center", "fontSize": "14px", "marginTop": "10px"})
 ])
 
+
 @app.callback(
-    [Output("bot-chart", "figure"),
-     Output("trade-chart", "figure"),
-     Output("heatmap-chart", "figure"),
-     Output("stats-values", "children"),
-     Output("sandwich-attack-list", "children")],
-    [Input("epoch-dropdown", "value"),
-     Input("interval-component", "n_intervals")]
+    Output({"type": "report-div", "index": MATCH}, "children"),
+    Input({"type": "generate-report-btn", "index": MATCH}, "n_clicks"),
+)
+def generate_report(n_clicks):
+    if not n_clicks:
+        return ""
+    triggered_id = ctx.triggered_id
+    attack_id = triggered_id["index"]
+
+    API_KEY = "580a5ab9-5bea-4077-a736-57e497b9f573"
+    
+    data = load_data()
+    sandwiches = get_last_sandwich_attacks(data, n=5)
+    signatures = []
+    
+    for entry in sandwiches:
+        if entry.get("bot1", {}).get("hash", {}) == attack_id:
+            signatures.append(entry.get("bot1", {}).get("hash", ""))
+            signatures.append(entry.get("bot2", {}).get("hash", ""))
+            
+            for victim in entry.get("victims", []):
+                hash_val = victim.get("hash", "")
+                if hash_val:  
+                    signatures.append(hash_val)
+
+    signatures = list(filter(None, set(signatures)))
+    
+    for signature in signatures:
+        url = f"https://api.solanabeach.io/v1/transaction/{signature}"
+        headers = {
+            "accept": "application/json",
+            "Authorization": f"Bearer {API_KEY}"
+        }
+
+        response = requests.get(url, headers=headers)
+
+        if response.ok:
+            tx_details = response.json()
+            flat_line = json.dumps(tx_details, separators=(',', ':'), ensure_ascii=False).replace("\n", "")
+            with open("report/sandwich_details.jsonl", 'a', encoding='utf-8') as out:
+                out.write(flat_line + '\n')
+        else:
+            print(f"Errore: {response.status_code} - {response.text}")
+        time.sleep(2.5)
+    
+    
+    from report import create_report_sandwich
+    final_report = create_report_sandwich("report/sandwich_details.jsonl")
+    
+    return html.Div([
+        html.H4("📄 Report Finale"),
+        html.Pre(final_report)  # Usa html.Pre per mantenere formattazione testo
+    ])
+
+
+@app.callback(
+    [
+        Output("bot-chart", "figure"),
+        Output("trade-chart", "figure"),
+        Output("stats-values", "children"),
+        Output("sandwich-attack-list", "children"),
+    ],
+    [
+        Input("epoch-dropdown", "value"),
+        Input("interval-component", "n_intervals")
+    ]
 )
 def update_dashboard(epoch, callback_context):
+    
+    ctx = callback_context
+    
     data = load_data()
     last_attacks = get_last_sandwich_attacks(data)
 
     # Generazione dei grafici
     fig_bots, fig_trades = generate_figures(data, epoch)
-    matrix = prepare_heatmap_data(data, epoch=epoch)
-    fig_heatmap = create_heatmap(matrix)
 
     # Calcolo delle statistiche
     min_fee, min_priority_fee, avg_fee, avg_priority_fee, max_fee, max_priority_fee = avg_fee_and_priority_fee(data, epoch)
@@ -349,30 +327,80 @@ def update_dashboard(epoch, callback_context):
 
     # Visualizzazione degli attacchi
     attacks = []
+
     for i, entry in enumerate(last_attacks):
         bot1 = entry.get("bot1", {}).get("bot", "Unknown Bot")
         bot2 = entry.get("bot2", {}).get("bot", "Unknown Bot")
         token_start = entry.get("bot1", {}).get("token_start", "Unknown Token")
         token_end = entry.get("bot1", {}).get("token_end", "Unknown Token")
+        bot1_value_start = entry.get("bot1", {}).get("value_start")
+        bot1_value_end = entry.get("bot1", {}).get("value_end")
+        bot2_value_start = entry.get("bot2", {}).get("value_start")
+        bot2_value_end = entry.get("bot2", {}).get("value_end")
         attack_id = entry.get("bot1", {}).get("hash", "Unknown ID")
 
-        attacks.append(
-            html.Div(
-                children=[
-                    html.Div(f"Attacco {i + 1}: {bot1} <-> {bot2}", style={"fontWeight": "bold", "fontSize": "18px"}),
-                    html.Div(f"Token Start: {token_start}, Token End: {token_end}", style={"fontSize": "16px"}),
-                    html.Button(
-                        "Visualizza Report",
-                        id=f"generate-report-{attack_id}",
-                        n_clicks=0,
-                        style={"backgroundColor": "#444", "color": "white", "borderRadius": "5px", "marginTop": "10px"}
-                    ),
-                ],
-                style={"border": "1px solid #444", "margin": "10px", "padding": "10px", "cursor": "pointer"}
-            )
+        victims_divs = []
+        for victim in entry.get("victims", []):
+            victim_name = victim.get("victim", "Unknown Victim")
+            v_token_start = victim.get("token_start", "Unknown Token")
+            v_value_start = victim.get("value_start", "Unknown Value")
+            v_token_end = victim.get("token_end", "Unknown Token")
+            v_value_end = victim.get("value_end", "Unknown Value")
+
+            victims_divs.extend([
+                html.Div(f"{victim_name}", style={"fontWeight": "bold", "fontSize": "18px", "color": "#ffffff"}),
+                html.Div(f"Token Start: {v_token_start} Value: {v_value_start} <-> Token End: {v_token_end} Value: {v_value_end}", style={"fontSize": "16px", "color": "#dddddd"}),
+            ])
+
+
+        attack_div = html.Div(
+            children=[
+                # BOT 1
+                html.Div([
+                    html.Div(f"{bot1}", style={"fontWeight": "bold", "fontSize": "18px", "color": "#ffffff"}),
+                    html.Div(f"Token Start: {token_start} Value: {bot1_value_start} <-> Token End: {token_end} Value: {bot1_value_end}", style={"fontSize": "16px", "color": "#dddddd"}),
+                ], style={"backgroundColor": "#2c3e50", "padding": "10px", "borderRadius": "8px"}),
+
+                html.Hr(style={"borderColor": "#555"}),
+
+                # VITTIME
+                html.Div([
+                    html.Div("Victims:", style={"fontWeight": "bold", "fontSize": "17px", "color": "#e74c3c", "marginBottom": "5px"}),
+                    *victims_divs
+                ], style={"backgroundColor": "#3b3b3b", "padding": "10px", "borderRadius": "8px"}),
+
+                html.Hr(style={"borderColor": "#555"}),
+
+                # BOT 2
+                html.Div([
+                    html.Div(f"{bot2}", style={"fontWeight": "bold", "fontSize": "18px", "color": "#ffffff"}),
+                    html.Div(f"Token Start: {token_end} Value: {bot2_value_start} <-> Token End: {token_start} Value: {bot2_value_end}", style={"fontSize": "16px", "color": "#dddddd"}),
+                ], style={"backgroundColor": "#2c3e50", "padding": "10px", "borderRadius": "8px"}),
+
+                html.Hr(style={"borderColor": "#555"}),
+
+                html.Button(
+                    "Visualizza Report",
+                    id={"type": "generate-report-btn", "index": attack_id},
+                    n_clicks=0,
+                    style={"backgroundColor": "#8e44ad", "color": "white", "borderRadius": "5px", "marginTop": "10px", "padding": "10px 20px", "border": "none"}
+                ),
+
+                html.Div(id={"type": "report-div", "index": attack_id}, style={"marginTop": "10px"})
+            ],
+            style={
+                "backgroundColor": "#1e1e1e",  # ✅ sfondo scuro del contenitore
+                "border": "1px solid #444",
+                "margin": "15px",
+                "padding": "20px",
+                "borderRadius": "12px",
+                "boxShadow": "2px 2px 10px rgba(0,0,0,0.3)"
+            }
         )
 
-    return fig_bots, fig_trades, fig_heatmap, stats, attacks
+        attacks.append(attack_div)
+
+    return fig_bots, fig_trades, stats, attacks
 
 
 @app.callback(
@@ -421,4 +449,4 @@ def update_sol_price_chart(n):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=8050, debug=True)
