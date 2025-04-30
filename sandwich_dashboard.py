@@ -136,7 +136,7 @@ def generate_weekly_bar_chart(data, days=30):
     df_count = df.value_counts().sort_index().reset_index(name="count")
 
     # Crea grafico
-    fig = px.bar(
+    fig = px.line(
         df_count,
         x="date",
         y="count",
@@ -263,7 +263,7 @@ app.layout = html.Div(style={"backgroundColor": "#222", "color": "white", "paddi
     dcc.Graph(id="bot-chart"),
     dcc.Graph(id="trade-chart"),
     
-    
+    html.H2(style={"textAlign": "center", "marginTop": "50px"}),
     dcc.Dropdown(
                     id="days-filter",
                     options=[{"label": f"Ultimi {i} giorni", "value": i} for i in [7, 14, 30]],
@@ -272,7 +272,6 @@ app.layout = html.Div(style={"backgroundColor": "#222", "color": "white", "paddi
                 ),
     
     dcc.Graph(id="weekly-entry-chart"),
-    
     html.H2("5 Latest Sandwich", style={"textAlign": "center", "marginTop": "50px"}),
     html.Div(id="sandwich-attack-list", style={"marginTop": "20px"}),  # Qui verranno mostrati gli attacchi
 
