@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 import os
 import re
 import requests
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 import time
 from dotenv import load_dotenv
 
@@ -106,6 +106,52 @@ def avg_net_profit(data, epoch=None):
     if not profit_list:
         return 0, 0, 0
     return min(profit_list), sum(profit_list) / len(profit_list), max(profit_list)
+
+def parse_custom_timestamp(ts_str):
+    clean_str = ts_str.replace(" +utc", "")
+    dt = datetime.strptime(clean_str, "%B %d, %Y %H:%M:%S")
+    return dt.replace(tzinfo=timezone.utc)
+
+def generate_weekly_bar_chart(data, days=30):
+    now = datetime.now(timezone.utc)
+    start_date = now - timedelta(days=days)
+
+    # Estrai solo le date dei timestamp nei giorni desiderati
+    dates = []
+    for entry in data:
+        try:
+            ts = entry.get("bot1", {}).get("Details", {}).get("Timestamp")
+            if ts:
+                dt = parse_custom_timestamp(ts)
+                if dt >= start_date:
+                    dates.append(dt.date())
+        except:
+            continue
+
+    if not dates:
+        return px.bar(title=f"Nessun dato negli ultimi {days} giorni")
+
+    # Conteggio per giorno
+    df = pd.DataFrame(dates, columns=["date"])
+    df_count = df.value_counts().sort_index().reset_index(name="count")
+
+    # Crea grafico
+    fig = px.bar(
+        df_count,
+        x="date",
+        y="count",
+        title=f"Sandwich Attack - Ultimi {days} giorni",
+        labels={"date": "Data", "count": "Numero di entry"}
+    )
+
+    fig.update_layout(
+        plot_bgcolor="#222",
+        paper_bgcolor="#222",
+        font_color="white",
+        xaxis_tickangle=45
+    )
+    return fig
+
 
 # --- Caricamento dati ---
 
@@ -213,10 +259,22 @@ app.layout = html.Div(style={"backgroundColor": "#222", "color": "white", "paddi
         ], style={"flex": "1"})
     ]),
 
-    html.Div(id="sandwich-attack-list", style={"marginTop": "20px"}),  # Qui verranno mostrati gli attacchi
+    
     dcc.Graph(id="bot-chart"),
     dcc.Graph(id="trade-chart"),
-    #dcc.Graph(id="heatmap-chart"),
+    
+    
+    dcc.Dropdown(
+                    id="days-filter",
+                    options=[{"label": f"Ultimi {i} giorni", "value": i} for i in [7, 14, 30]],
+                    value=30,
+                    style={"backgroundColor": "#444", "color": "white", "borderRadius": "5px"}
+                ),
+    
+    dcc.Graph(id="weekly-entry-chart"),
+    
+    html.H2("5 Latest Sandwich", style={"textAlign": "center", "marginTop": "50px"}),
+    html.Div(id="sandwich-attack-list", style={"marginTop": "20px"}),  # Qui verranno mostrati gli attacchi
 
     dcc.Interval(id="interval-component", interval=120*1000, n_intervals=0),
     dcc.Interval(id="price-interval", interval=30*1000, n_intervals=0),
@@ -287,23 +345,22 @@ def generate_report(n_clicks):
         Output("trade-chart", "figure"),
         Output("stats-values", "children"),
         Output("sandwich-attack-list", "children"),
+        Output("weekly-entry-chart", "figure"),
     ],
     [
         Input("epoch-dropdown", "value"),
-        Input("interval-component", "n_intervals")
+        Input("interval-component", "n_intervals"),
+        Input("days-filter", "value")  # Nuovo Input per il filtro dei giorni
     ]
 )
-def update_dashboard(epoch, callback_context):
-    
-    ctx = callback_context
-    
+def update_dashboard(epoch, callback_context, days):
+    # Carica i dati
     data = load_data()
-    last_attacks = get_last_sandwich_attacks(data)
-
-    # Generazione dei grafici
+    
+    # Ottieni gli altri grafici
     fig_bots, fig_trades = generate_figures(data, epoch)
-
-    # Calcolo delle statistiche
+    
+    # Calcola le statistiche
     min_fee, min_priority_fee, avg_fee, avg_priority_fee, max_fee, max_priority_fee = avg_fee_and_priority_fee(data, epoch)
     min_profit, avg_profit, max_profit = avg_net_profit(data, epoch)
 
@@ -327,8 +384,9 @@ def update_dashboard(epoch, callback_context):
         ], style={"textAlign": "center", "marginTop": "20px"})
     ])
 
-    # Visualizzazione degli attacchi
+    # Visualizza gli attacchi (non modificato)
     attacks = []
+    last_attacks = get_last_sandwich_attacks(data)
 
     for i, entry in enumerate(last_attacks):
         bot1 = entry.get("bot1", {}).get("bot", "Unknown Bot")
@@ -354,10 +412,8 @@ def update_dashboard(epoch, callback_context):
                 html.Div(f"Token Start: {v_token_start} Value: {v_value_start} <-> Token End: {v_token_end} Value: {v_value_end}", style={"fontSize": "16px", "color": "#dddddd"}),
             ])
 
-
         attack_div = html.Div(
             children=[
-                # BOT 1
                 html.Div([
                     html.Div(f"{bot1}", style={"fontWeight": "bold", "fontSize": "18px", "color": "#ffffff"}),
                     html.Div(f"Token Start: {token_start} Value: {bot1_value_start} <-> Token End: {token_end} Value: {bot1_value_end}", style={"fontSize": "16px", "color": "#dddddd"}),
@@ -365,7 +421,6 @@ def update_dashboard(epoch, callback_context):
 
                 html.Hr(style={"borderColor": "#555"}),
 
-                # VITTIME
                 html.Div([
                     html.Div("Victims:", style={"fontWeight": "bold", "fontSize": "17px", "color": "#e74c3c", "marginBottom": "5px"}),
                     *victims_divs
@@ -373,7 +428,6 @@ def update_dashboard(epoch, callback_context):
 
                 html.Hr(style={"borderColor": "#555"}),
 
-                # BOT 2
                 html.Div([
                     html.Div(f"{bot2}", style={"fontWeight": "bold", "fontSize": "18px", "color": "#ffffff"}),
                     html.Div(f"Token Start: {token_end} Value: {bot2_value_start} <-> Token End: {token_start} Value: {bot2_value_end}", style={"fontSize": "16px", "color": "#dddddd"}),
@@ -391,7 +445,7 @@ def update_dashboard(epoch, callback_context):
                 html.Div(id={"type": "report-div", "index": attack_id}, style={"marginTop": "10px"})
             ],
             style={
-                "backgroundColor": "#1e1e1e",  # ✅ sfondo scuro del contenitore
+                "backgroundColor": "#1e1e1e", 
                 "border": "1px solid #444",
                 "margin": "15px",
                 "padding": "20px",
@@ -402,7 +456,12 @@ def update_dashboard(epoch, callback_context):
 
         attacks.append(attack_div)
 
-    return fig_bots, fig_trades, stats, attacks
+    # Chiamata alla funzione per il grafico settimanale con il numero di giorni da visualizzare
+    weekly_fig = generate_weekly_bar_chart(data, days)
+
+    return fig_bots, fig_trades, stats, attacks, weekly_fig
+
+
 
 
 @app.callback(
@@ -451,4 +510,4 @@ def update_sol_price_chart(n):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8050, debug=True)
+    app.run(debug=True)
