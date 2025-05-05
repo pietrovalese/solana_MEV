@@ -112,7 +112,7 @@ def parse_custom_timestamp(ts_str):
     dt = datetime.strptime(clean_str, "%B %d, %Y %H:%M:%S")
     return dt.replace(tzinfo=timezone.utc)
 
-def generate_timestamp_line_chart(data, days=30):
+def generate_weekly_bar_chart(data, days=30):
     now = datetime.now(timezone.utc)
     start_date = now - timedelta(days=days)
 
@@ -152,60 +152,6 @@ def generate_timestamp_line_chart(data, days=30):
     )
     return fig
 
-def generate_timestamp_value_line_chart(data, days=30):
-    from datetime import datetime, timedelta, timezone
-    import pandas as pd
-    import plotly.express as px
-
-    now = datetime.now(timezone.utc)
-    start_date = now - timedelta(days=days)
-
-    date_profit_pairs = []
-
-    for entry in data:
-        try:
-            ts = entry.get("bot1", {}).get("Details", {}).get("Timestamp")
-            if not ts:
-                continue
-            dt = parse_custom_timestamp(ts)
-            if dt < start_date:
-                continue
-
-            bot1 = entry.get("bot1", {})
-            bot2 = entry.get("bot2", {})
-            if bot1.get("token_start") == bot2.get("token_end") and bot1.get("token_start") == "sol":
-                start = parse_number(bot1.get("value_start", 0))
-                end = parse_number(bot2.get("value_end", 0))
-                fee1 = clean_fee(bot1.get("Details", {}).get("Fee", "0"))
-                fee2 = clean_fee(bot2.get("Details", {}).get("Fee", "0"))
-                profit = end - start - fee1 - fee2
-                date_profit_pairs.append((dt.date(), profit))
-        except:
-            continue
-
-    if not date_profit_pairs:
-        return px.bar(title=f"Nessun dato negli ultimi {days} giorni")
-
-    # Crea DataFrame e somma i profitti per giorno
-    df = pd.DataFrame(date_profit_pairs, columns=["date", "profit"])
-    df_grouped = df.groupby("date", as_index=False).sum()
-
-    # Crea grafico
-    fig = px.line(
-        df_grouped,
-        x="date",
-        y="profit",
-        title=f"Profitto Totale da Sandwich Attack - Ultimi {days} giorni",
-        labels={"date": "Data", "profit": "Profitto Totale (SOL)"}
-    )
-
-    fig.update_layout(
-        plot_bgcolor="#222",
-        paper_bgcolor="#222",
-        font_color="white",
-        xaxis_tickangle=45
-    )
-    return fig
 
 # --- Caricamento dati ---
 
@@ -326,7 +272,6 @@ app.layout = html.Div(style={"backgroundColor": "#222", "color": "white", "paddi
                 ),
     
     dcc.Graph(id="weekly-entry-chart"),
-    dcc.Graph(id="weekly-value-chart"),
     html.H2("5 Latest Sandwich", style={"textAlign": "center", "marginTop": "50px"}),
     html.Div(id="sandwich-attack-list", style={"marginTop": "20px"}),  # Qui verranno mostrati gli attacchi
 
@@ -400,7 +345,6 @@ def generate_report(n_clicks):
         Output("stats-values", "children"),
         Output("sandwich-attack-list", "children"),
         Output("weekly-entry-chart", "figure"),
-        Output("weekly-value-chart", "figure"),
     ],
     [
         Input("epoch-dropdown", "value"),
@@ -512,10 +456,9 @@ def update_dashboard(epoch, callback_context, days):
         attacks.append(attack_div)
 
     # Chiamata alla funzione per il grafico settimanale con il numero di giorni da visualizzare
-    weekly_fig = generate_timestamp_line_chart(data, days)
-    value_fig = generate_timestamp_value_line_chart(data, days)
+    weekly_fig = generate_weekly_bar_chart(data, days)
 
-    return fig_bots, fig_trades, stats, attacks, weekly_fig, value_fig
+    return fig_bots, fig_trades, stats, attacks, weekly_fig
 
 
 
