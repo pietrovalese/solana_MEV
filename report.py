@@ -6,10 +6,32 @@ LAMPORTS_PER_SOL = 1_000_000_000
 
 
 class SolanaTransactionAnalyzer:
-    def __init__(self, tx_data: Dict[str, Any], position: int, total: int):
+    KNOWN_PROGRAMS = {
+    "11111111111111111111111111111111": "System Program",
+    "Stake11111111111111111111111111111111111111": "Stake Program",
+    "Vote111111111111111111111111111111111111111": "Vote Program",
+    "BPFLoader1111111111111111111111111111111111": "BPF Loader",
+    "BPFLoader2111111111111111111111111111111111": "BPF Loader 2",
+    "BPFLoaderUpgradeab1e11111111111111111111111": "Upgradeable BPF Loader",
+    "Config1111111111111111111111111111111111111": "Config Program",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA": "SPL Token Program",
+    "ATokenGPvbdGVxr1cZ6Gh8RQzeyG3kG9FZ6Vf9eTGzH": "Associated Token Program",
+    "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr": "Memo Program",
+    "NamesLPvCLsAGdkd9H9Yw2BTdh6aZq8aJgzQq5xTMvR": "Bonfida Name Service",
+    "C98vHVgGJHD5kz7Z2GUak3hXwLMi9cTzGE5GQ5NB5yQf": "Coin98 Swap",
+    "DEX11111111111111111111111111111111111111": "Serum DEX v1",
+    "9xQeWvG816bUx9EP1xQPLvAd9ESGZ1uP7m7bRMkUU7zN": "Serum DEX v3",
+    "4ckmDgGzLyD5G9uv6C6p2XpWwFqXRqVgTxNTG9c9tk4C": "Solend",
+    "EhhTKjxyMiRgnJp1HZFHyhEHEcCeURhfMSyjYbw1EKn": "Mango Markets",
+    "F9bUkWQi9Uu5FeFSGDqJ8H3gXbFS8A7tBzUVnHyKNxy": "Raydium Swap",
+    }
+
+
+    def __init__(self, tx_data: Dict[str, Any], position: int, total: int, verbose: bool = False):
         self.tx_data = tx_data
         self.position = position
         self.total = total
+        self.verbose = verbose
         self.summary = []
         self.total_transferred = 0
         self.transfer_count = 0
@@ -20,7 +42,10 @@ class SolanaTransactionAnalyzer:
         self._analyze_instructions()
         self._analyze_inner_instructions()
         self._add_summary()
-        return "\n".join(self.summary)
+        report = "\n".join(self.summary)
+        if self.verbose:
+            print(report)
+        return report
 
     def _add_header(self):
         report_prefix = "\n\nSolana Transaction Report"
@@ -57,7 +82,8 @@ class SolanaTransactionAnalyzer:
                 self._describe_instruction(instr, indent="    ")
 
     def _describe_instruction(self, instr: Dict[str, Any], indent: str = "  "):
-        program = instr.get("programId", {}).get("name") or instr.get("program", "Unknown Program")
+        program_id = instr.get("programId", {}).get("address") or instr.get("programId", "Unknown")
+        program = self.KNOWN_PROGRAMS.get(program_id, program_id)
         self.summary.append(f"{indent}Program: {program}")
 
         parsed = instr.get("parsed")
@@ -69,11 +95,12 @@ class SolanaTransactionAnalyzer:
                     if key in ["lamports", "amount"]:
                         try:
                             amount = int(val)
-                            sol = amount / LAMPORTS_PER_SOL
-                            val_str += f" ({sol:.6f} SOL)"
+                            decimals = details.get("decimals", 9)
+                            display_amount = amount / (10 ** decimals)
+                            val_str += f" ({display_amount:.6f})"
                             self.total_transferred += amount
                             self.transfer_count += 1
-                        except:
+                        except Exception:
                             pass
                     elif key in ["source", "destination", "owner", "authority"]:
                         self.involved_accounts.add(str(val))
@@ -102,6 +129,20 @@ class SolanaTransactionAnalyzer:
         self.summary.append(f"Total Moved:       {self.total_transferred:,} lamports ({self.total_transferred / LAMPORTS_PER_SOL:.6f} SOL)")
         self.summary.append(f"Accounts Involved: {len(self.involved_accounts)}")
 
+        if self.involved_accounts:
+            self.summary.append("Involved Accounts:")
+            for acc in sorted(self.involved_accounts):
+                self.summary.append(f" - {acc}")
+
+        pre = self.tx_data.get("meta", {}).get("preBalances", [])
+        post = self.tx_data.get("meta", {}).get("postBalances", [])
+        if pre and post and len(pre) == len(post):
+            self.summary.append("\nBalance Changes:")
+            for i, (pre_bal, post_bal) in enumerate(zip(pre, post)):
+                delta = post_bal - pre_bal
+                if delta != 0:
+                    self.summary.append(f" - Account {i} Δ Balance: {delta:+,} lamports ({delta / LAMPORTS_PER_SOL:+.6f} SOL)")
+
 
 # --- Utility functions ---
 
@@ -113,14 +154,14 @@ def save_report(text: str, output_path: str):
     with open(output_path, 'a') as f:
         f.write(text)
 
-def create_report_sandwich(input_file: str) -> str:
+def create_report_sandwich(input_file: str, verbose: bool = False) -> str:
     output_file = "transaction_report.txt"
     try:
         tx_data = load_transaction(input_file)
         total_transactions = len(tx_data)
 
         for idx, entry in enumerate(tx_data, 1):
-            analyzer = SolanaTransactionAnalyzer(entry, idx, total_transactions)
+            analyzer = SolanaTransactionAnalyzer(entry, idx, total_transactions, verbose=verbose)
             report = analyzer.analyze()
             save_report(report, output_file)
 

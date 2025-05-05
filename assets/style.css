@@ -19,7 +19,7 @@ h1 {
 }
 
 /* Specifico per i grafici */
-#bot-chart, #trade-chart, #weekly-entry-chart {
+#bot-chart, #trade-chart, #weekly-entry-chart, #weekly-value-chart {
     margin: 20px auto;  /* Aggiunge margini per separare i grafici */
     border-radius: 10px;  /* Arrotonda gli angoli */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);  /* Ombra per il grafico */
