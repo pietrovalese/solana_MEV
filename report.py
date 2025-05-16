@@ -4,8 +4,39 @@ import os
 
 LAMPORTS_PER_SOL = 1_000_000_000
 
-
 class SolanaTransactionAnalyzer:
+    # Programmi Solana noti (puoi estendere questo dizionario)
+    KNOWN_PROGRAMS = {
+        "11111111111111111111111111111111": "System Program",
+        "Stake11111111111111111111111111111111111111": "Stake Program",
+        "Vote111111111111111111111111111111111111111": "Vote Program",
+        "BPFLoader1111111111111111111111111111111111": "BPF Loader (deprecated)",
+        "BPFLoader2111111111111111111111111111111111": "BPF Loader 2",
+        "BPFLoaderUpgradeab1e11111111111111111111111": "Upgradeable BPF Loader",
+        "NativeLoader1111111111111111111111111111111": "Native Loader",
+        "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA": "SPL Token Program",
+        "ATokenGPvbdGVxr1Gz6UrzfSvQohdwWv1GkZ7fGK7ik": "Associated Token Account Program",
+        "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr": "Memo Program",
+        "NamesLPv2jE4fTJgqS8x4fg57HzxpNT3WNbYcXybpDRr": "Solana Name Service",
+        "ZkTokenProof11111111111111111111111111111111": "ZK Token Proof Program",
+        "AddressLookupTab1e1111111111111111111111111": "Address Lookup Table Program",
+        "ComputeBudget111111111111111111111111111111": "Compute Budget Program",
+        "NFTesT3nCRypt1wzUM3iZfwhvAWfKUd3Fq3uYVN5yzq": "Test NFT Program",
+        "MPLXz1GHDuc8KvWFTNHSSZXpwewNk8LxMQqDFYWMUwb": "Metaplex Token Metadata",
+        "candyMachineV2pXkxFJ": "Candy Machine v2 (NFT minting)",
+        "Sysvar1nstructions1111111111111111111111111": "Sysvar Instructions",
+        "SysvarRent111111111111111111111111111111111": "Sysvar Rent",
+        "SysvarClock11111111111111111111111111111111": "Sysvar Clock",
+        "SysvarRecentB1ockHashes11111111111111111111": "Sysvar Recent Blockhashes",
+        "SysvarRewards111111111111111111111111111111": "Sysvar Rewards",
+        "SysvarEpochSchedu1e111111111111111111111111": "Sysvar Epoch Schedule",
+        "SysvarFees111111111111111111111111111111111": "Sysvar Fees",
+        "SysvarSlotHashes111111111111111111111111111": "Sysvar Slot Hashes",
+        "SysvarSlotHistory11111111111111111111111111": "Sysvar Slot History",
+        "SysvarStakeHistory1111111111111111111111111": "Sysvar Stake History",
+        "SysvarInstructions1111111111111111111111111": "Sysvar Instructions",
+    }
+
     def __init__(self, tx_data: Dict[str, Any], position: int, total: int):
         self.tx_data = tx_data
         self.position = position
@@ -19,12 +50,12 @@ class SolanaTransactionAnalyzer:
         self._add_header()
         self._analyze_instructions()
         self._analyze_inner_instructions()
+        self._analyze_token_transfers()
         self._add_summary()
         return "\n".join(self.summary)
 
     def _add_header(self):
         report_prefix = "\n\nSolana Transaction Report"
-
         if self.position == 1:
             report_prefix += " - Front Running"
         elif self.position == self.total:
@@ -56,8 +87,25 @@ class SolanaTransactionAnalyzer:
                 self.summary.append(f"\n  ↪ Inner Instruction {parent_idx}.{idx}:")
                 self._describe_instruction(instr, indent="    ")
 
+    def _analyze_token_transfers(self):
+        token_balances = self.tx_data.get("postTokenBalances", [])
+        if token_balances:
+            self.summary.append("\nToken Transfers:")
+            for idx, token in enumerate(token_balances, 1):
+                token_name = token.get("mint", {}).get("name", "Unknown Token")
+                token_amount = token.get("uiTokenAmount", {}).get("uiAmountString", "0")
+                owner = token.get("owner", {}).get("address", "N/A")
+                self.summary.append(f"  ↪ Token {idx}: {token_name}")
+                self.summary.append(f"    Amount: {token_amount} {token_name}")
+                self.summary.append(f"    Owner: {owner}")
+                self.involved_accounts.add(owner)
+
     def _describe_instruction(self, instr: Dict[str, Any], indent: str = "  "):
-        program = instr.get("programId", {}).get("name") or instr.get("program", "Unknown Program")
+        program_id = instr.get("programId") or instr.get("program")
+        if isinstance(program_id, dict):
+            program_id = program_id.get("address") or program_id.get("name")
+        program = self.KNOWN_PROGRAMS.get(program_id, program_id or "Unknown Program")
+
         self.summary.append(f"{indent}Program: {program}")
 
         parsed = instr.get("parsed")
@@ -79,7 +127,6 @@ class SolanaTransactionAnalyzer:
                         self.involved_accounts.add(str(val))
                     self.summary.append(f"{indent}   - {key}: {val_str}")
         else:
-            # Unparsed instructions
             accounts = instr.get("accounts", [])
             if accounts:
                 self.summary.append(f"{indent}Accounts: {', '.join(accounts)}")
@@ -102,8 +149,7 @@ class SolanaTransactionAnalyzer:
         self.summary.append(f"Total Moved:       {self.total_transferred:,} lamports ({self.total_transferred / LAMPORTS_PER_SOL:.6f} SOL)")
         self.summary.append(f"Accounts Involved: {len(self.involved_accounts)}")
 
-
-# --- Utility functions ---
+# --- Funzioni di utilità ---
 
 def load_transaction(file_path: str) -> List[Dict[str, Any]]:
     with open(file_path, 'r') as f:

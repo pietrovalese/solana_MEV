@@ -14,8 +14,16 @@ body {
 h1 {
     text-align: center;
     color: white;
-    font-size: 32px;
+    font-size: 36px; /* Aumentato per un effetto più vistoso */
     margin-bottom: 20px;
+    text-transform: uppercase; /* Per rendere il testo in maiuscolo */
+    font-weight: bold; /* Aggiunge un po' di spessore al testo */
+    letter-spacing: 2px; /* Distanza tra le lettere per un effetto più elegante */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Aggiungi una leggera ombra per il testo */
+    background: linear-gradient(to right, #ff6347, #ffcc00); /* Gradiente di colori per dare un tocco vibrante */
+    -webkit-background-clip: text; /* Applica il gradiente solo al testo */
+    background-clip: text; /* Funziona in tutti i moderni browser */
+    font-family: "Segoe UI", Roboto, monospace !important; /* Font personalizzato */
 }
 
 /* Specifico per i grafici */

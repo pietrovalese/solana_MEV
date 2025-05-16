@@ -311,7 +311,7 @@ def generate_report(n_clicks):
     signatures = list(filter(None, set(signatures)))
     
     for signature in signatures:
-        url = f"https://api.solanabeach.io/v1/transaction/{signature}"
+        url = f"https://api.solanaview.com/v1/transaction/{signature}"
         headers = {
             "accept": "application/json",
             "Authorization": f"Bearer {API_KEY}"
