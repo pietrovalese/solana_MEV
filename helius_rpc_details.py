@@ -130,10 +130,3 @@ def process_sandwich_file(input_path, output_path):
 if __name__ == "__main__":
     process_sandwich_file("sandwich_ristretto.jsonl", "sandwich_dettagliato.jsonl")
     
-        
-
-
-# Inserisci qui la tua API Key di Helius
-#API_KEY = "7a49b0b5-1b22-4872-b13f-2e50d689778c"
-#
-#SIGNATURE = "54Wqe4ofc9r6py6iLZ1KyEhZaA7fkxTJ398SBsFQPBdQjVVCLEy9RFNMR8vpUTqtvDJ1CgAjyoQFiXA1LkENKJEm"  # hash della transazione
