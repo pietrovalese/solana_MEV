@@ -175,7 +175,7 @@ def create_bot_info(refined_list, i):
         "value_end": refined_list[i + 3] if i + 3 < len(refined_list) else "",
         "token_end": refined_list[i + 4] if i + 4 < len(refined_list) else "",
         "hash": extract_tx_id(refined_list[i + 5] if i + 5 < len(refined_list) else ""),
-        "Details": get_transaction_info(extract_tx_id(refined_list[i + 5] if i + 5 < len(refined_list) else ""))
+        #"Details": get_transaction_info(extract_tx_id(refined_list[i + 5] if i + 5 < len(refined_list) else ""))
     }
 
 def create_victim_info(refined_list, i):
@@ -186,7 +186,7 @@ def create_victim_info(refined_list, i):
         "value_end": refined_list[i + 3] if i + 3 < len(refined_list) else "",
         "token_end": refined_list[i + 4] if i + 4 < len(refined_list) else "",
         "hash": extract_tx_id(refined_list[i + 5] if i + 5 < len(refined_list) else ""),
-        "Details": get_transaction_info(extract_tx_id(refined_list[i + 5] if i + 5 < len(refined_list) else ""))
+        #"Details": get_transaction_info(extract_tx_id(refined_list[i + 5] if i + 5 < len(refined_list) else ""))
     }
 
 def json_write(sandwich_array):
@@ -218,7 +218,7 @@ def json_write(sandwich_array):
 def get_import(driver):
     try:
         WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.css-vooagt')))
-        time.sleep(1.5)
+        time.sleep(3)
 
         elements = driver.find_elements(By.CSS_SELECTOR, ".css-c8crdy, .css-j4hctk, .css-1d4aeae, .css-1dtafdp, .css-14fj6r6")
         refined_list = [el.text.strip().lower() or el.get_attribute("href") for el in elements]
@@ -260,8 +260,8 @@ def get_import(driver):
                             "bot2": bot2
                         }
 
-                        if sandwich_integrity_check(sandwich):
-                            json_write([sandwich])
+                        #if sandwich_integrity_check(sandwich):
+                        json_write([sandwich])
                         logging.info("✅ Sandwich creato e scritto nel JSON.")
 
                 else:
@@ -289,5 +289,5 @@ if __name__ == "__main__":
         end = time.perf_counter()
         logging.info(f"Execution time: {end - start:.2f} seconds")
 
-        time.sleep(10)
+        time.sleep(45)
 
