@@ -81,6 +81,19 @@ def simplify_rpc_response(rpc_response):
         print("Errore nella semplificazione:", e)
         return {}
 
+def load_existing_ids(output_path):
+    existing_ids = set()
+    if os.path.exists(output_path):
+        with open(output_path, "r") as exfile:
+            for line in exfile:
+                try:
+                    obj = json.loads(line)
+                    if "Id" in obj:
+                        existing_ids.add(obj["Id"])
+                except json.JSONDecodeError:
+                    continue
+    return existing_ids
+
 def process_sandwich_file(input_path, output_path):
 
     def enrich_with_details(obj, key="hash"):
@@ -89,18 +102,25 @@ def process_sandwich_file(input_path, output_path):
             try:
                 rpc = transaction_parsing(tx_hash)
                 details = simplify_rpc_response(rpc)
-                obj["details"] = details
+                obj["Details"] = details
             except Exception as e:
-                obj["details"] = {"error": str(e)}
+                obj["Details"] = {"error": str(e)}
         return obj
 
     with open(input_path, "r") as infile:
         lines = infile.readlines()
+        
+    existing_ids = load_existing_ids(output_path)
+    total_lines = len(lines)
 
-    with open(output_path, "w") as outfile:
-        for line in tqdm(lines, total=len(lines), desc="Enrichment transazioni", unit="tx"):
+    with open(output_path, "a") as outfile:
+        for line in tqdm(lines, total=total_lines, desc="Enrichment transazioni", unit="tx",
+                         bar_format="{l_bar}{bar} | {n_fmt}/{total_fmt} | ETA: {remaining} | {rate_fmt}"):
             try:
                 data = json.loads(line)
+                if data.get("Id") in existing_ids:
+                    print("Sandwich already exist")
+                    continue
 
                 if "bot1" in data:
                     data["bot1"] = enrich_with_details(data["bot1"])
