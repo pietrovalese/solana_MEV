@@ -3,43 +3,61 @@ import requests
 import os
 import time
 from tqdm import tqdm
+from ratelimit import limits, sleep_and_retry
 
 csv_file_path = "meme_and_shitcoins_list.csv"
+
+
+# Limite ufficiale CoinGecko: 50 richieste per 60 secondi
+RATE_LIMIT_CALLS = 50
+RATE_LIMIT_PERIOD = 60  # secondi
+
+@sleep_and_retry
+@limits(calls=RATE_LIMIT_CALLS, period=RATE_LIMIT_PERIOD)
+def safe_request(url, params):
+    return requests.get(url, params=params, timeout=15)
 
 def fetch_coins_by_category(category):
     url = "https://api.coingecko.com/api/v3/coins/markets"
     coins = []
     page = 1
+    request_count = 0
 
     while True:
         params = {
             "vs_currency": "usd",
             "category": category,
             "order": "market_cap_desc",
-            "per_page": 250,
+            "per_page": 50,
             "page": page
         }
 
         try:
-            response = requests.get(url, params=params, timeout=10)
+            response = safe_request(url, params=params)
+            request_count += 1
 
             if response.status_code == 429:
-                print(f"⏳ Rate limit per categoria '{category}' — attendo 15 secondi...")
-                time.sleep(15)
-                continue  # riprova la stessa pagina
+                print(f"🚫 Rate limit superato. Attesa 60 secondi prima di riprovare...")
+                time.sleep(60)
+                continue
 
             response.raise_for_status()
             page_coins = response.json()
             if not page_coins:
+                print(f"✅ Fine dei dati per '{category}' (pagina {page})")
                 break
+
             coins.extend(page_coins)
+            print(f"📄 Pagina {page} completata ({len(page_coins)} token)")
             page += 1
+
         except requests.exceptions.RequestException as e:
             print(f"❌ Errore richiesta categoria '{category}': {e}")
             break
-        finally:
-            time.sleep(2)  # attesa *dopo ogni richiesta*, sempre
 
+        time.sleep(1.3)  # margine di sicurezza
+
+    print(f"🔁 Richieste totali effettuate per '{category}': {request_count}")
     return coins
 
 if __name__ == "__main__":
@@ -66,6 +84,7 @@ if __name__ == "__main__":
             time.sleep(6)  # attesa prima della seconda categoria
 
         print(f"\n🔍 Scaricamento token per categoria: {tipo} ({category})...")
+        time.sleep(5)
         coins = fetch_coins_by_category(category)
         print(f"📦 Trovati {len(coins)} token nella categoria '{category}'.")
 
