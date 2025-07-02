@@ -17,37 +17,43 @@ def init_driver():
     return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 def parse_arbitrage_block(text_block):
-    lines = [line.strip() for line in text_block.strip().splitlines() if line.strip()]
-    
-    arb = {}
-    steps = []
-    
-    # Extract header
-    header_match = re.match(r"arb\s+#(\d+)\s+\|\s+bot:\s+(\w+)", lines[0], re.IGNORECASE)
-    if header_match:
-        arb["arb_id"] = (header_match.group(1))
-        arb["bot"] = header_match.group(2)
 
-    # Extract revenue
-    revenue_match = re.match(r"revenue:\s*\+?([\d.]+)\s*sol", lines[1], re.IGNORECASE)
-    if revenue_match:
-        arb["revenue_sol"] = (revenue_match.group(1))
+    data = text_block
+    results = []
+    i = 0
 
-    # Parse steps
-    i = 2
-    while i < len(lines):
-        platform = lines[i]
-        amount = (lines[i + 1].replace(',', ''))
-        token = lines[i + 2].upper()
-        steps.append({
-            "platform": platform,
-            "amount": amount,
-            "token": token
-        })
-        i += 3
+    while i < len(data):
+        if data[i].startswith("Arb"):
+            arb = {}
+            arb_id = data[i]
+            bot_id = arb_id.split("| Bot: ")[1]
+            arb["bot"] = bot_id
+            i += 1
 
-    arb["steps"] = steps
-    return arb
+            revenue = data[i].split(": ")[1].split(" ")[0]
+            arb["revenue_sol"] = float(revenue)
+            i += 1
+
+            arb["trades"] = []
+            while i < len(data) and not data[i].startswith("Arb"):
+                trade = {
+                    "platform": data[i],
+                    "from_amount": data[i+1],
+                    "from_token": data[i+2],
+                    "to_amount": data[i+3],
+                    "to_token": data[i+4],
+                }
+                arb["trades"].append(trade)
+                i += 5
+
+            results.append(arb)
+
+    # Salva in formato JSONL
+    with open("arbs.jsonl", "w") as f:
+        for arb in results:
+            json.dump(arb, f)
+            f.write("\n")
+
 
 def get_arbs(driver):
     try:
@@ -70,40 +76,12 @@ def get_arbs(driver):
             except Exception as inner_e:
                 logging.warning(f"Failed to access element content: {inner_e}")
                 continue
-
-        # Group lines into arbitrage blocks
-        arbs = []
-        block = []
-        for line in refined_list:
-            if re.match(r"arb\s+#\d+\s+\|\s+bot:", line.lower()):
-                if block:  # If previous block exists, parse it
-                    try:
-                        arb_json = parse_arbitrage_block("\n".join(block))
-                        arbs.append(arb_json)
-                    except Exception as parse_error:
-                        logging.warning(f"Failed to parse arbitrage block: {parse_error}")
-                block = [line]  # Start new block
-            else:
-                block.append(line)
-
-        # Don't forget the last block
-        if block:
-            try:
-                arb_json = parse_arbitrage_block("\n".join(block))
-                arbs.append(arb_json)
-            except Exception as parse_error:
-                logging.warning(f"Failed to parse final arbitrage block: {parse_error}")
-
-        # Append results to a .jsonl file
-        with open("arbitrages.jsonl", "a", encoding="utf-8") as f:
-            for arb in arbs:
-                f.write(json.dumps(arb) + "\n")
-                
+        
+        print(refined_list)
+        parse_arbitrage_block(refined_list)
+              
     except Exception as e:
         logging.error("Errore durante get_arbs", exc_info=e)
-
-
-
 
 if __name__ == "__main__":
     
