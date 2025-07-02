@@ -16,6 +16,47 @@ def init_driver():
     options = Options()
     return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
+def remove_duplicate_ids(filename):
+    seen_ids = set()
+    unique_entries = []
+
+    # Leggi tutte le righe e filtra duplicati
+    with open(filename, "r", encoding="utf-8") as f:
+        for line in f:
+            try:
+                obj = json.loads(line)
+                obj_id = obj.get("ID")
+                if obj_id and obj_id not in seen_ids:
+                    seen_ids.add(obj_id)
+                    unique_entries.append(obj)
+                # Se obj_id è duplicato, ignora
+            except json.JSONDecodeError:
+                # Ignora righe malformate
+                continue
+
+    # Riscrivi il file con solo entrate uniche
+    with open(filename, "w", encoding="utf-8") as f:
+        for entry in unique_entries:
+            json.dump(entry, f, ensure_ascii=False)
+            f.write("\n")
+            
+def create_ID(obj):
+    result = []
+
+    def extract_strings(item):
+        if isinstance(item, dict):
+            for value in item.values():
+                extract_strings(value)
+        elif isinstance(item, list):
+            for element in item:
+                extract_strings(element)
+        elif isinstance(item, str):
+            result.append(item)
+
+    extract_strings(obj)
+    id= ''.join(result)
+    return hashlib.sha256(id.encode('utf-8')).hexdigest()
+
 def parse_arbitrage_block(text_block):
 
     data = text_block
@@ -46,14 +87,15 @@ def parse_arbitrage_block(text_block):
                 arb["trades"].append(trade)
                 i += 5
 
+            id = create_ID(arb)
+            arb["ID"] = id
+            
             results.append(arb)
 
-    # Salva in formato JSONL
-    with open("arbs.jsonl", "w") as f:
+    with open("arbitrages.jsonl", "w") as f:
         for arb in results:
             json.dump(arb, f)
             f.write("\n")
-
 
 def get_arbs(driver):
     try:
@@ -93,7 +135,7 @@ if __name__ == "__main__":
         driver.get(url)
 
         get_arbs(driver)
-
+        remove_duplicate_ids("arbitrages.jsonl")
         driver.quit()
 
         end = time.perf_counter()
