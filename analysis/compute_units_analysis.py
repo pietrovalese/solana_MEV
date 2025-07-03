@@ -26,9 +26,10 @@ for entry in existing_sandwich:
         victims_cu = sum(v["Details"]["compute_units_consumed"] for v in entry.get("victims", []))
         total_cu = bot1_cu + bot2_cu + victims_cu
         
-        value_start = float(entry["bot1"]["value_start"].replace(',', ''))
-        value_end = float(entry["bot2"]["value_end"].replace(',', ''))
-        profit = value_end - value_start
+        if entry["bot1"]["token_start"] == "sol":
+            value_start = float(entry["bot1"]["value_start"].replace(',', ''))
+            value_end = float(entry["bot2"]["value_end"].replace(',', ''))
+            profit = value_end - value_start
         
         num_victims = len(entry.get("victims", []))
     
