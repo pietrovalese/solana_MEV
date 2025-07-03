@@ -92,7 +92,7 @@ def parse_arbitrage_block(text_block):
             
             results.append(arb)
 
-    with open("arbitrages.jsonl", "w") as f:
+    with open("arbitrages.jsonl", "a") as f:
         for arb in results:
             json.dump(arb, f)
             f.write("\n")

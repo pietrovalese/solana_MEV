@@ -1,31 +1,39 @@
 #!/bin/bash
 
+# Nome della sessione tmux
+SESSION="sandwich_session"
+
 # Step 1: Copia file
 cp sandwich.jsonl sandwich_appoggio.jsonl
 echo "✅ Copiato sandwich.jsonl -> sandwich_appoggio.jsonl"
 
-# Step 2: Lancia gli script in background e salva i PID
-gnome-terminal -- bash -c "python3 sandwich.py; exec bash" &
-pid1=$!
+# Step 2: Crea nuova sessione tmux in background
+tmux new-session -d -s $SESSION -n main
 
-gnome-terminal -- bash -c "python3 helius_rpc_details.py; exec bash" &
-pid2=$!
+# Step 3: Lancia i comandi nei vari pannelli
 
-gnome-terminal -- bash -c "python3 arbitrage.py; exec bash" &
-pid3=$!
+# Pannello 0: sandwich.py
+tmux send-keys -t $SESSION:0 'python3 sandwich.py; bash' C-m
 
-gnome-terminal -- bash -c "python3 memecoin.py; exec bash" &
-pid4=$!
+# Split orizzontale per helius_rpc_details.py
+tmux split-window -h -t $SESSION
+tmux send-keys -t $SESSION 'python3 helius_rpc_details.py; bash' C-m
 
+# Split verticale per arbitrage.py
+tmux split-window -v -t $SESSION:0.0
+tmux send-keys -t $SESSION 'python3 arbitrage.py; bash' C-m
+
+# Se vuoi un altro split per memecoin.py
+tmux select-pane -t $SESSION:0.1
+tmux split-window -v -t $SESSION
+tmux send-keys -t $SESSION 'python3 memecoin.py; bash' C-m
+
+tmux attach -t $SESSION
+
+# Step 4: Messaggio di attesa
 echo "⏳ Script attivo per 8 ore..."
-sleep 28800  # 8 ore
+sleep 28800
 
-echo "⏹️ Tempo scaduto: terminazione dei processi..."
-
-# (Facoltativo) Uccide eventuali processi Python attivi (più aggressivo):
-pkill -f sandwich.py
-pkill -f helius_rpc_details.py
-pkill -f arbitrage.py
-pkill -f memecoin.py
-
+# Step 5: Uccidi la sessione tmux
+tmux kill-session -t $SESSION
 echo "✅ Tutti i processi python terminati."

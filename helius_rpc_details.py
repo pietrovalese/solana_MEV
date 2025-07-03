@@ -144,7 +144,7 @@ def process_sandwich_file(input_path, output_path):
 
 
 if __name__ == "__main__":
-    process_sandwich_file("sandwich_reduced.jsonl", "sandwich_dettagliato.jsonl")
+    process_sandwich_file("sandwich_appoggio.jsonl", "sandwich_enriched.jsonl")
     
         
 
