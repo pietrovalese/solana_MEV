@@ -119,7 +119,6 @@ def get_arbs(driver):
                 logging.warning(f"Failed to access element content: {inner_e}")
                 continue
         
-        print(refined_list)
         parse_arbitrage_block(refined_list)
               
     except Exception as e:
@@ -141,4 +140,4 @@ if __name__ == "__main__":
         end = time.perf_counter()
         logging.info(f"Execution time: {end - start:.2f} seconds")
 
-        time.sleep(10)
+        time.sleep(5)
