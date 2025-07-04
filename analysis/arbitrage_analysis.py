@@ -3,6 +3,7 @@ import plotly.express as px
 from scipy.stats import pearsonr, spearmanr
 import os
 import json
+import numpy as np
 from collections import Counter
 
 # Path assoluto della cartella 'project/'
@@ -17,6 +18,27 @@ if __name__ == "__main__":
     except json.JSONDecodeError as e:
         print("Errore nel file JSON:", e)
         existing_arbitrages = []
+    
+    # Leggi il CSV delle memecoin
+    memecoin_df = pd.read_csv(MEME_FILE)  # aggiorna il path
+
+    # Crea un set con i ticker delle memecoin (in maiuscolo per evitare mismatch)
+    memecoin_set = set(memecoin_df["Ticker"].str.upper())
+    
+    arb_flags = []
+
+    for arb in existing_arbitrages:
+       tokens = set()
+       for trade in arb.get("trades", []):
+           from_token = trade.get("from_token")
+           to_token = trade.get("to_token")
+
+           if from_token: tokens.add(from_token.upper())
+           if to_token: tokens.add(to_token.upper())
+
+       # L'arbitraggio è memecoin se almeno uno dei token coinvolti è memecoin
+       is_memecoin_arb = any(token in memecoin_set for token in tokens)
+       arb_flags.append(is_memecoin_arb)
     
     revenues = []
     platform_counter = Counter()
@@ -48,16 +70,33 @@ if __name__ == "__main__":
 
 
     # Statistiche sul revenue
-    total_revenue = sum(revenues)
-    average_revenue = total_revenue / len(revenues) if revenues else 0
-    max_revenue = max(revenues) if revenues else 0
-    min_revenue = min(revenues) if revenues else 0
+    revenue_array = np.array(revenues)
+
+    total_revenue = revenue_array.sum()
+    average_revenue = revenue_array.mean()
+    max_revenue = revenue_array.max() if revenues else 0
+    min_revenue = revenue_array.min() if revenues else 0
+    std_revenue = revenue_array.std()
+    q25 = np.percentile(revenue_array, 25)
+    q50 = np.percentile(revenue_array, 50)
+    q75 = np.percentile(revenue_array, 75)
+    
+    IQR = q75 - q25
+
+    # Soglie per outlier
+    lower_bound = q75 - 1.5 * IQR
+    upper_bound = q25 + 1.5 * IQR
+    filtered_revenue_array = revenue_array[(revenue_array >= lower_bound) & (revenue_array <= upper_bound)]
 
     # Stampa risultati
     print(f"📊 Totale Revenue: {total_revenue:.6f} SOL")
     print(f"📈 Revenue medio: {average_revenue:.6f} SOL")
-    print(f"🔺 Revenue massimo: {max_revenue:.6f} SOL")
-    print(f"🔻 Revenue minimo: {min_revenue:.6f} SOL")
+    print(f"📉 Revenue minimo: {min_revenue:.6f} SOL")
+    print(f"📈 Revenue massimo: {max_revenue:.6f} SOL")
+    print(f"📊 Deviazione standard: {std_revenue:.6f} SOL")
+    print(f"📊 Quantile 25%: {q25:.6f} SOL")
+    print(f"📊 Mediana (50%): {q50:.6f} SOL")
+    print(f"📊 Quantile 75%: {q75:.6f} SOL")
     print("\n🏆 Piattaforme più frequenti:")
     for platform, count in platform_counter.most_common():
         print(f"  - {platform}: {count} volte")
@@ -65,26 +104,19 @@ if __name__ == "__main__":
     # Calcola il numero di trade per ogni arbitraggio
     num_trades_per_arb = [len(data.get("trades", [])) for data in existing_arbitrages]
     
-
     # DataFrame per visualizzazione
     df_trades = pd.DataFrame({
-        "num_trades": num_trades_per_arb,
-        "revenue_sol": revenues  # già raccolti prima
+    "num_trades": num_trades_per_arb,
+    "revenue_sol": revenues,
+    "is_memecoin": arb_flags
     })
 
     pearson_corr, _ = pearsonr(df_trades["num_trades"], df_trades["revenue_sol"])
     spearman_corr, _ = spearmanr(df_trades["num_trades"], df_trades["revenue_sol"])
 
-    print(f"📎 Pearson correlation: {pearson_corr:.4f}")
-    print(f"📎 Spearman correlation: {spearman_corr:.4f}")
+    #print(f"📎 Pearson correlation: {pearson_corr:.4f}")
+    #print(f"📎 Spearman correlation: {spearman_corr:.4f}")
 
-
-
-    # Leggi il CSV delle memecoin
-    memecoin_df = pd.read_csv(MEME_FILE)  # aggiorna il path
-
-    # Crea un set con i ticker delle memecoin (in maiuscolo per evitare mismatch)
-    memecoin_set = set(memecoin_df["Ticker"].str.upper())
 
     # Lista dei token coinvolti negli arbitraggi (già in token_counter)
     tokens_involved = set(token_counter.keys())
@@ -92,15 +124,15 @@ if __name__ == "__main__":
     # Trova quali token sono memecoin
     memecoin_in_arbitrage = tokens_involved.intersection(memecoin_set)
 
-    print(f"Token coinvolti che sono memecoin ({len(memecoin_in_arbitrage)}):")
-    print(sorted(memecoin_in_arbitrage))
+    #print(f"Token coinvolti che sono memecoin ({len(memecoin_in_arbitrage)}):")
+    #print(sorted(memecoin_in_arbitrage))
 
     # Conta il totale di occorrenze per le memecoin
     memecoin_counts = {token: count for token, count in token_counter.items() if token.upper() in memecoin_set}
 
-    print("\nConteggio memecoin negli arbitraggi:")
-    for token, count in sorted(memecoin_counts.items(), key=lambda x: x[1], reverse=True):
-        print(f"- {token}: {count} occorrenze")
+    #print("\nConteggio memecoin negli arbitraggi:")
+    #for token, count in sorted(memecoin_counts.items(), key=lambda x: x[1], reverse=True):
+    #    print(f"- {token}: {count} occorrenze")
 
 
     fig_trade_count = px.histogram(
@@ -124,12 +156,12 @@ if __name__ == "__main__":
 
     fig_trade_count.show()
 
-
     
     # crea DataFrame da Counter
     df_platforms = pd.DataFrame(platform_counter.items(), 
                                 columns=["platform", "count"])
-
+    df_platforms = df_platforms.head(20)
+    
     # Plot: piattaforme ordinate per frequenza
     fig_plat = px.bar(df_platforms.sort_values(by="count", ascending=False),
                       x="platform", y="count",
@@ -143,7 +175,7 @@ if __name__ == "__main__":
     df_tokens = pd.DataFrame(token_counter.items(), columns=["token", "count"])
     df_tokens["is_memecoin"] = df_tokens["token"].str.upper().isin(memecoin_set)
     df_tokens = df_tokens.sort_values(by="count", ascending=False)
-    df_tokens = df_tokens[df_tokens["count"] >= 10]
+    df_tokens = df_tokens.head(25)
 
     fig = px.bar(
         df_tokens,
@@ -160,5 +192,35 @@ if __name__ == "__main__":
     fig.update_layout(xaxis_tickangle=-45)
 
     fig.show()
+    
+    fig_comp = px.box(
+    df_trades[df_trades["revenue_sol"].between(lower_bound, upper_bound)],
+    x="is_memecoin",
+    y="revenue_sol",
+    points="outliers",
+    title="Distribuzione del Revenue (senza outlier)",
+    labels={"is_memecoin": "Memecoin?", "revenue_sol": "Revenue (SOL)"},
+    template="plotly_white",
+    color="is_memecoin",
+    color_discrete_map={True: "crimson", False: "steelblue"}
+    )
 
+    fig_comp.update_traces(
+        marker=dict(size=4, opacity=0.7),
+        line=dict(width=1.5),
+        boxmean=True
+    )
+
+    fig_comp.update_layout(
+        xaxis=dict(
+            tickmode="array",
+            tickvals=[True, False],
+            ticktext=["Memecoin", "Non-Memecoin"]
+        ),
+        yaxis_title="Revenue (SOL)",
+        title_font_size=18,
+        plot_bgcolor="white"
+    )
+
+    fig_comp.show()
 
