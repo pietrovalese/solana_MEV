@@ -30,10 +30,6 @@ tmux send-keys -t $SESSION 'python3 memecoin.py; bash' C-m
 
 tmux attach -t $SESSION
 
-# Step 4: Messaggio di attesa
-echo "⏳ Script attivo per 8 ore..."
-sleep 28800
-
 # Step 5: Uccidi la sessione tmux
-tmux kill-session -t $SESSION
-echo "✅ Tutti i processi python terminati."
+#tmux kill-session -t $SESSION
+

@@ -6,7 +6,7 @@ import json
 
 # Path assoluto della cartella 'project/'
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-SANDWICH_FILE = os.path.join(BASE_DIR, "sandwich_dettagliato.jsonl")
+SANDWICH_FILE = os.path.join(BASE_DIR, "sandwich_enriched.jsonl")
 
 if __name__ == "__main__":
     try:
