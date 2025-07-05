@@ -31,5 +31,5 @@ tmux send-keys -t $SESSION 'python3 memecoin.py; bash' C-m
 tmux attach -t $SESSION
 
 # Step 5: Uccidi la sessione tmux
-#tmux kill-session -t $SESSION
+#tmux kill-session -t sandwich_session
 
