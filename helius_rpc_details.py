@@ -35,6 +35,19 @@ def transaction_parsing(tx_hash):
 def get_epoch_from_slot(slot, slots_per_epoch=432000):
     return slot // slots_per_epoch if slot else None
 
+def compute_fee_object(details):
+    fee = details.get("fee", 0)
+    cu = details.get("computeUnitsConsumed", 0)
+    priority_fee = max(fee - 5000, 0)
+    fee_per_cu = round(priority_fee / cu, 6) if cu > 0 else None
+
+    return {
+        "total_fee": fee,
+        "transaction_fee": 5000,
+        "priority_fee": priority_fee,
+        "fee_per_cu": fee_per_cu
+    }
+
 def simplify_rpc_response(rpc_response):
     try:
         tx = rpc_response.get("result", {})
@@ -47,7 +60,7 @@ def simplify_rpc_response(rpc_response):
             "blockTime": tx.get("blockTime"),
             "slot": tx.get("slot"),
             "epoch": get_epoch_from_slot(tx.get("slot")),
-            "fee": meta.get("fee"),
+            "fee": compute_fee_object(meta),
             "compute_units_consumed": meta.get("computeUnitsConsumed"),
             "status": "success" if meta.get("err") is None else "error",
             "signer": account_keys[0] if account_keys else None,
@@ -144,7 +157,7 @@ def process_sandwich_file(input_path, output_path):
 
 
 if __name__ == "__main__":
-    process_sandwich_file("sandwich_appoggio.jsonl", "sandwich_enriched.jsonl")
+    process_sandwich_file("sandwich_appoggio.jsonl", "sandwiches_annotated.jsonl")
     
         
 
