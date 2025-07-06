@@ -2,6 +2,7 @@ import requests
 import csv
 import time
 import pandas as pd
+import os
 
 API_KEY = "ec0b3aa9-2e83-48fc-95eb-71b52f0d424a"
 HEADERS = {
@@ -44,7 +45,7 @@ def get_all_coins_by_category_id(category_id):
         all_coins.extend(coins)
         start += limit
 
-        time.sleep(2.5)  # ⏱️ attende per rispettare il rate limit
+        time.sleep(2.5) 
     return all_coins
 
 def save_coins_to_csv(coins, filename="meme_coins.csv", write_header=False):
@@ -102,10 +103,12 @@ def main():
 
     # Salva nel nuovo file
     merged_df.to_csv("memecoin_unificato.csv", index=False)
+    os.remove("meme_coins.csv")
 
     print("✅ Unione completata: salvato come 'memecoin_unificato.csv'")
 
 
 if __name__ == "__main__":
     main()
+    
     

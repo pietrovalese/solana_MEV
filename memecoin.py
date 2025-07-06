@@ -55,7 +55,7 @@ def fetch_coins_by_category(category):
             print(f"❌ Errore richiesta categoria '{category}': {e}")
             break
 
-        time.sleep(1.3)  # margine di sicurezza
+        time.sleep(5)  # margine di sicurezza
 
     print(f"🔁 Richieste totali effettuate per '{category}': {request_count}")
     return coins
@@ -81,7 +81,7 @@ if __name__ == "__main__":
 
     for i, (category, tipo) in enumerate(categories.items()):
         if i > 0:
-            time.sleep(6)  # attesa prima della seconda categoria
+            time.sleep(10)  # attesa prima della seconda categoria
 
         print(f"\n🔍 Scaricamento token per categoria: {tipo} ({category})...")
         time.sleep(5)

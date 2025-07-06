@@ -10,7 +10,7 @@ from scipy.stats import pointbiserialr
 
 # Path assoluto della cartella 'project/'
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-SANDWICH_FILE = os.path.join(BASE_DIR, "sandwich_enriched.jsonl")
+SANDWICH_FILE = os.path.join(BASE_DIR, "sandwiches_annotated.jsonl")
 MEME_FILE = os.path.join(BASE_DIR, "meme_and_shitcoins_list.csv")
 
 if __name__ == "__main__":
@@ -110,7 +110,7 @@ if __name__ == "__main__":
             marker_color='mediumturquoise'
         ))
         fig_bar.update_layout(
-            title="Top 5 Memecoin usate nei Sandwich",
+            title="Top 10 Memecoin usate nei Sandwich",
             xaxis_title="Token",
             yaxis_title="Occorrenze",
         )
@@ -126,13 +126,32 @@ if __name__ == "__main__":
     fig_pie.show()
     
     # Boxplot compute_units divisi per memecoin / non memecoin
+    
+    # --- RIMOZIONE OUTLIER CON IQR ---
+    filtered_df = pd.DataFrame()
+
+    for is_meme_val in df_cu["is_meme"].unique():
+        group = df_cu[df_cu["is_meme"] == is_meme_val]
+        q1 = group["total_cu"].quantile(0.25)
+        q3 = group["total_cu"].quantile(0.75)
+        iqr = q3 - q1
+        lower_bound = q1 - 1.5 * iqr
+        upper_bound = q3 + 1.5 * iqr
+
+        cleaned_group = group[(group["total_cu"] >= lower_bound) & (group["total_cu"] <= upper_bound)]
+        filtered_df = pd.concat([filtered_df, cleaned_group], ignore_index=True)
+
+    # Boxplot compute_units divisi per memecoin / non memecoin (SENZA outlier)
     fig_box = px.box(
-        df_cu, 
+        filtered_df, 
         x="is_meme", 
         y="total_cu", 
-        title="Compute Units Consumate: Memecoin vs Non Memecoin",
+        title="Compute Units Consumate: Memecoin vs Non Memecoin (Outlier Rimossi con IQR)",
         labels={"is_meme": "Memecoin", "total_cu": "Compute Units Totali"},
         category_orders={"is_meme": [False, True]}
     )
     fig_box.update_xaxes(tickvals=[False, True], ticktext=["No", "Sì"])
     fig_box.show()
+
+    
+    

@@ -26,7 +26,8 @@ tmux send-keys -t $SESSION 'python3 arbitrage.py; bash' C-m
 # Se vuoi un altro split per memecoin.py
 tmux select-pane -t $SESSION:0.1
 tmux split-window -v -t $SESSION
-tmux send-keys -t $SESSION 'python3 memecoin.py; bash' C-m
+tmux send-keys -t $SESSION 'python3 memecoin.py && python3 coinmarketcap.py; bash' C-m
+
 
 tmux attach -t $SESSION
 
