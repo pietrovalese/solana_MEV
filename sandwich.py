@@ -109,58 +109,6 @@ def calculate_id(bot1, victims, bot2):
     id_str = bot1["hash"] + bot2["hash"] + ''.join(v["hash"] for v in victims)
     return hashlib.sha256(id_str.encode('utf-8')).hexdigest()
 
-def get_transaction_epoch(tx_block):
-    driver = init_driver()
-    url = f"https://solscan.io/block/{tx_block}"
-    driver.get(url)
-    logging.info(f"Accessing: {url}")
-    try:
-        WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.w-full')))
-        time.sleep(5)
-        elements = driver.find_elements(By.CSS_SELECTOR, '.textLink')
-        values = [el.text.strip().lower() or el.get_attribute("href") for el in elements]
-        numeric_values = [x for x in values if x and x.isdigit()]
-        return [numeric_values[0]] if numeric_values else ""
-    except Exception as e:
-        logging.error("Error fetching data from SolanaFM", exc_info=e)
-        return ""
-    finally:
-        driver.quit()
-
-def get_transaction_info(tx_hash):
-    driver = init_driver()
-    url = f"https://solscan.io/tx/{tx_hash}"
-    driver.get(url)
-    logging.info(f"Accessing: {url}")
-    try:
-        WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CLASS_NAME, 'textLink')))
-        time.sleep(5)
-        block_elements = driver.find_elements(By.CSS_SELECTOR, 'a.textLink')
-        timestamp_elements = driver.find_elements(By.CSS_SELECTOR, '.text-neutral5')
-        fee_elements = driver.find_elements(By.CSS_SELECTOR, '.text-neutral7')
-        result_elements = driver.find_elements(By.CSS_SELECTOR, '.flex-wrap')
-
-        block = [el.text.strip().lower() or el.get_attribute("href") for el in block_elements]
-        timestamps = [el.text.strip().lower() for el in timestamp_elements if el.text.strip()]
-        fees = [el.text.strip().lower() for el in fee_elements if "sol" in el.text.lower() and "$" in el.text]
-        results = [el.text.strip().lower() for el in result_elements if el.text.strip()]
-
-        result_text = next((results[i+1].replace("\n", " --> ") for i in range(len(results)) if results[i] == "result"), "")
-
-        return {
-            "Block": block[1] if len(block) > 1 else "",
-            "Timestamp": timestamps[0] if timestamps else "",
-            "Fee": fees[0] if fees else "",
-            "Priority Fee": fees[1] if len(fees) > 1 else "",
-            "Result": result_text,
-            "Epoch": get_transaction_epoch(block[1]) if len(block) > 1 else ""
-        }
-    except Exception as e:
-        logging.error("Error extracting Solscan info", exc_info=e)
-        return {}
-    finally:
-        driver.quit()
-
 def extract_tx_id(url):
     """Rimuove la parte del link per ottenere solo l'ID della transazione."""
     tx_id = url.replace("https://solscan.io/tx/", "")
@@ -175,7 +123,6 @@ def create_bot_info(refined_list, i):
         "value_end": refined_list[i + 3] if i + 3 < len(refined_list) else "",
         "token_end": refined_list[i + 4] if i + 4 < len(refined_list) else "",
         "hash": extract_tx_id(refined_list[i + 5] if i + 5 < len(refined_list) else ""),
-        #"Details": get_transaction_info(extract_tx_id(refined_list[i + 5] if i + 5 < len(refined_list) else ""))
     }
 
 def create_victim_info(refined_list, i):
@@ -186,7 +133,6 @@ def create_victim_info(refined_list, i):
         "value_end": refined_list[i + 3] if i + 3 < len(refined_list) else "",
         "token_end": refined_list[i + 4] if i + 4 < len(refined_list) else "",
         "hash": extract_tx_id(refined_list[i + 5] if i + 5 < len(refined_list) else ""),
-        #"Details": get_transaction_info(extract_tx_id(refined_list[i + 5] if i + 5 < len(refined_list) else ""))
     }
 
 def json_write(sandwich_array):
