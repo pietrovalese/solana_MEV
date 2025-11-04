@@ -2,17 +2,18 @@ import matplotlib.pyplot as plt
 
 # === Dati Top 10 piattaforme ===
 top_platforms = [
-    ('Meteora DLMM', 1064952), 
-    ('Raydium CPMM', 426458), 
-    ('PumpSwap', 384919), 
-    ('Orca Whirlpools', 306684), 
-    ('Raydium CLMM', 261347), 
-    ('HumidiFi', 258218), 
-    ('Meteora DAMM v2', 220118), 
-    ('Raydium V4', 165849), 
-    ('SolFi', 143636), 
-    ('Meteora Pools', 66238)
+    ('Meteora DLMM', 1767105),
+    ('PumpSwap', 762562),
+    ('HumidiFi', 591573),
+    ('Raydium CPMM', 556960),
+    ('Orca Whirlpools', 536964),
+    ('Raydium CLMM', 512905),
+    ('Meteora DAMM v2', 375473),
+    ('Raydium V4', 253441),
+    ('SolFi', 206902),
+    ('TesseraV4', 149507)
 ]
+
 
 # === Separiamo nomi e valori ===
 platform_names = [p[0] for p in top_platforms]

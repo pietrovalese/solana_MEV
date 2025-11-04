@@ -18,7 +18,7 @@ import time
 
 # Percorsi file
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-sandwich_path = os.path.join(BASE_DIR, "sandwiches_unique.jsonl")
+sandwich_path = os.path.join(BASE_DIR, "sandwiches_annotated.jsonl")
 meme_list_path = os.path.join(BASE_DIR, "meme_and_shitcoins_list.csv")
 
 # Lettura memecoin
@@ -220,7 +220,7 @@ exchange = ccxt.binance()
 EPOCH_808_START = datetime(2025, 6, 25, 6, 58, 38)  # Inizio esatto epoca 808
 EPOCH_DURATION_HOURS = 48  # Durata di ogni epoca in ore
 START_EPOCH = 808
-END_EPOCH = 841
+END_EPOCH = 848
 
 print(f"Raccolta dati dall'epoca {START_EPOCH} all'epoca {END_EPOCH}")
 

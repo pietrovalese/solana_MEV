@@ -274,8 +274,8 @@ exchange = ccxt.binance()
 # Configurazione epoche Solana
 EPOCH_808_START = datetime(2025, 6, 25, 6, 58, 38)  # inizio epoca 808
 EPOCH_DURATION_HOURS = 48
-START_EPOCH = 808
-END_EPOCH = 836
+START_EPOCH = 814
+END_EPOCH = 848
 
 print(f"Raccolta dati prezzo SOL per epoche {START_EPOCH}-{END_EPOCH}...")
 
