@@ -45,21 +45,37 @@ ax.bar(x + width/2, df["arbitrage_count"], width, label="Arbitrage count", color
 # Scala logaritmica sull'asse y
 ax.set_yscale("log")
 
-# Linee orizzontali delle medie geometriche
-ax.axhline(mean_sandwich_log, color="#0b3d91", linestyle="--", linewidth=2)
-ax.axhline(mean_arbitrage_log, color="#b35400", linestyle="--", linewidth=2)
-
-# Etichette a lato asse y (a sinistra)
-ax.text(-1.63, mean_sandwich_log, f"{mean_sandwich_log:.0f}", color="#0b3d91",
-        va='center', ha='right', fontweight='bold')
-ax.text(-1.63, mean_arbitrage_log, f"{mean_arbitrage_log:.0f}", color="#b35400",
-        va='center', ha='right', fontweight='bold')
-
-ax.set_xlabel("Epoca")
-ax.set_ylabel("Numero di eventi")
+ax.set_xlabel("Epoch")
+ax.set_ylabel("Number of events")
 ax.set_xticks(x)
 ax.set_xticklabels(df["epoch"], rotation=45)
 ax.legend()
 ax.grid(True, linestyle="--", alpha=0.6, which="both", axis="y")
 plt.tight_layout()
 plt.show()
+
+# === 🔹 RECAP STATISTICO ===
+total_sandwich = df["sandwich_count"].sum()
+total_arbitrage = df["arbitrage_count"].sum()
+mean_sandwich = df["sandwich_count"].mean()
+mean_arbitrage = df["arbitrage_count"].mean()
+median_sandwich = df["sandwich_count"].median()
+median_arbitrage = df["arbitrage_count"].median()
+
+ratio = total_arbitrage / total_sandwich
+
+print("\n" + "="*70)
+print("🔹 EVENT COUNT RECAP (COMMON EPOCHS)")
+print("="*70)
+print(f"Total sandwich events:   {total_sandwich:,}")
+print(f"Total arbitrage events:  {total_arbitrage:,}")
+print(f"Ratio (arbitrage/sandwich):  {ratio:.2f}x")
+print("-"*70)
+print(f"Mean sandwich count:     {mean_sandwich:,.1f}")
+print(f"Mean arbitrage count:    {mean_arbitrage:,.1f}")
+print(f"Median sandwich count:   {median_sandwich:,.0f}")
+print(f"Median arbitrage count:  {median_arbitrage:,.0f}")
+print("-"*70)
+print(f"Geometric mean (log scale) — sandwich:  {mean_sandwich_log:,.1f}")
+print(f"Geometric mean (log scale) — arbitrage: {mean_arbitrage_log:,.1f}")
+print("="*70)

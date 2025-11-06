@@ -46,10 +46,10 @@ df_sandwich = pd.DataFrame(
 df_arbitrage = pd.DataFrame(list(arbitrage_data.items()), columns=["epoch", "mean_revenue_sol_arbitrage"])
 df_prices = pd.DataFrame(list(prices.items()), columns=["epoch", "price_usd"])
 
-# Merge
+# === Merge ===
 df = (
     df_sandwich
-    .merge(df_arbitrage, on="epoch", how="outer")
+    .merge(df_arbitrage, on="epoch", how="outer", sort=True)
     .merge(df_prices, on="epoch", how="left")
     .sort_values("epoch")
 )
@@ -58,10 +58,11 @@ df = (
 df["mean_revenue_usd_sandwich"] = df["mean_revenue_sol_sandwich"] * df["price_usd"]
 df["mean_revenue_usd_arbitrage"] = df["mean_revenue_sol_arbitrage"] * df["price_usd"]
 
-# === Calcolo statistiche ===
+# === Calcolo statistiche temporali ===
 mean_sandwich_usd = df["mean_revenue_usd_sandwich"].mean(skipna=True)
-mean_arbitrage_usd = df["mean_revenue_usd_arbitrage"].mean(skipna=True)
 std_sandwich_usd = df["mean_revenue_usd_sandwich"].std(skipna=True)
+
+mean_arbitrage_usd = df["mean_revenue_usd_arbitrage"].mean(skipna=True)
 std_arbitrage_usd = df["mean_revenue_usd_arbitrage"].std(skipna=True)
 
 # === Coefficienti di variazione (CV = std / mean * 100) ===
@@ -69,11 +70,12 @@ cv_sandwich = std_sandwich_usd / mean_sandwich_usd * 100
 cv_arbitrage = std_arbitrage_usd / mean_arbitrage_usd * 100
 cv_ratio = cv_sandwich / cv_arbitrage
 
-print(f"\n📊 Deviazione standard del revenue medio (USD):")
-print(f"   • Sandwich:  {std_sandwich_usd:.4f}")
-print(f"   • Arbitrage: {std_arbitrage_usd:.4f}")
+# === Output ===
+print("\n📊 Statistiche del Revenue Medio (USD):")
+print(f"   • Sandwich:  mean = {mean_sandwich_usd:.4f}, std = {std_sandwich_usd:.4f}")
+print(f"   • Arbitrage: mean = {mean_arbitrage_usd:.4f}, std = {std_arbitrage_usd:.4f}")
 
-print(f"\n📈 Coefficiente di variazione (CV):")
+print("\n📈 Coefficiente di Variazione (CV):")
 print(f"   • Sandwich:  {cv_sandwich:.2f}%")
 print(f"   • Arbitrage: {cv_arbitrage:.2f}%")
 
@@ -86,10 +88,37 @@ plt.figure(figsize=(12, 6))
 plt.plot(df_common["epoch"], df_common["mean_revenue_usd_sandwich"], '-o', label="Sandwich Revenue (USD)")
 plt.plot(df_common["epoch"], df_common["mean_revenue_usd_arbitrage"], '-s', label="Arbitrage Revenue (USD)")
 
-plt.title("Revenue Medio per Epoca (in USD)")
+plt.xlabel("Epoch")
+plt.ylabel("Mean Revenue [USD]")
+plt.legend()
+plt.grid(True, linestyle="--", alpha=0.6)
+plt.tight_layout()
+plt.show()
+
+import matplotlib.pyplot as plt
+
+df_common = df.dropna(subset=["mean_revenue_usd_sandwich", "mean_revenue_usd_arbitrage"])
+
+plt.figure(figsize=(12, 6))
+plt.plot(df_common["epoch"], df_common["mean_revenue_usd_sandwich"], '-o', label="Sandwich (USD)")
+plt.plot(df_common["epoch"], df_common["mean_revenue_usd_arbitrage"], '-s', label="Arbitrage (USD)")
+plt.title("Revenue Medio per Epoca (in USD) — Scala Assoluta")
 plt.xlabel("Epoca")
 plt.ylabel("Revenue Medio [USD]")
 plt.legend()
 plt.grid(True, linestyle="--", alpha=0.6)
 plt.tight_layout()
 plt.show()
+
+# Normalizzato rispetto alla media
+plt.figure(figsize=(12, 6))
+plt.plot(df_common["epoch"], df_common["mean_revenue_usd_sandwich"] / mean_sandwich_usd, '-o', label="Sandwich (Normalizzato)")
+plt.plot(df_common["epoch"], df_common["mean_revenue_usd_arbitrage"] / mean_arbitrage_usd, '-s', label="Arbitrage (Normalizzato)")
+plt.title("Revenue Medio per Epoca — Normalizzato alla Media")
+plt.xlabel("Epoca")
+plt.ylabel("Revenue / Media")
+plt.legend()
+plt.grid(True, linestyle="--", alpha=0.6)
+plt.tight_layout()
+plt.show()
+

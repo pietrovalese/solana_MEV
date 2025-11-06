@@ -14,7 +14,6 @@ top_platforms = [
     ('TesseraV4', 149507)
 ]
 
-
 # === Separiamo nomi e valori ===
 platform_names = [p[0] for p in top_platforms]
 platform_values = [p[1] for p in top_platforms]
