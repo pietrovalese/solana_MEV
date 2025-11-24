@@ -94,6 +94,27 @@ def load_jsonl_arbitrages(path):
     df["hour"] = df["datetime"].dt.hour
     return df.groupby("hour").size()
 
+import numpy as np
+
+def gini(x):
+    """
+    Compute the Gini coefficient of array x.
+    """
+    x = np.array(x, dtype=float)
+    if np.amin(x) < 0:
+        raise ValueError("Values cannot be negative for Gini computation.")
+    if np.all(x == 0):
+        return 0.0
+    
+    # Sort values
+    x_sorted = np.sort(x)
+    n = len(x_sorted)
+    
+    # Gini formula
+    cumulative = np.cumsum(x_sorted)
+    gini_index = (2 * np.sum((np.arange(1, n+1) * x_sorted))) / (n * np.sum(x_sorted)) - (n + 1) / n
+    
+    return gini_index
 
 # === 2️⃣ Carica i dati ===
 
@@ -108,6 +129,7 @@ df_compare = pd.DataFrame({
     "sandwiches": sandwiches_hourly,
     "arbitrages": arbitrages_hourly
 }).fillna(0)
+
 
 # === 4️⃣ Plot originale ===
 
@@ -134,14 +156,13 @@ for col in df_minmax.columns:
         df_minmax[col] = df_minmax[col] / max_val
 
 plt.figure(figsize=(12, 6))
-plt.plot(df_minmax.index, df_minmax["tokens"], label="Token (normalizzato)", marker="o")
-plt.plot(df_minmax.index, df_minmax["sandwiches"], label="Sandwiches (normalizzato)", marker="s")
-plt.plot(df_minmax.index, df_minmax["arbitrages"], label="Arbitrages (normalizzato)", marker="^")
+plt.plot(df_minmax.index, df_minmax["tokens"], label="Tokens", marker="o")
+plt.plot(df_minmax.index, df_minmax["sandwiches"], label="Sandwiches", marker="s")
+plt.plot(df_minmax.index, df_minmax["arbitrages"], label="Arbitrages", marker="^")
 
 plt.xticks(range(0, 24))
-plt.xlabel("Ora del giorno (UTC)")
-plt.ylabel("Valore normalizzato (0–1)")
-plt.title("Andamento orario (normalizzazione Min–Max)")
+plt.xlabel("Hour of day (UTC)")
+plt.ylabel("Normalized value (0–1)")
 plt.legend()
 plt.grid(True, linestyle="--", alpha=0.6)
 plt.tight_layout()
@@ -189,3 +210,11 @@ print(corr_matrix)
 
 print("\n📈 Distribuzioni originali:")
 print(df_compare)
+
+gini_tokens = gini(df_density["tokens"])
+gini_sandwiches = gini(df_density["sandwiches"])
+gini_arbs = gini(df_density["arbitrages"])
+
+print("Gini Tokens:", gini_tokens)
+print("Gini Sandwiches:", gini_sandwiches)
+print("Gini Arbitrages:", gini_arbs)
