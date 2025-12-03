@@ -6,8 +6,7 @@ import seaborn as sns
 from scipy import stats
 
 # Leggi il CSV
-df = pd.read_csv('memecoin_with_last_activity.csv')
-
+df = pd.read_csv('memecoin.csv')
 print(f"Righe totali nel dataset: {len(df)}")
 print(f"\nValori mancanti originali:")
 print(df[['launched_at', 'last_activity']].isnull().sum())
@@ -33,7 +32,6 @@ print(f"Date last_activity parsate: {df['last_activity_parsed'].notna().sum()}/{
 
 # Filtra solo le righe con ENTRAMBE le date valide
 df_clean = df.dropna(subset=['launched_at_parsed', 'last_activity_parsed']).copy()
-
 print(f"\nRighe con entrambe le date valide: {len(df_clean)}")
 print(f"Righe scartate: {len(df) - len(df_clean)}")
 
@@ -48,19 +46,48 @@ if durate_negative > 0:
     print(f"\nAttenzione: trovate {durate_negative} durate negative (last_activity prima di launched_at)")
     df_clean = df_clean[df_clean['durata_ore'] >= 0].copy()
 
-print(f"\nRighe finali dopo pulizia: {len(df_clean)}")
-print(f"\nStatistiche durata (ore):")
+print(f"\nRighe dopo rimozione durate negative: {len(df_clean)}")
+print(f"\nStatistiche durata PRIMA della rimozione outlier (ore):")
 print(df_clean['durata_ore'].describe())
+'''
+# ============================================================
+# RIMOZIONE OUTLIER AL 1° E 99° PERCENTILE
+# ============================================================
+p1 = df_clean['durata_ore'].quantile(0.01)
+p99 = df_clean['durata_ore'].quantile(0.99)
 
-# Mostra alcuni esempi di righe scartate (se presenti)
-righe_scartate = df[~df.index.isin(df_clean.index)]
-if len(righe_scartate) > 0:
-    print(f"\n--- Esempi di righe scartate ---")
-    print(righe_scartate[['Nome', 'launched_at', 'last_activity']].head())
+print(f"\n--- Rimozione Outlier ---")
+print(f"1° percentile: {p1:.2f} ore ({p1*60:.2f} minuti)")
+print(f"99° percentile: {p99:.2f} ore ({p99*60:.2f} minuti)")
 
-# Usa df_clean per le tue analisi successive
+# Filtra i dati mantenendo solo quelli tra p1 e p99
+df_no_outliers = df_clean[
+    (df_clean['durata_ore'] <= p99)
+].copy()
+
+outliers_rimossi = len(df_clean) - len(df_no_outliers)
+print(f"\nOutlier rimossi: {outliers_rimossi} ({outliers_rimossi/len(df_clean)*100:.1f}%)")
+print(f"Righe finali dopo rimozione outlier: {len(df_no_outliers)}")
+
+print(f"\nStatistiche durata DOPO rimozione outlier (ore):")
+print(df_no_outliers['durata_ore'].describe())
+
+# Mostra alcuni esempi di outlier rimossi
+if outliers_rimossi > 0:
+    outliers_df = df_clean[
+        (df_clean['durata_ore'] > p99)
+    ]
+    print(f"\n--- Esempi di outlier rimossi ---")
+    print(f"Troppo brevi (< {p1:.2f}h):")
+    print(outliers_df[outliers_df['durata_ore'] < p1][['Nome', 'durata_ore', 'durata_minuti']].head())
+    print(f"\nTroppo lunghi (> {p99:.2f}h):")
+    print(outliers_df[outliers_df['durata_ore'] > p99][['Nome', 'durata_ore']].head())
+
+# Usa df_no_outliers per le tue analisi successive
+df = df_no_outliers
+print(f"\n✅ Dataset finale pronto per l'analisi: {len(df)} righe")
+'''
 df = df_clean
-
 # ============================================
 # STATISTICHE DESCRITTIVE
 # ============================================
@@ -210,6 +237,9 @@ df['last_activity_parsed'] = pd.to_datetime(df['last_activity'])
 df['durata_ore'] = (df['last_activity_parsed'] - df['launched_at_parsed']).dt.total_seconds() / 3600
 df = df[np.isfinite(df['durata_ore'])]
 
+# Rimuovi valori <= 0 prima di applicare scala logaritmica
+df = df[df['durata_ore'] > 0]
+
 # Statistiche
 mean_val = df['durata_ore'].mean()
 median_val = df['durata_ore'].median()
@@ -233,15 +263,31 @@ ax.axhline(mean_val, color='blue', linestyle='--', linewidth=1, label='Mean')
 ax.axhline(median_val, color='orange', linestyle='--', linewidth=1, label='Median')
 ax.axhline(q3_val, color='purple', linestyle='--', linewidth=1, label='75th percentile')
 
+# SCALA LOGARITMICA
+ax.set_yscale('log')
+
 # Dettagli del grafico
-ax.set_ylabel('Lifespan (h)', fontsize=12)
+ax.set_ylabel('Lifespan (hours)', fontsize=10)
 ax.set_xticks([1])
 ax.set_xticklabels(['Token'])
-ax.grid(True, alpha=0.3, axis='y')
+ax.grid(True, alpha=0.3, axis='y', which='both')  # 'both' mostra griglia per major e minor ticks
+
+from matplotlib.ticker import LogLocator, LogFormatter
+
+ax.yaxis.set_major_locator(LogLocator(base=10.0, numticks=10))
+ax.yaxis.set_minor_locator(LogLocator(base=10.0, subs=np.arange(2, 10) * 0.1, numticks=10))
 
 # Legenda posizionata più in basso
 ax.legend(loc='upper right', frameon=False, fontsize=10, bbox_to_anchor=(0.98, 0.92))
 
-plt.savefig('violin_plot_with_q3_labels_fixed.png', dpi=300, bbox_inches='tight')
+plt.savefig('violin_plot_log_scale.png', dpi=300, bbox_inches='tight')
 plt.show()
+
+print(f"\nStatistiche durata (ore):")
+print(f"N. token: {len(df)}")
+print(f"Media: {mean_val:.2f}h")
+print(f"Mediana: {median_val:.2f}h")
+print(f"75° percentile: {q3_val:.2f}h")
+print(f"Min: {df['durata_ore'].min():.2f}h")
+print(f"Max: {df['durata_ore'].max():.2f}h")
 

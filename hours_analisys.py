@@ -218,3 +218,98 @@ gini_arbs = gini(df_density["arbitrages"])
 print("Gini Tokens:", gini_tokens)
 print("Gini Sandwiches:", gini_sandwiches)
 print("Gini Arbitrages:", gini_arbs)
+
+
+from statsmodels.tsa.stattools import grangercausalitytests
+import pandas as pd
+import numpy as np
+
+# Prepara il dataset per il Granger test
+df_granger = df_compare.copy().fillna(0)
+df_granger = df_granger.sort_index()  # ordina per sicurezza
+
+series_names = ["tokens", "sandwiches", "arbitrages"]
+max_lag = 3  # massimo lag da testare
+
+# Matrice dei p-value più bassi
+pval_matrix = pd.DataFrame(np.nan, index=series_names, columns=series_names)
+
+print("\n=== Granger Causality Test (dettagli per coppia) ===")
+
+for y in series_names:
+    for x in series_names:
+        if x == y:
+            continue
+
+        print(f"\n{x} (cause) → {y} (effetto):")
+        df_test = df_granger[[y, x]].fillna(0)
+
+        # Test Granger con stampa dettagliata
+        results = grangercausalitytests(df_test, max_lag, verbose=True)
+
+        # Trova il p-value più basso tra tutti i lag
+        min_p = min([results[lag][0]['ssr_ftest'][1] for lag in results])
+        pval_matrix.loc[y, x] = min_p
+
+# Stampa la tabella dei p-value più bassi
+print("\n📊 Tabella dei p-value più bassi per Granger causality (lag 1–3):")
+print(pval_matrix)
+
+# Crea anche la matrice binaria di significatività
+signif_matrix = (pval_matrix < 0.05).astype(int)
+print("\n📈 Matrice binaria di causalità (1 = significativo, 0 = non significativo):")
+print(signif_matrix)
+
+import networkx as nx
+import matplotlib.pyplot as plt
+
+# Serie e matrice dei p-value
+series_names = ["tokens", "sandwiches", "arbitrages"]
+pval_matrix = pd.DataFrame({
+    "tokens": [np.nan, 0.015637, 0.016758],
+    "sandwiches": [2.9e-05, np.nan, 0.484935],
+    "arbitrages": [3.1e-05, 0.203171, np.nan]
+}, index=series_names)
+
+# Crea grafo diretto
+G = nx.DiGraph()
+
+# Aggiungi nodi
+for node in series_names:
+    G.add_node(node)
+
+# Aggiungi archi pesati (solo p < 0.05)
+for y in series_names:
+    for x in series_names:
+        if x == y:
+            continue
+        p = pval_matrix.loc[y, x]
+        if pd.notna(p) and p < 0.05:
+            weight = 1 / p
+            G.add_edge(x, y, weight=weight, pvalue=p)
+
+# Layout tipo molla per distribuzione più naturale
+pos = nx.spring_layout(G, seed=42, k=1.2)
+
+# Disegna il grafo
+plt.figure(figsize=(8,6))
+plt.gca().set_facecolor('#f0f0f0')  # sfondo chiaro
+
+# Pesatura degli archi per spessore
+weights = [G[u][v]['weight']*0.5 for u,v in G.edges()]
+
+# Disegna nodi con ombra
+nx.draw_networkx_nodes(G, pos, node_size=2500, node_color='skyblue', edgecolors='black', linewidths=1.5)
+nx.draw_networkx_labels(G, pos, font_size=12, font_weight='bold')
+
+# Disegna archi direzionali
+nx.draw_networkx_edges(G, pos, arrowstyle='-|>', arrowsize=20, width=weights, edge_color='red')
+
+# Etichette degli archi con p-value
+edge_labels = {(u, v): f"p={G[u][v]['pvalue']:.3g}" for u, v in G.edges()}
+nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_color='black', label_pos=0.5)
+
+plt.title("Granger Causality Network (pesato per p-value)", fontsize=14, fontweight='bold')
+plt.axis('off')
+plt.tight_layout()
+plt.show()
