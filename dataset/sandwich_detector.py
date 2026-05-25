@@ -1,21 +1,3 @@
-#!/usr/bin/env python3
-"""
-Sandwich Attack Detector — Solana Block  (v2)
-==============================================
-Miglioramenti rispetto alla v1:
-  - Verifica condivisione pool/AMM account (non solo coppia di token)
-  - Filtro tx di voto validator prima del parsing
-  - Stima fee Solana (base + priorità) per validare profitto reale
-  - Penalità gap: tx del bot stesso tra front e back invalidano il match
-  - Slippage stimato per ogni vittima
-  - Supporto cross-DEX (front e back possono usare programmi diversi)
-  - Blocco statistiche completo a fine analisi
-
-Uso:
-    python sandwich_detector.py block.json
-    python sandwich_detector.py block.json --min-profit 0.001 --verbose
-"""
-
 import argparse
 import json
 import math
@@ -26,14 +8,11 @@ from statistics import mean, median
 from typing import Optional
 
 
-# ─── Costanti ─────────────────────────────────────────────────────────────────
-
+# --- Constants ---
 SOL_MINT = "So11111111111111111111111111111111111111112"
-
-# Programma di voto dei validator — da escludere sempre
+# Validator vote program -- always excluded
 VOTE_PROGRAM = "Vote111111111111111111111111111111111111111"
-
-# Fee base per tx Solana in lamport (5000 = ~0.000005 SOL)
+# Base fee per Solana transaction in lamports (5000 = ~0.000005 SOL)
 BASE_FEE_LAMPORTS = 5_000
 
 KNOWN_DEX_PROGRAMS = {
@@ -47,29 +26,25 @@ KNOWN_DEX_PROGRAMS = {
     "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C": "Raydium CPMM",
 }
 
-
-# ─── Strutture dati ───────────────────────────────────────────────────────────
-
+# --- Data structures ---
 @dataclass
 class SwapInfo:
-    tx_index:    int
-    signature:   str
-    signer:      str
-    token_in:    str
-    token_out:   str
-    amount_in:   float
-    amount_out:  float
-    program:     str
-    failed:      bool
-    fee_sol:     float = 0.0          # fee pagata in SOL (base + priorità)
+    tx_index:      int
+    signature:     str
+    signer:        str
+    token_in:      str
+    token_out:     str
+    amount_in:     float
+    amount_out:    float
+    program:       str
+    failed:        bool
+    fee_sol:       float = 0.0            # fee paid in SOL (base + priority)
     pool_accounts: frozenset = field(default_factory=frozenset)
-                                      # account AMM/pool coinvolti nella tx
-
-
+                                          # AMM/pool accounts involved in the tx
 @dataclass
 class VictimInfo:
     swap:              SwapInfo
-    slippage_estimate: float          # % di slippage stimato rispetto al prezzo pre-frontrun
+    slippage_estimate: float              # estimated slippage % vs pre-frontrun price
 
 
 @dataclass
@@ -78,16 +53,18 @@ class SandwichResult:
     victims:        list[VictimInfo]
     backrun:        SwapInfo
     profit_token:   str
-    profit_raw:     float             # delta grezzo (senza fee)
-    profit_net:     float             # profit_raw - fee_frontrun - fee_backrun
-    shared_pools:   frozenset         # pool in comune tra front e back
-    cross_dex:      bool              # True se front e back usano DEX diversi
-    confidence:     str               # "HIGH" / "MEDIUM" / "LOW"
+    profit_raw:     float                 # raw delta (before fees)
+    profit_net:     float                 # profit_raw - fee_frontrun - fee_backrun
+    shared_pools:   frozenset             # pool accounts shared between front and back
+    cross_dex:      bool                  # True if front and back use different DEXes
+    confidence:     str                   # "HIGH" / "MEDIUM" / "LOW"
 
 
-# ─── Helpers generici ─────────────────────────────────────────────────────────
+# --- Generic helpers ---
 
 def get_signer(tx: dict) -> str:
+    """Returns the public key of the first account (fee payer / signer) in a transaction.
+    Returns an empty string if the key cannot be extracted."""
     try:
         account_keys = tx["transaction"]["message"]["accountKeys"]
         first = account_keys[0]
@@ -97,6 +74,8 @@ def get_signer(tx: dict) -> str:
 
 
 def get_account_keys_flat(tx: dict) -> list[str]:
+    """Returns a flat list of all account keys in a transaction, including loaded addresses.
+    Combines static keys with writable and readonly loaded addresses."""
     keys = []
     try:
         for k in tx["transaction"]["message"]["accountKeys"]:
@@ -113,7 +92,8 @@ def get_account_keys_flat(tx: dict) -> list[str]:
 
 
 def is_vote_tx(tx: dict) -> bool:
-    """True se la tx è una tx di voto validator (da escludere)."""
+    """Returns True if the transaction is a validator vote transaction (to be excluded).
+    Detection is based on the presence of the vote program in the account keys."""
     try:
         keys = get_account_keys_flat(tx)
         return VOTE_PROGRAM in keys
@@ -122,6 +102,8 @@ def is_vote_tx(tx: dict) -> bool:
 
 
 def extract_token_transfers(tx: dict) -> list[dict]:
+    """Extracts token balance changes from a transaction's pre/post token balances.
+    Returns a list of dicts with mint, owner, and delta amount."""
     meta = tx.get("meta", {})
     pre  = {b["accountIndex"]: b for b in meta.get("preTokenBalances", [])}
     post = {b["accountIndex"]: b for b in meta.get("postTokenBalances", [])}
@@ -140,6 +122,8 @@ def extract_token_transfers(tx: dict) -> list[dict]:
 
 
 def sol_delta_for_signer(tx: dict, signer: str) -> float:
+    """Computes the net SOL balance change for the signer of a transaction, excluding fees.
+    Returns 0.0 if the signer is not found in the account keys."""
     meta = tx.get("meta", {})
     keys = get_account_keys_flat(tx)
     try:
@@ -150,12 +134,13 @@ def sol_delta_for_signer(tx: dict, signer: str) -> float:
     post = meta.get("postBalances", [])
     if idx >= len(pre) or idx >= len(post):
         return 0.0
-    fee   = meta.get("fee", 0)
+    fee = meta.get("fee", 0)
     return (post[idx] - pre[idx] + fee) / 1e9
 
 
 def get_fee_sol(tx: dict) -> float:
-    """Restituisce la fee totale della tx in SOL (base + priority fee)."""
+    """Returns the total fee paid for a transaction in SOL (base + priority).
+    Falls back to BASE_FEE_LAMPORTS if the fee field is missing."""
     try:
         return tx["meta"].get("fee", BASE_FEE_LAMPORTS) / 1e9
     except (KeyError, TypeError):
@@ -163,11 +148,8 @@ def get_fee_sol(tx: dict) -> float:
 
 
 def get_pool_accounts(tx: dict) -> frozenset:
-    """
-    Restituisce gli account writable della tx che appartengono a DEX noti.
-    Sono i candidate pool/AMM account condivisi tra front e backrun.
-    Usiamo solo i writable perché i pool AMM vengono sempre modificati durante uno swap.
-    """
+    """Returns the writable account keys of a transaction that belong to known DEX programs.
+    Only writable accounts are included since AMM pools are always modified during a swap."""
     try:
         account_keys_raw = tx["transaction"]["message"]["accountKeys"]
         writable_keys = set()
@@ -175,8 +157,8 @@ def get_pool_accounts(tx: dict) -> frozenset:
             if isinstance(k, dict):
                 if k.get("writable"):
                     writable_keys.add(k["pubkey"])
-            # Per tx non-parsed non abbiamo info su writable, skip
-        # Aggiungi writable da loadedAddresses
+            # For non-parsed transactions, writable info is unavailable -- skip
+        # Add writable keys from loadedAddresses
         loaded = tx.get("meta", {}).get("loadedAddresses", {})
         writable_keys.update(loaded.get("writable", []))
         return frozenset(writable_keys)
@@ -184,17 +166,15 @@ def get_pool_accounts(tx: dict) -> frozenset:
         return frozenset()
 
 
-# ─── Parser swap ──────────────────────────────────────────────────────────────
+# --- Swap parser ---
 
 def infer_swap_from_transfers(
     tx_index: int,
     tx: dict,
     verbose: bool = False,
 ) -> Optional[SwapInfo]:
-    """
-    Ricostruisce lo swap principale di una tx dai balance delta.
-    Include fee SOL e pool accounts nel risultato.
-    """
+    """Reconstructs the main swap of a transaction from balance deltas.
+    Returns a SwapInfo with fee and pool accounts, or None if the transaction is not a swap."""
     try:
         meta = tx.get("meta", {})
         if meta.get("err") is not None:
@@ -247,42 +227,33 @@ def infer_swap_from_transfers(
             pass
 
         return SwapInfo(
-            tx_index     = tx_index,
-            signature    = sig,
-            signer       = signer,
-            token_in     = token_in,
-            token_out    = token_out,
-            amount_in    = amount_in,
-            amount_out   = amount_out,
-            program      = program,
-            failed       = False,
-            fee_sol      = get_fee_sol(tx),
-            pool_accounts= get_pool_accounts(tx),
+            tx_index      = tx_index,
+            signature     = sig,
+            signer        = signer,
+            token_in      = token_in,
+            token_out     = token_out,
+            amount_in     = amount_in,
+            amount_out    = amount_out,
+            program       = program,
+            failed        = False,
+            fee_sol       = get_fee_sol(tx),
+            pool_accounts = get_pool_accounts(tx),
         )
 
     except Exception as e:
         if verbose:
-            print(f"[WARN] Errore parsing tx {tx_index}: {e}", file=sys.stderr)
+            print(f"[WARN] Error parsing tx {tx_index}: {e}", file=sys.stderr)
         return None
 
 
-# ─── Stima slippage vittima ───────────────────────────────────────────────────
+# --- Victim slippage estimation ---
 
 def estimate_victim_slippage(
     victim: SwapInfo,
     frontrun: SwapInfo,
 ) -> float:
-    """
-    Stima lo slippage subito dalla vittima confrontando il suo price_impact
-    con il prezzo implicito del frontrun (che ha spostato il pool prima di lei).
-
-    price_fr    = amount_out_fr / amount_in_fr   (prezzo ottenuto dal bot)
-    price_vic   = amount_out_vic / amount_in_vic (prezzo ottenuto dalla vittima)
-
-    Se front e vittima vanno nella stessa direzione (token_in uguale):
-        slippage = (price_fr - price_vic) / price_fr  * 100
-    Altrimenti (direzioni opposte) non ha senso confrontarli → restituisce 0.
-    """
+    """Estimates the slippage suffered by a victim by comparing its implicit price to the frontrun price.
+    Returns 0.0 if the two swaps are in opposite directions or if amounts are zero."""
     if victim.token_in != frontrun.token_in or victim.token_out != frontrun.token_out:
         return 0.0
     if frontrun.amount_in == 0 or victim.amount_in == 0:
@@ -295,7 +266,7 @@ def estimate_victim_slippage(
     return round(slippage, 4)
 
 
-# ─── Classificazione confidenza ──────────────────────────────────────────────
+# --- Confidence classification ---
 
 def classify_confidence(
     fr: SwapInfo,
@@ -305,16 +276,11 @@ def classify_confidence(
     profit_net: float,
     gap: int,
 ) -> str:
-    """
-    Assegna una confidenza al sandwich rilevato.
-
-    HIGH:   pool condivisi + profitto netto > 0 + gap <= 3
-    MEDIUM: pool condivisi OPPURE profitto netto > 0
-    LOW:    nessuno dei criteri forti (possibile falso positivo)
-    """
-    has_shared_pool  = len(shared_pools) > 0
-    has_net_profit   = profit_net > 0
-    tight_gap        = gap <= 3
+    """Assigns a confidence level to a detected sandwich based on shared pools, net profit, and gap size.
+    Returns 'HIGH' if all three criteria are met, 'MEDIUM' if at least one is, 'LOW' otherwise."""
+    has_shared_pool = len(shared_pools) > 0
+    has_net_profit  = profit_net > 0
+    tight_gap       = gap <= 3
 
     score = sum([has_shared_pool, has_net_profit, tight_gap])
 
@@ -326,9 +292,11 @@ def classify_confidence(
         return "LOW"
 
 
-# ─── Algoritmo di detection ───────────────────────────────────────────────────
+# --- Detection algorithm ---
 
 def is_mirror_swap(a: SwapInfo, b: SwapInfo) -> bool:
+    """Returns True if two swaps are mirror operations (A->B and B->A).
+    Used to identify matching frontrun/backrun pairs."""
     return a.token_in == b.token_out and a.token_out == b.token_in
 
 
@@ -338,19 +306,8 @@ def detect_sandwiches(
     min_profit_net: Optional[float] = None,
     verbose: bool = False,
 ) -> list[SandwichResult]:
-    """
-    Algoritmo di detection migliorato:
-
-    Per ogni coppia (frontrun, backrun) che soddisfa:
-      1. stesso signer
-      2. swap speculare (A→B / B→A)
-      3. almeno una vittima in mezzo sullo stesso token pair
-      4. nessuna tx del bot stesso in mezzo (evita falsi positivi)
-      5. pool condivisi tra front e back (quando disponibili)
-      6. profitto netto > soglia (opzionale)
-
-    Restituisce i risultati ordinati per profitto netto decrescente.
-    """
+    """Detects sandwich attacks in a list of ordered swaps using an advanced heuristic.
+    Returns results sorted by descending net profit, optionally filtered by minimum profit."""
     results: list[SandwichResult] = []
     n = len(swaps)
 
@@ -360,25 +317,25 @@ def detect_sandwiches(
         for j in range(i + 2, min(i + 1 + max_gap, n)):
             br = swaps[j]
 
-            # ── Criteri base ────────────────────────────────────────────────
+            # Basic criteria
             if fr.signer != br.signer:
                 continue
             if not is_mirror_swap(fr, br):
                 continue
 
-            # ── Nessuna tx del bot in mezzo (filtro falsi positivi) ─────────
-            # Se il bot fa un'altra operazione tra front e back, probabilmente
-            # non è un sandwich ma due trade separati.
+            # No bot transactions between front and back (avoids false positives)
+            # If the bot makes another operation between front and back, it is likely
+            # two separate trades rather than a sandwich.
             bot_tx_in_between = any(
                 swaps[k].signer == fr.signer
                 for k in range(i + 1, j)
             )
             if bot_tx_in_between:
                 if verbose:
-                    print(f"  [skip] bot ha tx intermedie tra {i} e {j}", file=sys.stderr)
+                    print(f"  [skip] bot has intermediate txs between {i} and {j}", file=sys.stderr)
                 continue
 
-            # ── Vittime: stessa coppia, signer diverso ───────────────────────
+            # Victims: same token pair, different signer
             victim_swaps = [
                 swaps[k]
                 for k in range(i + 1, j)
@@ -390,27 +347,26 @@ def detect_sandwiches(
             if not victim_swaps:
                 continue
 
-            # ── Pool condivisi ───────────────────────────────────────────────
-            # Intersezione degli account writable: se vuota, front e back
-            # non toccano lo stesso pool (probabile falso positivo su token
-            # molto liquidi presenti su molti AMM).
+            # Shared pool accounts: intersection of writable accounts.
+            # If empty, front and back do not touch the same pool
+            # (likely a false positive on highly liquid tokens across many AMMs).
             shared_pools = fr.pool_accounts & br.pool_accounts
             if verbose and not shared_pools:
-                print(f"  [warn] nessun pool condiviso tra frontrun@{i} e backrun@{j}",
+                print(f"  [warn] no shared pool between frontrun@{i} and backrun@{j}",
                       file=sys.stderr)
 
-            # ── Calcolo profitto ─────────────────────────────────────────────
+            # Profit calculation
             profit_raw = br.amount_out - fr.amount_in
             profit_net = profit_raw - fr.fee_sol - br.fee_sol
 
-            # ── Filtro profitto netto minimo ─────────────────────────────────
+            # Minimum net profit filter
             if min_profit_net is not None and profit_net < min_profit_net:
                 if verbose:
-                    print(f"  [skip] profitto netto {profit_net:.6f} < {min_profit_net}",
+                    print(f"  [skip] net profit {profit_net:.6f} < {min_profit_net}",
                           file=sys.stderr)
                 continue
 
-            # ── Slippage vittime ─────────────────────────────────────────────
+            # Victim slippage
             victims = [
                 VictimInfo(
                     swap=v,
@@ -438,32 +394,33 @@ def detect_sandwiches(
             ))
 
             if verbose:
-                print(f"  [match {confidence}] frontrun@{fr.tx_index} → "
-                      f"backrun@{br.tx_index} signer={fr.signer[:8]}… "
+                print(f"  [match {confidence}] frontrun@{fr.tx_index} -> "
+                      f"backrun@{br.tx_index} signer={fr.signer[:8]}... "
                       f"pool_shared={len(shared_pools)} profit_net={profit_net:.6f}",
                       file=sys.stderr)
             break
 
-    # Ordina per profitto netto decrescente
+    # Sort by descending net profit
     results.sort(key=lambda s: s.profit_net, reverse=True)
     return results
 
 
-# ─── Statistiche ─────────────────────────────────────────────────────────────
+# --- Statistics ---
 
 def compute_stats(
     sandwiches: list[SandwichResult],
     total_txs: int,
     total_swaps: int,
 ) -> dict:
-    """Calcola statistiche aggregate sui sandwich trovati."""
+    """Computes aggregate statistics over the detected sandwiches.
+    Returns a dict with profit summaries, top bots, DEX breakdown, and confidence distribution."""
     if not sandwiches:
         return {}
 
     profits_net = [s.profit_net for s in sandwiches]
     profits_raw = [s.profit_raw for s in sandwiches]
 
-    # Bot più attivi
+    # Most active bots
     bot_count: dict[str, int] = {}
     bot_profit: dict[str, float] = {}
     for s in sandwiches:
@@ -473,13 +430,13 @@ def compute_stats(
 
     top_bots = sorted(bot_count.items(), key=lambda x: x[1], reverse=True)[:5]
 
-    # DEX più colpiti (conteggio vittime per DEX del frontrun)
+    # Most targeted DEXes (victim count per frontrun DEX)
     dex_count: dict[str, int] = {}
     for s in sandwiches:
         dex = s.frontrun.program
         dex_count[dex] = dex_count.get(dex, 0) + len(s.victims)
 
-    # Slippage medio vittime
+    # Average victim slippage
     all_slippages = [
         v.slippage_estimate
         for s in sandwiches
@@ -487,17 +444,17 @@ def compute_stats(
         if v.slippage_estimate != 0
     ]
 
-    # Distribuzione confidenza
+    # Confidence distribution
     conf_dist: dict[str, int] = {"HIGH": 0, "MEDIUM": 0, "LOW": 0}
     for s in sandwiches:
         conf_dist[s.confidence] += 1
 
     return {
-        "total_sandwiches":      len(sandwiches),
-        "total_txs_in_block":    total_txs,
-        "total_swaps_parsed":    total_swaps,
-        "sandwich_rate_pct":     round(len(sandwiches) / max(total_swaps, 1) * 100, 2),
-        "cross_dex_count":       sum(1 for s in sandwiches if s.cross_dex),
+        "total_sandwiches":        len(sandwiches),
+        "total_txs_in_block":      total_txs,
+        "total_swaps_parsed":      total_swaps,
+        "sandwich_rate_pct":       round(len(sandwiches) / max(total_swaps, 1) * 100, 2),
+        "cross_dex_count":         sum(1 for s in sandwiches if s.cross_dex),
         "confidence_distribution": conf_dist,
         "profit_net": {
             "min":    round(min(profits_net), 6),
@@ -507,14 +464,14 @@ def compute_stats(
             "total":  round(sum(profits_net), 6),
         },
         "profit_raw": {
-            "min":    round(min(profits_raw), 6),
-            "max":    round(max(profits_raw), 6),
-            "mean":   round(mean(profits_raw), 6),
-            "total":  round(sum(profits_raw), 6),
+            "min":   round(min(profits_raw), 6),
+            "max":   round(max(profits_raw), 6),
+            "mean":  round(mean(profits_raw), 6),
+            "total": round(sum(profits_raw), 6),
         },
         "victim_slippage_pct": {
-            "mean":   round(mean(all_slippages), 4) if all_slippages else None,
-            "max":    round(max(all_slippages), 4)  if all_slippages else None,
+            "mean": round(mean(all_slippages), 4) if all_slippages else None,
+            "max":  round(max(all_slippages), 4)  if all_slippages else None,
         },
         "top_bots": [
             {
@@ -529,138 +486,148 @@ def compute_stats(
 
 
 def print_stats(stats: dict) -> None:
+    """Prints a formatted block statistics summary to stdout.
+    Does nothing if stats is empty."""
     if not stats:
         return
 
     W = 68
-    print(f"\n{'═'*W}")
-    print(f"  STATISTICHE BLOCCO")
-    print(f"{'═'*W}")
-    print(f"  Tx totali nel blocco      : {stats['total_txs_in_block']}")
-    print(f"  Swap identificati         : {stats['total_swaps_parsed']}")
-    print(f"  Sandwich rilevati         : {stats['total_sandwiches']}")
-    print(f"  Tasso sandwich/swap       : {stats['sandwich_rate_pct']}%")
+    print(f"\n{'='*W}")
+    print(f"  BLOCK STATISTICS")
+    print(f"{'='*W}")
+    print(f"  Total txs in block        : {stats['total_txs_in_block']}")
+    print(f"  Swaps identified          : {stats['total_swaps_parsed']}")
+    print(f"  Sandwiches detected       : {stats['total_sandwiches']}")
+    print(f"  Sandwich/swap rate        : {stats['sandwich_rate_pct']}%")
     print(f"  Cross-DEX                 : {stats['cross_dex_count']}")
 
     cd = stats["confidence_distribution"]
-    print(f"\n  Confidenza:")
+    print(f"\n  Confidence:")
     print(f"    HIGH   : {cd['HIGH']}")
     print(f"    MEDIUM : {cd['MEDIUM']}")
     print(f"    LOW    : {cd['LOW']}")
 
     pn = stats["profit_net"]
     pr = stats["profit_raw"]
-    token_label = "SOL"   # il profitto è quasi sempre in SOL
-    print(f"\n  Profitto netto (fee dedotte) [{token_label}]:")
-    print(f"    Totale  : {pn['total']:+.6f}")
-    print(f"    Media   : {pn['mean']:+.6f}")
-    print(f"    Mediana : {pn['median']:+.6f}")
-    print(f"    Min/Max : {pn['min']:+.6f} / {pn['max']:+.6f}")
+    token_label = "SOL"   # profit is almost always denominated in SOL
+    print(f"\n  Net profit (fees deducted) [{token_label}]:")
+    print(f"    Total  : {pn['total']:+.6f}")
+    print(f"    Mean   : {pn['mean']:+.6f}")
+    print(f"    Median : {pn['median']:+.6f}")
+    print(f"    Min/Max: {pn['min']:+.6f} / {pn['max']:+.6f}")
 
-    print(f"\n  Profitto grezzo (senza fee) [{token_label}]:")
-    print(f"    Totale  : {pr['total']:+.6f}")
-    print(f"    Media   : {pr['mean']:+.6f}")
+    print(f"\n  Raw profit (before fees) [{token_label}]:")
+    print(f"    Total  : {pr['total']:+.6f}")
+    print(f"    Mean   : {pr['mean']:+.6f}")
 
     vs = stats["victim_slippage_pct"]
     if vs["mean"] is not None:
-        print(f"\n  Slippage stimato vittime:")
-        print(f"    Media   : {vs['mean']:.4f}%")
-        print(f"    Massimo : {vs['max']:.4f}%")
+        print(f"\n  Estimated victim slippage:")
+        print(f"    Mean   : {vs['mean']:.4f}%")
+        print(f"    Max    : {vs['max']:.4f}%")
 
     if stats["top_bots"]:
-        print(f"\n  Top bot:")
+        print(f"\n  Top bots:")
         for b in stats["top_bots"]:
-            print(f"    {b['signer'][:20]}…  "
-                  f"sandwich: {b['sandwiches']}  "
+            print(f"    {b['signer'][:20]}...  "
+                  f"sandwiches: {b['sandwiches']}  "
                   f"profit_net: {b['profit_net']:+.6f} {token_label}")
 
     if stats["dex_victims"]:
-        print(f"\n  Vittime per DEX (frontrun):")
+        print(f"\n  Victims by DEX (frontrun):")
         for dex, cnt in sorted(stats["dex_victims"].items(), key=lambda x: -x[1]):
-            print(f"    {dex:<30} : {cnt} vittime")
+            print(f"    {dex:<30} : {cnt} victim(s)")
 
-    print(f"{'═'*W}\n")
+    print(f"{'='*W}\n")
 
 
-# ─── Output dettaglio ─────────────────────────────────────────────────────────
+# --- Detail output ---
 
 MINT_LABELS = {SOL_MINT: "SOL"}
 
+
 def label(mint: str) -> str:
-    return MINT_LABELS.get(mint, mint[:8] + "…")
+    """Returns a short human-readable label for a mint address.
+    Falls back to the first 8 characters of the address if the mint is unknown."""
+    return MINT_LABELS.get(mint, mint[:8] + "...")
 
 
 def print_sandwich(idx: int, s: SandwichResult) -> None:
+    """Prints a detailed formatted view of a single sandwich result to stdout.
+    Includes frontrun, victims, backrun, and profit information."""
     fr = s.frontrun
     br = s.backrun
     W  = 68
-    conf_icon = {"HIGH": "🔴", "MEDIUM": "🟡", "LOW": "🟢"}.get(s.confidence, "")
-    print(f"\n{'─'*W}")
-    print(f"  SANDWICH #{idx+1}  [{s.confidence} {conf_icon}]"
-          + ("  ⚡ CROSS-DEX" if s.cross_dex else ""))
-    print(f"{'─'*W}")
-    print(f"  Bot         : {fr.signer}")
-    print(f"  DEX front   : {fr.program}")
-    print(f"  DEX back    : {br.program}")
-    print(f"  Pool comuni : {len(s.shared_pools)}")
+    print(f"\n{'-'*W}")
+    print(f"  SANDWICH #{idx+1}  [{s.confidence}]"
+          + ("  CROSS-DEX" if s.cross_dex else ""))
+    print(f"{'-'*W}")
+    print(f"  Bot          : {fr.signer}")
+    print(f"  DEX front    : {fr.program}")
+    print(f"  DEX back     : {br.program}")
+    print(f"  Shared pools : {len(s.shared_pools)}")
     print()
     print(f"  FRONTRUN  [tx #{fr.tx_index}]")
-    print(f"    sig       : {fr.signature}")
-    print(f"    swap      : {fr.amount_in:.6f} {label(fr.token_in)}"
-          f"  →  {fr.amount_out:.6f} {label(fr.token_out)}")
-    print(f"    fee       : {fr.fee_sol:.6f} SOL")
+    print(f"    sig        : {fr.signature}")
+    print(f"    swap       : {fr.amount_in:.6f} {label(fr.token_in)}"
+          f"  ->  {fr.amount_out:.6f} {label(fr.token_out)}")
+    print(f"    fee        : {fr.fee_sol:.6f} SOL")
     print()
     for vi, v in enumerate(s.victims):
-        slip_str = (f"  slippage stimato: {v.slippage_estimate:+.4f}%"
+        slip_str = (f"  estimated slippage: {v.slippage_estimate:+.4f}%"
                     if v.slippage_estimate != 0 else "")
         print(f"  VICTIM {vi+1}  [tx #{v.swap.tx_index}]{slip_str}")
-        print(f"    sig       : {v.swap.signature}")
-        print(f"    signer    : {v.swap.signer}")
-        print(f"    swap      : {v.swap.amount_in:.6f} {label(v.swap.token_in)}"
-              f"  →  {v.swap.amount_out:.6f} {label(v.swap.token_out)}")
+        print(f"    sig        : {v.swap.signature}")
+        print(f"    signer     : {v.swap.signer}")
+        print(f"    swap       : {v.swap.amount_in:.6f} {label(v.swap.token_in)}"
+              f"  ->  {v.swap.amount_out:.6f} {label(v.swap.token_out)}")
     print()
     print(f"  BACKRUN   [tx #{br.tx_index}]")
-    print(f"    sig       : {br.signature}")
-    print(f"    swap      : {br.amount_in:.6f} {label(br.token_in)}"
-          f"  →  {br.amount_out:.6f} {label(br.token_out)}")
-    print(f"    fee       : {br.fee_sol:.6f} SOL")
+    print(f"    sig        : {br.signature}")
+    print(f"    swap       : {br.amount_in:.6f} {label(br.token_in)}"
+          f"  ->  {br.amount_out:.6f} {label(br.token_out)}")
+    print(f"    fee        : {br.fee_sol:.6f} SOL")
     print()
     profit_label = label(s.profit_token)
     sign_raw = "+" if s.profit_raw >= 0 else ""
     sign_net = "+" if s.profit_net >= 0 else ""
-    print(f"  PROFITTO GREZZO : {sign_raw}{s.profit_raw:.6f} {profit_label}")
-    print(f"  PROFITTO NETTO  : {sign_net}{s.profit_net:.6f} {profit_label}", end="")
+    print(f"  RAW PROFIT  : {sign_raw}{s.profit_raw:.6f} {profit_label}")
+    print(f"  NET PROFIT  : {sign_net}{s.profit_net:.6f} {profit_label}", end="")
     if s.profit_net > 0:
-        print("  ✓ PROFIT")
+        print("  PROFIT")
     elif s.profit_net < 0:
-        print("  ✗ LOSS")
+        print("  LOSS")
     else:
-        print("  ~ BREAKEVEN")
-    print(f"{'─'*W}")
+        print("  BREAKEVEN")
+    print(f"{'-'*W}")
 
 
 def print_summary_table(sandwiches: list[SandwichResult]) -> None:
+    """Prints a compact summary table of all detected sandwiches, sorted by net profit.
+    Prints a 'none found' message if the list is empty."""
     if not sandwiches:
-        print("\n[✓] Nessun sandwich attack rilevato nel blocco.")
+        print("\nNo sandwich attacks detected in the block.")
         return
     W = 68
-    print(f"\n{'═'*W}")
-    print(f"  RIEPILOGO — {len(sandwiches)} sandwich (ordinati per profitto netto)")
-    print(f"{'═'*W}")
-    print(f"  {'#':<4} {'Conf':<7} {'Bot':<18} {'Pair':<20} {'Vit':<5} {'Net profit'}")
+    print(f"\n{'='*W}")
+    print(f"  SUMMARY -- {len(sandwiches)} sandwich(es) (sorted by net profit)")
+    print(f"{'='*W}")
+    print(f"  {'#':<4} {'Conf':<7} {'Bot':<18} {'Pair':<20} {'Vic':<5} {'Net profit'}")
     print(f"  {'─'*4} {'─'*7} {'─'*18} {'─'*20} {'─'*5} {'─'*14}")
     for i, s in enumerate(sandwiches):
-        pair       = f"{label(s.frontrun.token_in)}→{label(s.frontrun.token_out)}"
+        pair       = f"{label(s.frontrun.token_in)}->{label(s.frontrun.token_out)}"
         sign       = "+" if s.profit_net >= 0 else ""
         profit_str = f"{sign}{s.profit_net:.4f} {label(s.profit_token)}"
         print(f"  {i+1:<4} {s.confidence:<7} {s.frontrun.signer[:16]:<18} "
               f"{pair:<20} {len(s.victims):<5} {profit_str}")
-    print(f"{'═'*W}\n")
+    print(f"{'='*W}\n")
 
 
-# ─── Serializzazione ──────────────────────────────────────────────────────────
+# --- Serialization ---
 
 def swap_to_dict(x: SwapInfo) -> dict:
+    """Converts a SwapInfo dataclass to a JSON-serializable dictionary.
+    Excludes pool_accounts (frozenset) as it is not needed in output."""
     return {
         "tx_index":  x.tx_index,
         "signature": x.signature,
@@ -675,6 +642,8 @@ def swap_to_dict(x: SwapInfo) -> dict:
 
 
 def sandwich_to_dict(s: SandwichResult) -> dict:
+    """Converts a SandwichResult dataclass to a JSON-serializable dictionary.
+    Shared pools are converted from frozenset to a sorted list."""
     return {
         "frontrun":     swap_to_dict(s.frontrun),
         "victims":      [
@@ -691,45 +660,45 @@ def sandwich_to_dict(s: SandwichResult) -> dict:
     }
 
 
-# ─── Main ─────────────────────────────────────────────────────────────────────
+# --- Main ---
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Rileva sandwich attack in un blocco Solana (v2 — euristica avanzata)."
+        description="Detect sandwich attacks in a Solana block (v2 -- advanced heuristics)."
     )
-    parser.add_argument("block_file", help="Percorso del file JSON del blocco")
+    parser.add_argument("block_file", help="Path to the block JSON file")
     parser.add_argument("--min-profit", type=float, default=None,
-                        help="Mostra solo sandwich con profitto NETTO >= X SOL")
+                        help="Show only sandwiches with NET profit >= X SOL")
     parser.add_argument("--max-gap", type=int, default=10,
-                        help="Numero massimo di tx tra frontrun e backrun (default: 10)")
+                        help="Maximum number of txs between frontrun and backrun (default: 10)")
     parser.add_argument("--confidence", choices=["HIGH", "MEDIUM", "LOW"], default=None,
-                        help="Filtra per livello minimo di confidenza")
+                        help="Filter by minimum confidence level")
     parser.add_argument("--verbose", "-v", action="store_true",
-                        help="Output di debug durante il parsing")
+                        help="Enable debug output during parsing")
     parser.add_argument("--output-json", default=None,
-                        help="Salva i risultati (array JSON) in un file")
+                        help="Save results (JSON array) to a file")
     parser.add_argument("--output-stats", default=None,
-                        help="Salva le statistiche in un file JSON separato")
+                        help="Save statistics to a separate JSON file")
     args = parser.parse_args()
 
-    # ── Caricamento blocco ───────────────────────────────────────────────────
+    # Block loading
     block_path = Path(args.block_file)
     if not block_path.exists():
-        print(f"ERRORE: File non trovato: {block_path}", file=sys.stderr)
+        print(f"ERROR: File not found: {block_path}", file=sys.stderr)
         sys.exit(1)
     if block_path.stat().st_size == 0:
-        print(f"ERRORE: File vuoto: {block_path}", file=sys.stderr)
+        print(f"ERROR: Empty file: {block_path}", file=sys.stderr)
         sys.exit(1)
 
-    print(f"[*] Caricamento {block_path} …")
+    print(f"[*] Loading {block_path}...")
     try:
         with block_path.open("r", encoding="utf-8") as f:
             raw = json.load(f)
     except json.JSONDecodeError as e:
-        print(f"ERRORE: JSON non valido in '{block_path}': {e}", file=sys.stderr)
+        print(f"ERROR: Invalid JSON in '{block_path}': {e}", file=sys.stderr)
         sys.exit(1)
     except OSError as e:
-        print(f"ERRORE: Impossibile leggere '{block_path}': {e}", file=sys.stderr)
+        print(f"ERROR: Cannot read '{block_path}': {e}", file=sys.stderr)
         sys.exit(1)
 
     if "block" in raw and "_meta" in raw:
@@ -744,13 +713,13 @@ def main() -> None:
 
     transactions = block_data.get("transactions", [])
     if not isinstance(transactions, list):
-        print("ERRORE: Formato blocco non valido: 'transactions' non è una lista.",
+        print("ERROR: Invalid block format: 'transactions' is not a list.",
               file=sys.stderr)
         sys.exit(1)
-    print(f"    Transazioni nel blocco: {len(transactions)}")
+    print(f"    Transactions in block: {len(transactions)}")
 
-    # ── Filtro tx di voto + estrazione swap ──────────────────────────────────
-    print(f"\n[*] Parsing swap (filtro tx di voto attivo)…")
+    # Vote tx filter + swap extraction
+    print(f"\n[*] Parsing swaps (vote tx filter enabled)...")
     swaps: list[SwapInfo] = []
     vote_count   = 0
     failed_parse = 0
@@ -768,63 +737,63 @@ def main() -> None:
         else:
             failed_parse += 1
 
-    print(f"    Tx di voto filtrate : {vote_count}")
-    print(f"    Swap estratti       : {len(swaps)}")
-    print(f"    Non-swap / errori   : {failed_parse}")
+    print(f"    Vote txs filtered : {vote_count}")
+    print(f"    Swaps extracted   : {len(swaps)}")
+    print(f"    Non-swap / errors : {failed_parse}")
 
     if not swaps:
-        print("\n[!] Nessuno swap identificabile nel blocco. "
-              "Verifica che il JSON sia in formato jsonParsed.")
+        print("\n[!] No identifiable swaps in the block. "
+              "Make sure the JSON is in jsonParsed format.")
         sys.exit(0)
 
-    # ── Rilevamento sandwich ─────────────────────────────────────────────────
-    print(f"\n[*] Ricerca pattern sandwich (max_gap={args.max_gap})…")
+    # Sandwich detection
+    print(f"\n[*] Searching for sandwich patterns (max_gap={args.max_gap})...")
     sandwiches = detect_sandwiches(
         swaps,
         max_gap=args.max_gap,
         min_profit_net=args.min_profit,
         verbose=args.verbose,
     )
-    print(f"    Sandwich trovati: {len(sandwiches)}")
+    print(f"    Sandwiches found: {len(sandwiches)}")
 
-    # Filtro confidenza
+    # Confidence filter
     if args.confidence:
         conf_order = {"HIGH": 3, "MEDIUM": 2, "LOW": 1}
         min_conf   = conf_order[args.confidence]
         before     = len(sandwiches)
         sandwiches = [s for s in sandwiches if conf_order[s.confidence] >= min_conf]
-        print(f"    Dopo filtro confidenza >= {args.confidence}: {len(sandwiches)} "
-              f"(esclusi {before - len(sandwiches)})")
+        print(f"    After confidence filter >= {args.confidence}: {len(sandwiches)} "
+              f"(excluded {before - len(sandwiches)})")
 
-    # ── Stampa dettagli ──────────────────────────────────────────────────────
+    # Print detailed results
     for i, s in enumerate(sandwiches):
         print_sandwich(i, s)
     print_summary_table(sandwiches)
 
-    # ── Statistiche ──────────────────────────────────────────────────────────
+    # Statistics
     stats = compute_stats(sandwiches, len(transactions), len(swaps))
     print_stats(stats)
 
-    # ── Salvataggio JSON risultati ───────────────────────────────────────────
+    # Save results JSON
     if args.output_json:
         output_path = Path(args.output_json)
         try:
             with output_path.open("w", encoding="utf-8") as f:
                 json.dump([sandwich_to_dict(s) for s in sandwiches], f, indent=2)
-            print(f"[✓] Risultati salvati in '{output_path}'")
+            print(f"[OK] Results saved to '{output_path}'")
         except OSError as e:
-            print(f"ERRORE scrittura '{output_path}': {e}", file=sys.stderr)
+            print(f"ERROR writing '{output_path}': {e}", file=sys.stderr)
             sys.exit(1)
 
-    # ── Salvataggio JSON statistiche ─────────────────────────────────────────
+    # Save statistics JSON
     if args.output_stats and stats:
         stats_path = Path(args.output_stats)
         try:
             with stats_path.open("w", encoding="utf-8") as f:
                 json.dump(stats, f, indent=2)
-            print(f"[✓] Statistiche salvate in '{stats_path}'")
+            print(f"[OK] Statistics saved to '{stats_path}'")
         except OSError as e:
-            print(f"ERRORE scrittura '{stats_path}': {e}", file=sys.stderr)
+            print(f"ERROR writing '{stats_path}': {e}", file=sys.stderr)
             sys.exit(1)
 
 

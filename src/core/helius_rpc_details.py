@@ -127,7 +127,7 @@ def process_sandwich_file(input_path, output_path):
     total_lines = len(lines)
 
     with open(output_path, "a") as outfile:
-        for line in tqdm(lines, total=total_lines, desc="Enrichment transazioni", unit="tx",
+        for line in tqdm(lines, total=total_lines, desc="Enrichment transactions", unit="tx",
                          bar_format="{l_bar}{bar} | {n_fmt}/{total_fmt} | ETA: {remaining} | {rate_fmt}"):
             try:
                 data = json.loads(line)

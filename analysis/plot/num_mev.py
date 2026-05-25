@@ -17,8 +17,6 @@ sandwich_data = {
         5219, 4046, 4429, 4027, 3421, 2263, 1616, 1613, 1863, 2188, 1599
     ]
 }
-
-
 # Dati Arbitraggi
 arbitrage_data = {
     'epoch': [
