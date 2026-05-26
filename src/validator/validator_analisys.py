@@ -7,20 +7,18 @@ CSV_EPOCH_831 = "epoch_831.csv"
 CSV_EPOCH_846 = "epoch_846.csv"
 OUTPUT_CSV = "validators_aggregated.csv"
 
-EPOCHS_IN_60D = 30  # ~60 giorni / 2 giorni per epoca
-
+EPOCHS_IN_60D = 30  # ~60 days / 2 days per epoch
 
 # =========================
 # FUNCTIONS
 # =========================
 def parse_ids(id_string: str) -> set:
-    """
-    Convert "{id1,id2,...}" → set(ids)
-    """
+    """Converts a "{id1,id2,...}" string into a set of IDs.
+    Returns an empty set if the input is NaN or blank."""
     if pd.isna(id_string):
         return set()
 
-    # Rimuove graffe {}
+    # Remove curly braces {}
     cleaned = id_string.strip("{}")
 
     if not cleaned:
@@ -28,25 +26,25 @@ def parse_ids(id_string: str) -> set:
 
     return set(x.strip() for x in cleaned.split(","))
 
+
 def round_metrics(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Round metrics for readability.
-    """
-    df["blocks_1e"] = df["blocks_1e"].round(0)  # 1 cifra
-    df["sandwich_blocks_1e"] = df["sandwich_blocks_1e"].round(0)  # 1 cifra
-    df["sandwich_rate_1e"] = df["sandwich_rate_1e"].round(4)  # 4 decimali ≈ 0.01%
+    """Rounds numeric metric columns to appropriate decimal places for readability.
+    Modifies the DataFrame in place and returns it."""
+    df["blocks_1e"] = df["blocks_1e"].round(0)
+    df["sandwich_blocks_1e"] = df["sandwich_blocks_1e"].round(0)
+    df["sandwich_rate_1e"] = df["sandwich_rate_1e"].round(4)  # 4 decimals ~ 0.01%
     df["SII"] = df["SII"].round(2)
     df["avg_stake"] = df["avg_stake"].round(2)
     return df
 
+
 def load_and_prepare(csv_path: str, epoch_label: str) -> pd.DataFrame:
-    """
-    Load a CSV and rename columns with epoch suffix.
-    """
+    """Loads a CSV file and renames the relevant columns with the given epoch suffix.
+    Returns a DataFrame with only the needed columns."""
     cols = [
         "validator_name",
         "vote_account",
-         "validator_ids", 
+        "validator_ids",
         "30d_blocks_produced",
         "30d_blocks_with_sandwiches",
         "total_stake",
@@ -67,9 +65,8 @@ def load_and_prepare(csv_path: str, epoch_label: str) -> pd.DataFrame:
 
 
 def aggregate_epochs(df_831: pd.DataFrame, df_846: pd.DataFrame) -> pd.DataFrame:
-    """
-    Merge the two epochs and aggregate metrics over ~60 days.
-    """
+    """Merges two epoch DataFrames on vote_account and aggregates metrics over ~60 days.
+    Combines validator ID sets and computes total blocks, sandwich blocks, sandwich rate, and average stake."""
     df = pd.merge(
         df_831,
         df_846,
@@ -77,15 +74,15 @@ def aggregate_epochs(df_831: pd.DataFrame, df_846: pd.DataFrame) -> pd.DataFrame
         how="inner",
         suffixes=("_831", "_846"),
     )
-    
-    # Merge validator IDs
+
+    # Merge validator IDs from both epochs
     df["all_validator_ids"] = df.apply(
         lambda row: parse_ids(row["validator_ids_831"]) |
                     parse_ids(row["validator_ids_846"]),
         axis=1
     )
     df["all_validator_ids"] = df["all_validator_ids"].apply(
-    lambda s: "{" + ",".join(sorted(s)) + "}"
+        lambda s: "{" + ",".join(sorted(s)) + "}"
     )
 
     # Aggregate over ~60 days
@@ -104,22 +101,20 @@ def aggregate_epochs(df_831: pd.DataFrame, df_846: pd.DataFrame) -> pd.DataFrame
 
 
 def rescale_to_epoch(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Rescale absolute metrics to 1 epoch (~2 days).
-    """
+    """Rescales 60-day absolute block counts to a single epoch (~2 days).
+    The sandwich rate is kept unchanged as it is already a ratio."""
     df["blocks_1e"] = df["blocks_60d"] / EPOCHS_IN_60D
     df["sandwich_blocks_1e"] = df["sandwich_blocks_60d"] / EPOCHS_IN_60D
 
-    # Rate does NOT change
+    # Rate does not change
     df["sandwich_rate_1e"] = df["sandwich_rate_60d"]
 
     return df
 
 
 def compute_sii(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Compute Sandwich Impact Index (SII).
-    """
+    """Computes the Sandwich Impact Index (SII) as a normalized score relative to the top validator.
+    Values range from 0 to 1, where 1 is the most impactful validator."""
     max_sandwich_blocks = df["sandwich_blocks_60d"].max()
 
     df["SII"] = (
@@ -130,12 +125,11 @@ def compute_sii(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def print_top10(df: pd.DataFrame) -> None:
-    """
-    Print Top 10 validators by SII.
-    """
+    """Prints the top 10 validators ranked by SII to stdout.
+    Displays name, vote account, block counts, sandwich rate, and SII score."""
     top10 = df.sort_values(by="SII", ascending=False).head(10)
 
-    print("\n🚨 TOP 10 VALIDATORS BY SANDWICH IMPACT (PER EPOCA)\n")
+    print("\nTOP 10 VALIDATORS BY SANDWICH IMPACT (PER EPOCH)\n")
     print(
         top10[
             [
@@ -186,38 +180,36 @@ def main() -> None:
     ]
 
     df[final_cols].to_csv(OUTPUT_CSV, index=False)
-    print(f"✅ File generato: {OUTPUT_CSV}")
+    print(f"Output file saved: {OUTPUT_CSV}")
 
     # Print Top 10
     print_top10(round_metrics(df))
-    
-    # Totale sandwich blocks su tutta la rete
+
+    # Total sandwich blocks across the network
     network_sandwich_blocks = df["sandwich_blocks_60d"].sum()
     network_blocks = df["blocks_60d"].sum()
 
-    # Media sandwich rate su tutta la rete (pesata per numero di blocchi prodotti)
+    # Network-wide sandwich rate weighted by blocks produced
     network_sandwich_rate = (
         df["sandwich_blocks_60d"].sum() / df["blocks_60d"].sum()
     )
-    print("\n🌐 NETWORK SUMMARY:")
-    print(f"Totale blocchi: {network_blocks:.0f}")
-    print(f"Totale blocchi sandwichati: {network_sandwich_blocks:.0f}")
-    print(f"Sandwich rate medio rete: {network_sandwich_rate*100:.4f}")
-    
-    # --- Calcolo sandwich rate separati per epoca ---
+    print("\nNETWORK SUMMARY:")
+    print(f"Total blocks: {network_blocks:.0f}")
+    print(f"Total sandwiched blocks: {network_sandwich_blocks:.0f}")
+    print(f"Network average sandwich rate: {network_sandwich_rate * 100:.4f}%")
+
+    # Compute per-epoch sandwich rates
     df["sandwich_rate_831"] = (
         df["sandwich_blocks_831"] / df["blocks_831"]
     ).fillna(0)
-    
+
     df["sandwich_rate_846"] = (
         df["sandwich_blocks_846"] / df["blocks_846"]
     ).fillna(0)
-    
-    # Stampare il sandwich rate medio per epoca
-    print(f"Sandwich rate medio prima: {df['sandwich_rate_831'].mean() * 100:.4f}%")
-    print(f"Sandwich rate medio dopo: {df['sandwich_rate_846'].mean() * 100:.4f}%")
 
-
+    # Print average sandwich rate per epoch
+    print(f"Average sandwich rate epoch 831: {df['sandwich_rate_831'].mean() * 100:.4f}%")
+    print(f"Average sandwich rate epoch 846: {df['sandwich_rate_846'].mean() * 100:.4f}%")
 
 
 if __name__ == "__main__":
