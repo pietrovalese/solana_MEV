@@ -1,0 +1,20 @@
+[package]
+name    = "sandwich_detector"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+# Builds a Python-importable .so / .pyd extension module.
+name    = "sandwich_detector"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3       = { version = "0.21", features = ["extension-module"] }
+serde      = { version = "1",    features = ["derive"] }
+serde_json = "1"
+rayon      = "1"       # parallel block processing (used in parse_swaps_parallel)
+
+[profile.release]
+opt-level = 3
+lto       = true       # link-time optimisation — shrinks binary, speeds up hot paths
+codegen-units = 1      # single codegen unit for maximum inlining
