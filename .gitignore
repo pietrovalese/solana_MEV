@@ -10,3 +10,4 @@ __pycache__/
 # .gitignore
 .env
 analisys/plot
+analisys/hours.txt
