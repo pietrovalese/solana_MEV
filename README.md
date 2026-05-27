@@ -5,13 +5,13 @@ The project integrates **Helius API** for transaction enrichment and supports an
 
 ---
 
-## 🔍 Main Features
+## Main Features
 
 - **Data Collection:**
-  - `sandwich.py` → detects and saves **sandwich attacks** from [sandwiched.me](https://sandwiched.me)
-  - `arbitrage.py` → collects **arbitrage trades** from [sandwiched.me](https://sandwiched.me)
-  - `memecoin.py` and `memecoin_pumpfun.py` → monitor and store **memecoin-related data** in `.csv` format
-  - `helius_rpc_details.py` → integrates with **Helius API** for Solana transaction enrichment
+  - `src/core/sandwich.py` → detects and saves **sandwich attacks** from [sandwiched.me](https://sandwiched.me)
+  - `src/core/arbitrage.py` → collects **arbitrage trades** from [sandwiched.me](https://sandwiched.me)
+  - `src/core/memecoin_pumpfun.py` → monitor and store **memecoin-related data** in `.csv` format
+  - `src/core/helius_rpc_details.py` → integrates with **Helius API** for Solana transaction enrichment
 
 - **Analysis and Computation:**
   - The `analysis/` folder contains scripts for:
@@ -19,9 +19,12 @@ The project integrates **Helius API** for transaction enrichment and supports an
     - cross-comparison between sandwich, arbitrage, and memecoin data  
     - generation of consolidated datasets and metrics
 
-- **Visualization and Plotting:**
-  - The `plot/` folder includes scripts to generate **plots and visualizations** from the analyzed data  
-  - Enables automated reporting and exploratory insights
+- **Detection and Validation:**
+  - The `dataset/` folder includes scripts to download blocks and detect sandwiches attacks  
+  - Based on rust implemnetation in `dataset/engine/lib.rs`
+
+- **Validator behaviour analisys:**
+  - The `core/validator/` folder includes scripts to compute metrics and detect malicious pattern
 
 ---
 
@@ -30,93 +33,75 @@ The project integrates **Helius API** for transaction enrichment and supports an
 ```
 solana_sandwich/
 ├── analysis/               # Analysis scripts and data processing
-├── plot/                   # Plotting and visualization scripts
+├── dataset/                   # Check and validate datset
+├── src/         # Market data support
+    |── core/
+        |── sandwich.py
+        |── arbitrage.py
+        |── helius_rpc_details.py
+        |── memecoin_pumpfun.py
+    |── validator/
 ├── .gitignore
 ├── README.md
 ├── requirements.txt         # Project dependencies
 ├── all_run.sh               # Automated run script
-├── sandwich.py              # Sandwich attack data collector
-├── arbitrage.py             # Arbitrage trade collector
-├── memecoin.py              # Memecoin data collector
-├── memecoin_pumpfun.py      # Memecoin tracking on pump.fun
-├── helius_rpc_details.py    # Helius API integration
-├── coinmarketcap.py         # Market data support
-└── dataset/ (optional)      # Folder for generated JSON/CSV data
+```
+
+---
+
+## Dependecies
+
+### 1. Create virtual environment
+```bash
+python3 -m venv venv
+```
+Activate the environment
+```bash
+source ./venv/bin/activate
+```
+
+### 2. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
 ---
 
 ## ⚙️ Usage
 
-### 1. Install Dependencies
-
+### 1. Collect and Enhance Data
+To gather sandwich, arbitrage and memcoin data:
 ```bash
-pip install -r requirements.txt
+python3 scr/core/sandwich.py
+python3 src/core/arbitrage.py
+python3 src/core/memecoin_pumpfun.py
 ```
 
-### 2. Collect Data
-
-To gather sandwich and arbitrage data:
-
+To enhance both sandwiches and arbitrages data:
 ```bash
-python3 sandwich.py
-python3 arbitrage.py
+python3 scr/core/helius_rpc_details.py
 ```
 
-To collect memecoin data:
+### 2. Run Analysis
+
+Execute the analysis scripts inside the `analisys/` folder:
 
 ```bash
-python3 memecoin.py
-python3 memecoin_pumpfun.py
+python3 analysis/*_analysis.py
 ```
-
-### 3. Run Analysis
-
-Execute the analysis scripts inside the `analysis/` folder:
-
-```bash
-python3 analysis/main_analysis.py
-```
-
-### 4. Generate Plots
-
-Create plots and visual summaries:
-
-```bash
-python3 plot/main_plot.py
-```
-
-### 5. Automated Execution
-
-Run the full pipeline automatically:
-
-```bash
-bash all_run.sh
-```
-
 ---
 
-## 🔗 Key Dependencies
+## Output Structure
 
-- `requests`
-- `pandas`
-- `matplotlib`
-- `beautifulsoup4`
-- `tqdm`
-- `helius` (API)
-- `json`, `csv`
-
----
-
-## 📊 Output Structure
-
-- **Raw data** → stored in `.json` and `.csv` format  
+- **Raw data** → stored in `.jsonl` and `.csv` format  
 - **Processed analysis** → stored in `analysis/results/`  
-- **Plots and figures** → stored in `plot/output/`
 
 ---
 
-## 🧭 Roadmap
+## Roadmap
 
 - Extend support to additional Solana DEXs and data sources  
 - Automate time-series analysis and anomaly detection  
@@ -124,6 +109,6 @@ bash all_run.sh
 
 ---
 
-## 📜 License
+## License
 
 This project is released under the **MIT License**.
